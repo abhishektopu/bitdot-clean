@@ -146,7 +146,7 @@ const App = () => {
                     </SocketContext.Provider>
                 </BrowserRouter>
 <a 
-  href="https://wa.me/917899358934" 
+  href="https://wa.me/917899358934?text=Hi%20I%20want%20to%20start%20crypto%20trading%20can%20you%20guide%20me" 
   target="_blank" 
   rel="noopener noreferrer"
   style={{
@@ -155,15 +155,16 @@ const App = () => {
     right: "20px",
     background: "#25D366",
     color: "white",
-    padding: "12px 16px",
+    padding: "14px 18px",  
     borderRadius: "50px",
     fontSize: "16px",
+    fontWeight: "bold",
     textDecoration: "none",
     boxShadow: "0 4px 6px rgba(0,0,0,0.2)",
     zIndex: 999
   }}
 >
-  💬 WhatsApp
+  💬 Start Earning Now
 </a> 
                          
           </I18nextProvider>
