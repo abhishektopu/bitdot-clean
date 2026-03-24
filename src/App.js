@@ -146,7 +146,7 @@ const App = () => {
                     </SocketContext.Provider>
                 </BrowserRouter>
 <a 
-  href="https://wa.me/917899358934?text=Hi%20I%20want%20to%20start%20crypto%20trading%20can%20you%20guide%20me" 
+  href="https://wa.me/918333065725?text=Hi%20I%20want%20to%20start%20crypto%20trading%20can%20you%20guide%20me" 
   target="_blank" 
   rel="noopener noreferrer"
   style={{
