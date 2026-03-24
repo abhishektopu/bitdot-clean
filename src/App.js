@@ -164,7 +164,7 @@ const App = () => {
   }}
 >
   💬 WhatsApp
-</a>
+</a> 
                          
           </I18nextProvider>
 
