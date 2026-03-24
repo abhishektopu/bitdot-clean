@@ -1,0 +1,6 @@
+{
+    "name": "SpotTradeHistory",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./SpotTradeHistory.js"
+}

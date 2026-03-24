@@ -1,0 +1,6 @@
+{
+    "name": "KycSubmitBtn",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./KycSubmitBtn.js"
+}
