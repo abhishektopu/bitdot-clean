@@ -4,6 +4,7 @@ import { Switch, BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
 import { I18nextProvider } from 'react-i18next';
+import { Route } from "react-router-dom";
 
 // import component
 import ConditionRoute from './components/Route/ConditionRoute';
@@ -140,8 +141,8 @@ const App = () => {
                             <ConditionRoute exact path='/withdraw-fiat-verification/:authToken' component={EmailVerification} type={"public"} />
                             <ConditionRoute exact path='/withdraw-coin-verification/:authToken' component={EmailVerification} type={"public"} />
                             {/* PUBLIC */}
-                            <Route path="/blog" component={BlogPage} />
-                            <Route path="/bybit-review" component={BybitReviewPage} />
+                            <ConditionRoute exact path="/blog" component={BlogPage} type={"public"} />
+                            <ConditionRoute exact path="/bybit-review" component={BybitReviewPage} type={"public"} />
 
 
                             {/* <Route exact path="/*" component={Home}>
