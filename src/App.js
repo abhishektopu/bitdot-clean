@@ -140,6 +140,9 @@ const App = () => {
                             <ConditionRoute exact path='/withdraw-fiat-verification/:authToken' component={EmailVerification} type={"public"} />
                             <ConditionRoute exact path='/withdraw-coin-verification/:authToken' component={EmailVerification} type={"public"} />
                             {/* PUBLIC */}
+                            <Route path="/blog" component={BlogPage} />
+                            <Route path="/bybit-review" component={BybitReviewPage} />
+
 
                             {/* <Route exact path="/*" component={Home}>
                     <Redirect to="/home" />
