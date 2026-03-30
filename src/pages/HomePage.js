@@ -66,6 +66,16 @@ const HomePage = (props) => {
             ⚠️ Crypto involves risk. Start small & learn first.
           </p>
 
+<div className="text-center my-5">
+  <h3>📚 Learn Before You Trade</h3>
+  <p>Read our beginner guides and platform reviews.</p>
+
+  <a href="/blog">
+    <button style={styles.secondaryBtn}>
+      Read Guides
+    </button>
+  </a>
+</div>
           {/* COUNTDOWN */}
           <div style={{ marginTop: "15px", fontWeight: "700", color: "red" }}>
             ⏳ Bonus expires in:
