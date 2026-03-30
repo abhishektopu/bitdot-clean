@@ -53,6 +53,8 @@ import HistoryPage from './pages/HistoryPage';
 import SupportPage from './pages/SupportPage';
 import Launchpad from "./pages/launchpad.js";
 import LaunchpadDetails from "./pages/launchpaddetails.js";
+import BlogPage from "./pages/BlogPage";
+import BybitReviewPage from "./pages/BybitReviewPage";
 
 // import action
 import { decodeJwt } from './actions/jsonWebToken';
