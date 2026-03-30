@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
 import { Button } from "@material-ui/core";
 import logo from "../assets/images/logo.png";
+import { Link } from "react-router-dom";
 
 // Components
 import Header from "components/Header/Header.js";
@@ -70,11 +71,11 @@ const HomePage = (props) => {
   <h3>📚 Learn Before You Trade</h3>
   <p>Read our beginner guides and platform reviews.</p>
 
-  <a href="/blog">
-    <button style={styles.secondaryBtn}>
-      Read Guides
-    </button>
-  </a>
+  <Link to="/blog">
+  <button style={styles.secondaryBtn}>
+    Read Guides
+  </button>
+</Link>
 </div>
           {/* COUNTDOWN */}
           <div style={{ marginTop: "15px", fontWeight: "700", color: "red" }}>
