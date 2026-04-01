@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
-import { Button } from "@material-ui/core";
 import logo from "../assets/images/logo.png";
 import { Link } from "react-router-dom";
 
 // Components
-import Header from "components/Header/Header.js";
-import HeaderLinks from "components/Header/HeaderLinks.js";
+import Header from "../components/Header/Header.js";
+import HeaderLinks from "../components/Header/HeaderLinks.js";
 
 function ScrollToTopOnMount() {
   useEffect(() => {
@@ -179,7 +178,7 @@ useEffect(() => {
       {/* FINAL CTA */}
       <div className="text-center my-5">
         <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
-          <Button style={styles.ctaBtn}>
+          <button style={styles.ctaBtn}>
             🚀 Start Learning Now
           </Button>
         </a>
