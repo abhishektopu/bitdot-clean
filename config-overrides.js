@@ -4,7 +4,7 @@ module.exports = function override(config) {
     stream: require.resolve("stream-browserify"),
     crypto: require.resolve("crypto-browserify"),
     buffer: require.resolve("buffer"),
-    util: require.resolve("util")
+    util: require.resolve("util/")
   };
   return config;
 };
