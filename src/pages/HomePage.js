@@ -137,6 +137,7 @@ useEffect(() => {
                   Open Binance Account
                 </button>
               </a>
+      </div> 
           
 
           {/* TRUST */}
