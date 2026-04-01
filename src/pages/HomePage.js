@@ -152,7 +152,7 @@ const HomePage = (props) => {
       <div style={styles.floating}>
         <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
           <button style={styles.floatingBtn}>
-            💬 Start Trading on Bybit
+          🚀 Start Earning Now
           </button>
         </a>
       </div>
@@ -223,17 +223,19 @@ const styles = {
   left: "50%",
   transform: "translateX(-50%)",
   width: "90%",
-  zIndex: "999"
+  zIndex: "3000"
 },
-  floatingBtn: {
+floatingBtn: {
   width: "100%",
-  background: "#25D366",
+  background: "linear-gradient(45deg, #25D366, #1ebe5d)",
   color: "#fff",
-  padding: "14px",
-  borderRadius: "30px",
+  padding: "16px",
+  borderRadius: "40px",
   border: "none",
-  fontWeight: "700",
-  cursor: "pointer"
+  fontWeight: "800",
+  fontSize: "16px",
+  cursor: "pointer",
+  boxShadow: "0 6px 20px rgba(0,0,0,0.3)"
 },
   popup: {
     position: "fixed",
