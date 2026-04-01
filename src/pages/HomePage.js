@@ -66,6 +66,9 @@ const HomePage = (props) => {
           <p style={{ color: "red", fontSize: "14px", marginTop: "8px" }}>
             ⚠️ Crypto involves risk. Start small & learn first.
           </p>
+              <p style={{ fontSize: "13px", color: "#888", marginTop: "10px" }}>
+  👇 Click below to start in under 2 minutes
+</p>
 
 <div className="text-center my-5">
   <h3>📚 Learn Before You Trade</h3>
@@ -81,6 +84,9 @@ const HomePage = (props) => {
           <div style={{ marginTop: "15px", fontWeight: "700", color: "red" }}>
             ⏳ Bonus expires in:
             <Countdown date={Date.now() + 86400000} />
+              <p style={{ color: "#ff4d4f", fontWeight: "600", marginTop: "5px" }}>
+  ⚡ Limited-time bonus – don’t miss this!
+</p>
           </div>
 
           {/* CTA BUTTONS */}
@@ -146,7 +152,7 @@ const HomePage = (props) => {
       <div style={styles.floating}>
         <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
           <button style={styles.floatingBtn}>
-            🚀 Start Now
+            💬 Start Trading on Bybit
           </button>
         </a>
       </div>
@@ -227,7 +233,7 @@ const styles = {
   border: "none",
   fontWeight: "700",
   cursor: "pointer"
-}
+},
   popup: {
     position: "fixed",
     bottom: "100px",
