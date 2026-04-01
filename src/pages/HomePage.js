@@ -52,7 +52,7 @@ const HomePage = (props) => {
 />
 
       {/* HERO SECTION */}
-      <div className="hero_section text-center" style={{ padding: "60px 20px" }}>
+      <div className="hero_section text-center" style={{ padding: "80px 20px" }}>
         <div className="container">
 
           <h1 style={{ fontWeight: "800", fontSize: "36px" }}>
@@ -160,7 +160,7 @@ const HomePage = (props) => {
       {/* POPUP */}
       {showPopup && (
         <div style={styles.popup}>
-          🔥 Someone just joined using this page!
+          🔥 Hurry! Bonus is almost gone!
         </div>
       )}
 {/* BACK TO HOME */}
@@ -192,15 +192,16 @@ const HomePage = (props) => {
 
 const styles = {
   primaryBtn: {
-    background: "#ff4d8d",
-    color: "#fff",
-    padding: "14px 22px",
-    fontSize: "16px",
-    fontWeight: "700",
-    borderRadius: "8px",
-    border: "none",
-    cursor: "pointer"
-  },
+  background: "linear-gradient(45deg, #ff4d8d, #ff7a18)",
+  color: "#fff",
+  padding: "14px 22px",
+  fontSize: "16px",
+  fontWeight: "700",
+  borderRadius: "30px",
+  border: "none",
+  cursor: "pointer",
+  boxShadow: "0 4px 15px rgba(0,0,0,0.2)"
+},
   secondaryBtn: {
     background: "#f3ba2f",
     color: "#000",
