@@ -77,11 +77,11 @@ useEffect(() => {
           <h1 style={{ fontWeight: "800", fontSize: "36px" }}>
             Start Crypto Trading in 5 Minutes 🚀
           </h1>
-
-          <h2 style={{ color: "#f4b52c", marginTop: "10px" }}>
 <p style={{ color: "#28a745", fontWeight: "600", marginTop: "5px" }}>
   👥 {usersOnline}+ users are trading now
 </p>
+          <h2 style={{ color: "#f4b52c", marginTop: "10px" }}>
+
             🎁 Get $100+ Bonus on Signup
           </h2>
 
