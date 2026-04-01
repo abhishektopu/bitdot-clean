@@ -137,8 +137,7 @@ useEffect(() => {
                   Open Binance Account
                 </button>
               </a>
-            </div>
-          </div>
+          
 
           {/* TRUST */}
           <p style={{ marginTop: "15px", fontSize: "14px" }}>
