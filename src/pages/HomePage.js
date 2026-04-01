@@ -120,6 +120,9 @@ useEffect(() => {
             <p style={{ color: "#ff4d4f", fontWeight: "600", marginTop: "8px" }}>
   ⚡ 87% users start within 2 minutes
 </p>
+    <p style={{ color: "#28a745", fontWeight: "700", marginTop: "6px" }}>
+  ✅ Verified payouts | Trusted by 2000+ users
+</p>
             </a>
 
             <div style={{ marginTop: "10px" }}>
@@ -174,7 +177,7 @@ useEffect(() => {
       </div>
 {recentUser && (
   <div style={styles.recent}>
-    {recentUser}
+    🔥 {recentUser} — earning now!
   </div>
 )}
       {/* FLOATING BUTTON */}
@@ -189,7 +192,7 @@ useEffect(() => {
       {/* POPUP */}
       {showPopup && (
         <div style={styles.popup}>
-          🔥 Hurry! Bonus is almost gone!
+          🔥 Only few bonus slots left today!
         </div>
       )}
 {/* BACK TO HOME */}
@@ -278,17 +281,19 @@ floatingBtn: {
   fontSize: "14px",
   zIndex: "2000"
 },
-  recent: {
+recent: {
   position: "fixed",
   bottom: "180px",
   left: "50%",
   transform: "translateX(-50%)",
-  background: "#000",
+  background: "linear-gradient(45deg, #000, #222)",
   color: "#fff",
-  padding: "10px 14px",
-  borderRadius: "8px",
+  padding: "12px 16px",
+  borderRadius: "10px",
   fontSize: "13px",
-  zIndex: "2000"
+  zIndex: "2000",
+  boxShadow: "0 4px 15px rgba(0,0,0,0.4)",
+  animation: "fadeIn 0.3s ease"
 },
   footer: {
     textAlign: "center",
