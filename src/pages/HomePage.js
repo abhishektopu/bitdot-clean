@@ -91,7 +91,7 @@ useEffect(() => {
   👇 Click below to start in under 2 minutes
 </p>
 {/* FIXED WRAPPER */}
-<div>
+
 <div className="text-center my-5">
   <h3>📚 Learn Before You Trade</h3>
   <p>Read our beginner guides and platform reviews.</p>
@@ -102,7 +102,7 @@ useEffect(() => {
   </button>
 </Link>
 </div>
-  </div>
+
           {/* COUNTDOWN */}
           <div style={{ marginTop: "15px", fontWeight: "700", color: "red" }}>
             ⏳ Bonus expires in:
