@@ -109,21 +109,27 @@ useEffect(() => {
               <p style={{ color: "#ff4d4f", fontWeight: "600", marginTop: "5px" }}>
   ⚡ Limited-time bonus – don’t miss this!
 </p>
+    <p style={{ color: "#ff4d4f", fontWeight: "700" }}>
+  ⏳ Offer expires today for new users only
+</p>
           </div>
 
           {/* CTA BUTTONS */}
-          <div style={{ marginTop: "20px" }}>
-            <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
-              <button style={styles.primaryBtn}>
-                🚀 Start Trading & Earn Daily
-              </button>
-            <p style={{ color: "#ff4d4f", fontWeight: "600", marginTop: "8px" }}>
-  ⚡ 87% users start within 2 minutes
-</p>
-    <p style={{ color: "#28a745", fontWeight: "700", marginTop: "6px" }}>
-  ✅ Verified payouts | Trusted by 2000+ users
-</p>
-            </a>
+       <div>
+  <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
+    <button style={styles.primaryBtn}>
+      🚀 Start Trading & Earn Daily
+    </button>
+  </a>
+
+  <p style={{ color: "#ff4d4f", fontWeight: "600", marginTop: "8px" }}>
+    ⚡ 87% users start within 2 minutes
+  </p>
+
+  <p style={{ color: "#28a745", fontWeight: "700", marginTop: "6px" }}>
+    ✅ Verified payouts | Trusted by 2000+ users
+  </p>
+</div>
 
             <div style={{ marginTop: "10px" }}>
               <a href="https://www.binance.com/en/register?ref=35886743" target="_blank" rel="noopener noreferrer">
@@ -138,6 +144,9 @@ useEffect(() => {
           <p style={{ marginTop: "15px", fontSize: "14px" }}>
             ✔ Trusted by Millions | ✔ Secure | ✔ Beginner Friendly
           </p>
+              <p style={{ fontSize: "13px", color: "#28a745", fontWeight: "600" }}>
+  🔐 100% Secure Signup | No KYC Delay
+</p>
               <p style={{ fontSize: "13px", color: "#888" }}>
   🔒 Official Bybit Partner | Instant Signup | No Hidden Fees
    </p>
@@ -184,7 +193,7 @@ useEffect(() => {
       <div style={styles.floating}>
         <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
           <button style={styles.floatingBtn}>
-          🚀 Start Earning Now
+          🔥 Claim Your Bonus Now
           </button>
         </a>
       </div>
