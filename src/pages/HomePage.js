@@ -116,7 +116,7 @@ useEffect(() => {
           </div>
 
           {/* CTA BUTTONS */}
-       <div>
+       
   <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
     <button style={styles.primaryBtn}>
       🚀 Start Trading & Earn Daily
@@ -130,7 +130,6 @@ useEffect(() => {
   <p style={{ color: "#28a745", fontWeight: "700", marginTop: "6px" }}>
     ✅ Verified payouts | Trusted by 2000+ users
   </p>
-</div>
 
             <div style={{ marginTop: "10px" }}>
               <a href="https://www.binance.com/en/register?ref=35886743" target="_blank" rel="noopener noreferrer">
