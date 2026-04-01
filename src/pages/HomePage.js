@@ -180,7 +180,7 @@ useEffect(() => {
         <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
           <button style={styles.ctaBtn}>
             🚀 Start Learning Now
-          </Button>
+          </button>
         </a>
       </div>
 {recentUser && (
