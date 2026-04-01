@@ -22,7 +22,7 @@ const HomePage = (props) => {
     const interval = setInterval(() => {
       setShowPopup(true);
       setTimeout(() => setShowPopup(false), 4000);
-    }, 10000);
+    }, 20000);
 
     return () => clearInterval(interval);
   }, []);
@@ -238,15 +238,17 @@ floatingBtn: {
   boxShadow: "0 6px 20px rgba(0,0,0,0.3)"
 },
   popup: {
-    position: "fixed",
-    bottom: "100px",
-    left: "20px",
-    background: "#000",
-    color: "#fff",
-    padding: "10px 14px",
-    borderRadius: "8px",
-    fontSize: "14px"
-  },
+  position: "fixed",
+  bottom: "120px",   // 👈 increased spacing
+  left: "50%",
+  transform: "translateX(-50%)", // 👈 center align
+  background: "#000",
+  color: "#fff",
+  padding: "12px 16px",
+  borderRadius: "10px",
+  fontSize: "14px",
+  zIndex: "2000"
+},
   footer: {
     textAlign: "center",
     fontSize: "12px",
