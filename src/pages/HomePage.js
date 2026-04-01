@@ -85,9 +85,9 @@ const HomePage = (props) => {
 
           {/* CTA BUTTONS */}
           <div style={{ marginTop: "20px" }}>
-            <a href="https://www.bybit.com/invite?ref=GWYGK" target="_blank" rel="noopener noreferrer">
+            <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
               <button style={styles.primaryBtn}>
-                👉 Start Earning on Bybit
+                🚀 Start Trading & Earn Daily
               </button>
             </a>
 
@@ -104,6 +104,9 @@ const HomePage = (props) => {
           <p style={{ marginTop: "15px", fontSize: "14px" }}>
             ✔ Trusted by Millions | ✔ Secure | ✔ Beginner Friendly
           </p>
+              <p style={{ fontSize: "13px", color: "#888" }}>
+  🔒 Official Bybit Partner | Instant Signup | No Hidden Fees
+   </p>
 
         </div>
       </div>
@@ -132,7 +135,7 @@ const HomePage = (props) => {
 
       {/* FINAL CTA */}
       <div className="text-center my-5">
-        <a href="https://www.bybit.com/invite?ref=GWYGK" target="_blank" rel="noopener noreferrer">
+        <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
           <Button style={styles.ctaBtn}>
             🚀 Start Learning Now
           </Button>
@@ -141,7 +144,7 @@ const HomePage = (props) => {
 
       {/* FLOATING BUTTON */}
       <div style={styles.floating}>
-        <a href="https://www.bybit.com/invite?ref=GWYGK" target="_blank" rel="noopener noreferrer">
+        <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
           <button style={styles.floatingBtn}>
             🚀 Start Now
           </button>
@@ -154,6 +157,21 @@ const HomePage = (props) => {
           🔥 Someone just joined using this page!
         </div>
       )}
+{/* BACK TO HOME */}
+<div style={{ textAlign: "center", marginTop: "30px" }}>
+  <a href="/" style={{
+    display: "inline-block",
+    padding: "12px 20px",
+    background: "#1f3b4d",
+    color: "#fff",
+    borderRadius: "30px",
+    textDecoration: "none",
+    fontWeight: "600"
+  }}>
+    ⬅ Back to Home
+  </a>
+</div>
+
 
       {/* FOOTER */}
       <p style={styles.footer}>
@@ -193,20 +211,23 @@ const styles = {
     padding: "12px 20px"
   },
   floating: {
-    position: "fixed",
-    bottom: "20px",
-    right: "20px",
-    zIndex: "999"
-  },
+  position: "fixed",
+  bottom: "15px",
+  left: "50%",
+  transform: "translateX(-50%)",
+  width: "90%",
+  zIndex: "999"
+},
   floatingBtn: {
-    background: "#f4b52c",
-    color: "#000",
-    padding: "12px 18px",
-    borderRadius: "30px",
-    border: "none",
-    fontWeight: "700",
-    cursor: "pointer"
-  },
+  width: "100%",
+  background: "#25D366",
+  color: "#fff",
+  padding: "14px",
+  borderRadius: "30px",
+  border: "none",
+  fontWeight: "700",
+  cursor: "pointer"
+}
   popup: {
     position: "fixed",
     bottom: "100px",
