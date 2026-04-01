@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import './index.css';
+import { Buffer } from "buffer";
+window.Buffer = Buffer;
 
 
 // ✅ FACEBOOK PIXEL (CORRECT WAY)
