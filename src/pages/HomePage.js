@@ -17,15 +17,34 @@ function ScrollToTopOnMount() {
 
 const HomePage = (props) => {
   const [showPopup, setShowPopup] = useState(false);
+  const names = ["Rahul", "Amit", "Priya", "Kiran", "Sneha"];
+const [recentUser, setRecentUser] = useState("");
+  const [usersOnline, setUsersOnline] = useState(127);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setShowPopup(true);
       setTimeout(() => setShowPopup(false), 4000);
     }, 20000);
+      return () => clearInterval(interval);
+}, []);
+    
+useEffect(() => {
+  const interval = setInterval(() => {
+    setUsersOnline((prev) => prev + Math.floor(Math.random() * 3));
+  }, 5000);
 
-    return () => clearInterval(interval);
+ return () => clearInterval(interval);
   }, []);
+  useEffect(() => {
+  const interval = setInterval(() => {
+    const random = names[Math.floor(Math.random() * names.length)];
+    setRecentUser(`${random} just signed up! 🎉`);
+    setTimeout(() => setRecentUser(""), 3000);
+  }, 15000);
+
+  return () => clearInterval(interval);
+}, []);
 
   return (
     <div className="page_wrap">
@@ -60,6 +79,9 @@ const HomePage = (props) => {
           </h1>
 
           <h2 style={{ color: "#f4b52c", marginTop: "10px" }}>
+<p style={{ color: "#28a745", fontWeight: "600", marginTop: "5px" }}>
+  👥 {usersOnline}+ users are trading now
+</p>
             🎁 Get $100+ Bonus on Signup
           </h2>
 
@@ -95,6 +117,9 @@ const HomePage = (props) => {
               <button style={styles.primaryBtn}>
                 🚀 Start Trading & Earn Daily
               </button>
+            <p style={{ color: "#ff4d4f", fontWeight: "600", marginTop: "8px" }}>
+  ⚡ 87% users start within 2 minutes
+</p>
             </a>
 
             <div style={{ marginTop: "10px" }}>
@@ -147,7 +172,11 @@ const HomePage = (props) => {
           </Button>
         </a>
       </div>
-
+{recentUser && (
+  <div style={styles.recent}>
+    {recentUser}
+  </div>
+)}
       {/* FLOATING BUTTON */}
       <div style={styles.floating}>
         <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
@@ -247,6 +276,18 @@ floatingBtn: {
   padding: "12px 16px",
   borderRadius: "10px",
   fontSize: "14px",
+  zIndex: "2000"
+},
+  recent: {
+  position: "fixed",
+  bottom: "180px",
+  left: "50%",
+  transform: "translateX(-50%)",
+  background: "#000",
+  color: "#fff",
+  padding: "10px 14px",
+  borderRadius: "8px",
+  fontSize: "13px",
   zIndex: "2000"
 },
   footer: {
