@@ -21,12 +21,13 @@ const HomePage = (props) => {
     const testEventCode = params.get('fbp_test_event_code');
 
     if (testEventCode) {
-      fbq('track', 'PageView', {
-        test_event_code: testEventCode
-      });
+  fbq('track', 'PageView', {}, {
+    eventID: testEventCode
+  });
 
-      console.log("✅ Test PageView fired:", testEventCode);
-    }
+  console.log("✅ Test PageView fired:", testEventCode);
+}
+    
   }
 }, []);
   const handleLeadClick = (url) => {
@@ -35,8 +36,8 @@ const HomePage = (props) => {
 const testEventCode = params.get('fbp_test_event_code');
 
 if (testEventCode) {
-  fbq('track', 'Lead', {
-    test_event_code: testEventCode
+  fbq('track', 'Lead', {}, {
+    eventID: testEventCode
   });
 } else {
   fbq('track', 'Lead');
