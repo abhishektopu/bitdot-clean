@@ -36,6 +36,8 @@ const HomePage = (props) => {
 const testEventCode = params.get('fbp_test_event_code');
 
 if (testEventCode) {
+  console.log("Sending Lead with test code:", testEventCode);
+
   fbq('track', 'Lead', {}, {
     eventID: testEventCode
   });
@@ -48,7 +50,7 @@ if (testEventCode) {
 
   setTimeout(() => {
     window.open(url, "_blank");
-  }, 600);
+  }, 1500);
 };
   const [showPopup, setShowPopup] = useState(false);
   const names = ["Rahul", "Amit", "Priya", "Kiran", "Sneha"];
