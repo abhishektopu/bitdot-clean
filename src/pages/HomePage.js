@@ -15,6 +15,15 @@ function ScrollToTopOnMount() {
 }
 
 const HomePage = (props) => {
+  const handleLeadClick = (url) => {
+  if (window.fbq) {
+    window.fbq('track', 'Lead');
+  }
+
+  setTimeout(() => {
+    window.open(url, "_blank");
+  }, 600);
+};
   const [showPopup, setShowPopup] = useState(false);
   const names = ["Rahul", "Amit", "Priya", "Kiran", "Sneha"];
 const [recentUser, setRecentUser] = useState("");
@@ -117,11 +126,12 @@ useEffect(() => {
 
           {/* CTA BUTTONS */}
        
-  <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
-    <button style={styles.primaryBtn}>
-      🚀 Start Trading & Earn Daily
-    </button>
-  </a>
+  <button
+  style={styles.primaryBtn}
+  onClick={() => handleLeadClick("https://partner.bybit.com/b/157106")}
+>
+  🚀 Start Trading & Earn Daily
+</button>
 
   <p style={{ color: "#ff4d4f", fontWeight: "600", marginTop: "8px" }}>
     ⚡ 87% users start within 2 minutes
@@ -178,11 +188,12 @@ useEffect(() => {
 
       {/* FINAL CTA */}
       <div className="text-center my-5">
-        <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
-          <button style={styles.ctaBtn}>
-            🚀 Start Learning Now
-          </button>
-        </a>
+        <button
+  style={styles.ctaBtn}
+  onClick={() => handleLeadClick("https://partner.bybit.com/b/157106")}
+>
+  🚀 Start Learning Now
+</button>
       </div>
 {recentUser && (
   <div style={styles.recent}>
@@ -191,11 +202,12 @@ useEffect(() => {
 )}
       {/* FLOATING BUTTON */}
       <div style={styles.floating}>
-        <a href="https://partner.bybit.com/b/157106" target="_blank" rel="noopener noreferrer">
-          <button style={styles.floatingBtn}>
-          🔥 Claim Your Bonus Now
-          </button>
-        </a>
+        <button
+  style={styles.floatingBtn}
+  onClick={() => handleLeadClick("https://partner.bybit.com/b/157106")}
+>
+  🔥 Claim Your Bonus Now
+</button>
       </div>
 
       {/* POPUP */}
