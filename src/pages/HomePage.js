@@ -15,6 +15,20 @@ function ScrollToTopOnMount() {
 }
 
 const HomePage = (props) => {
+  useEffect(() => {
+  if (window.fbq) {
+    const params = new URLSearchParams(window.location.search);
+    const testEventCode = params.get('fbp_test_event_code');
+
+    if (testEventCode) {
+      fbq('track', 'PageView', {
+        test_event_code: testEventCode
+      });
+
+      console.log("✅ Test PageView fired:", testEventCode);
+    }
+  }
+}, []);
   const handleLeadClick = (url) => {
   if (window.fbq) {
    const params = new URLSearchParams(window.location.search);
