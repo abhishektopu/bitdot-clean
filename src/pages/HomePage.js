@@ -17,7 +17,16 @@ function ScrollToTopOnMount() {
 const HomePage = (props) => {
   const handleLeadClick = (url) => {
   if (window.fbq) {
-    window.fbq('track', 'Lead');
+    const params = new URLSearchParams(window.location.search);
+    const testEventCode = params.get('fbp_test_event_code');
+
+    if (testEventCode) {
+      fbq('track', 'Lead', {}, { eventID: testEventCode });
+    } else {
+      fbq('track', 'Lead');
+    }
+
+    console.log("Lead event fired");
   }
 
   setTimeout(() => {
