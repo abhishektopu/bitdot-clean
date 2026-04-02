@@ -21,7 +21,7 @@ const HomePage = (props) => {
     const testEventCode = params.get('fbp_test_event_code');
 
     if (testEventCode) {
-  fbq('track', 'PageView', {}, {
+  fbq('track', 'PageView');
     eventID: testEventCode
   });
 
@@ -38,7 +38,7 @@ const testEventCode = params.get('fbp_test_event_code');
 if (testEventCode) {
   console.log("Sending Lead with test code:", testEventCode);
 
-  fbq('track', 'Lead', {}, {
+  fbq('track', 'Lead');
     eventID: testEventCode
   });
 } else {
