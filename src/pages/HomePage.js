@@ -28,14 +28,7 @@ const HomePage = (props) => {
   const names = ["Rahul", "Amit", "Priya", "Kiran", "Sneha"];
 const [recentUser, setRecentUser] = useState("");
   const [usersOnline, setUsersOnline] = useState(127);
-      const handleLeadClick = (url) => {
-  if (window.fbq) {
-    window.fbq('track', 'Lead');
-    console.log('Lead event fired');
-  }
-
-  window.open(url, "_blank");
-};
+      
   useEffect(() => {
     const interval = setInterval(() => {
       setShowPopup(true);
