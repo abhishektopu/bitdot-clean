@@ -15,35 +15,37 @@ function ScrollToTopOnMount() {
 }
 
 const HomePage = (props) => {
-  useEffect(() => {
+useEffect(() => {
   if (window.fbq) {
     const params = new URLSearchParams(window.location.search);
     const testEventCode = params.get('fbp_test_event_code');
 
     if (testEventCode) {
-  fbq('track', 'PageView');
-    eventID: testEventCode
-  });
+      fbq('track', 'PageView', {}, {
+        eventID: testEventCode
+      });
 
-  console.log("✅ Test PageView fired:", testEventCode);
-}
-    
+      console.log("✅ Test PageView fired:", testEventCode);
+    } else {
+      fbq('track', 'PageView');
+    }
   }
 }, []);
+
   const handleLeadClick = (url) => {
   if (window.fbq) {
-   const params = new URLSearchParams(window.location.search);
-const testEventCode = params.get('fbp_test_event_code');
+    const params = new URLSearchParams(window.location.search);
+    const testEventCode = params.get('fbp_test_event_code');
 
-if (testEventCode) {
-  console.log("Sending Lead with test code:", testEventCode);
+    if (testEventCode) {
+      console.log("Sending Lead with test code:", testEventCode);
 
-  fbq('track', 'Lead');
-    eventID: testEventCode
-  });
-} else {
-  fbq('track', 'Lead');
-}
+      fbq('track', 'Lead', {}, {
+        eventID: testEventCode
+      });
+    } else {
+      fbq('track', 'Lead');
+    }
 
     console.log("Lead event fired");
   }
@@ -52,6 +54,8 @@ if (testEventCode) {
     window.open(url, "_blank");
   }, 1500);
 };
+
+  
   const [showPopup, setShowPopup] = useState(false);
   const names = ["Rahul", "Amit", "Priya", "Kiran", "Sneha"];
 const [recentUser, setRecentUser] = useState("");
