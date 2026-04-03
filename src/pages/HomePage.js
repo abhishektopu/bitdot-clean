@@ -174,13 +174,17 @@ useEffect(() => {
     ✅ Verified payouts | Trusted by 2000+ users
   </p>
 
-            <div style={{ marginTop: "10px" }}>
-              <a href="https://www.binance.com/en/register?ref=35886743" target="_blank" rel="noopener noreferrer">
-                <button style={styles.secondaryBtn}>
-                  Open Binance Account
-                </button>
-              </a>
-      </div> 
+       <div style={{ marginTop: "10px" }}>
+  <button 
+    style={styles.secondaryBtn}
+    onClick={() => handleLeadClick("https://www.binance.com/referral/earn-together/refer2earn-usdc/claim?hl=en&ref=GRO_28502_S8YYS&utm_source=referral_entrance")}
+  >
+    Open Binance Account
+  </button>
+  <p style={{ fontSize: "12px", color: "#666", marginTop: "5px" }}>
+    Referral Code: <b>GRO_28502_S8YYS</b>
+  </p>
+</div>
           
 
           {/* TRUST */}
