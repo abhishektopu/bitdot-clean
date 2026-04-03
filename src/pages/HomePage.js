@@ -175,16 +175,16 @@ useEffect(() => {
   </p>
 
        <div style={{ marginTop: "10px" }}>
-  <button 
-    style={styles.secondaryBtn}
-    onClick={() => handleLeadClick("https://www.binance.com/referral/earn-together/refer2earn-usdc/claim?hl=en&ref=GRO_28502_S8YYS&utm_source=referral_entrance")}
-  >
-    Open Binance Account
-  </button>
-  <p style={{ fontSize: "12px", color: "#666", marginTop: "5px" }}>
-    Referral Code: <b>GRO_28502_S8YYS</b>
-  </p>
-</div>
+              <button 
+                style={styles.secondaryBtn}
+                onClick={() => handleLeadClick("https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00M4SS7Z7U&utm_source=referral_entrance")}
+              >
+                Open Binance Account
+              </button>
+              <p style={{ fontSize: "11px", color: "#888", marginTop: "4px" }}>
+                Referral ID: <b>CPA_00M4SS7Z7U</b>
+              </p>
+            </div>
           
 
           {/* TRUST */}
