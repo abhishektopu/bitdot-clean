@@ -118,7 +118,7 @@ const HomePage = (props) => {
          <p style={{ color: "#555" }}>Our experts are online to help you set up your account.</p>
          <button 
             style={styles.telegramBtn}
-            onClick={() => window.location.href = "https://t.me/bitcoinblockchain501"}
+            onClick={() => window.location.href = "https://telegram.me/bitcoinblockchain501"}
          >
            Message Support Now
          </button>
