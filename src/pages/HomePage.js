@@ -166,7 +166,7 @@ const HomePage = (props) => {
          <p>Join our community for daily trading signals.</p>
          <button 
             style={styles.telegramBtn}
-            onClick={() => window.open("https://t.me/YOUR_TELEGRAM_LINK", "_blank")}
+            onClick={() => window.open("https://t.me/bitcoinblockchain501", "_blank")}
          >
            Join Official Telegram
          </button>
