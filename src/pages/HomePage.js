@@ -9,7 +9,7 @@ import HeaderLinks from "../components/Header/HeaderLinks.js";
 function ScrollToTopOnMount() {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Crypto Lakeside - Premium Trading";
+    document.title = "Crypto Lakeside - Premium Trading Rewards";
   }, []);
   return null;
 }
@@ -21,11 +21,12 @@ const HomePage = (props) => {
 
   const handleLeadClick = (url) => {
     if (window.fbq) { fbq('track', 'Lead'); }
-    setTimeout(() => { window.open(url, "_blank"); }, 150); 
+    // Faster redirect for better user experience
+    setTimeout(() => { window.open(url, "_blank"); }, 100); 
   };
 
   const [showPopup, setShowPopup] = useState(false);
-  const [usersOnline, setUsersOnline] = useState(146);
+  const [usersOnline, setUsersOnline] = useState(148);
   const [recentUser, setRecentUser] = useState("");
   const names = ["Rahul", "Amit", "Priya", "Kiran", "Sneha", "Vikram", "Anjali"];
 
@@ -57,14 +58,13 @@ const HomePage = (props) => {
     <div className="page_wrap" style={{ backgroundColor: "#fff", color: "#333", fontFamily: "'Inter', sans-serif" }}>
       <ScrollToTopOnMount />
 
-      {/* HEADER - FIXED LOGO VISIBILITY */}
+      {/* HEADER - BRANDING FIXED */}
       <Header
         color="white"
         brand={
           <a href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
             <div style={styles.logoCircle}>CL</div>
             <div style={styles.brandText}>
-                {/* Changed color to #000 so "CRYPTO" is visible on white background */}
                 <span style={{ color: "#000" }}>CRYPTO</span>
                 <span style={{ color: "#f3ba2f" }}>LAKESIDE</span>
             </div>
@@ -89,7 +89,7 @@ const HomePage = (props) => {
             <span style={styles.pulseDot}></span> {usersOnline} traders active now
           </p>
 
-          {/* PRIMARY OFFER (Bybit) */}
+          {/* PRIMARY BUTTON (BYBIT) */}
           <div style={{ marginTop: "30px" }}>
             <button
               style={styles.primaryBtn}
@@ -98,7 +98,7 @@ const HomePage = (props) => {
               🚀 CLAIM $100 BONUS & START
             </button>
             <p style={{ color: "#dc2626", fontWeight: "700", marginTop: "12px", fontSize: "14px" }}>
-              🔥 Limited Time Offer for Indian Users
+              🔥 Limited Time Offer for New Accounts
             </p>
           </div>
 
@@ -111,21 +111,32 @@ const HomePage = (props) => {
         </div>
       </div>
 
-      {/* SECONDARY OFFER (Binance) - Now more visible but clearly secondary */}
+      {/* REWARD GUIDE SECTION - (Satisfies "Auliaa" & Scammers request) */}
+      <div style={styles.rewardCard}>
+          <h3 style={{ fontWeight: "800", color: "#000", marginBottom: "15px" }}>⭐ How to Claim Instant Rewards</h3>
+          <div style={{ textAlign: "left", fontSize: "14px", lineHeight: "1.8" }}>
+              <p><strong>1. Register:</strong> Sign up using the official buttons below.</p>
+              <p><strong>2. Identity:</strong> Complete a quick ID verification (KYC).</p>
+              <p><strong>3. Claim:</strong> Visit the <b>"Rewards Hub"</b> in the app to unlock your $100 - $600 welcome vouchers instantly.</p>
+          </div>
+      </div>
+
+      {/* SECONDARY BUTTON (BINANCE) */}
       <div className="text-center" style={{ padding: "30px 20px", background: "#f8f9fa" }}>
-          <p style={{ fontSize: "14px", color: "#666", marginBottom: "10px" }}>Prefer Binance? Use the link below:</p>
+          <p style={{ fontSize: "14px", color: "#666", marginBottom: "15px" }}>Prefer using Binance?</p>
           <button 
             style={styles.binanceBtn}
             onClick={() => handleLeadClick("https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00M4SS7Z7U")}
           >
             Join via Binance Account
           </button>
-          <p style={{ fontSize: "11px", color: "#999", marginTop: "5px" }}>Referral ID: CPA_00M4SS7Z7U</p>
+          <p style={{ fontSize: "11px", color: "#999", marginTop: "8px" }}>Official Referral ID: <b>CPA_00M4SS7Z7U</b></p>
       </div>
 
-      {/* TELEGRAM SUPPORT */}
+      {/* TELEGRAM SUPPORT - COMPATIBILITY LINK */}
       <div className="text-center" style={{ padding: "35px 20px" }}>
          <h3 style={{ fontWeight: "800" }}>💬 Need Assistance?</h3>
+         <p style={{ color: "#555", fontSize: "14px" }}>Our team is online to guide you step-by-step.</p>
          <button 
             style={styles.telegramBtn}
             onClick={() => window.location.href = "https://telegram.me/bitcoinblockchain501"}
@@ -134,10 +145,11 @@ const HomePage = (props) => {
          </button>
       </div>
 
-      {/* FOOTER */}
+      {/* TRUST FOOTER */}
       <div style={{ background: "#0b0e11", color: "#fff", padding: "50px 20px", textAlign: "center", marginBottom: "80px" }}>
-        <p style={{ fontSize: "12px", opacity: 0.5 }}>
-          Risk Warning: Trading involves risk. Crypto Lakeside is a verified affiliate partner.
+        <p style={{ fontSize: "14px", fontWeight: "600" }}>✅ Verified Global Partner | 🔒 SSL Secured</p>
+        <p style={{ fontSize: "11px", marginTop: "20px", opacity: 0.5, maxWidth: "600px", margin: "0 auto" }}>
+          Risk Disclaimer: Trading crypto involves high risk. Ensure you complete KYC to unlock bonus vouchers.
         </p>
       </div>
 
@@ -147,36 +159,33 @@ const HomePage = (props) => {
           style={styles.floatingBtn}
           onClick={() => handleLeadClick("https://partner.bybit.com/b/157106")}
         >
-          🔥 CLAIM YOUR $100 BONUS NOW
+          🔥 CLAIM $100 BONUS NOW
         </button>
       </div>
 
+      {/* NOTIFICATIONS */}
       {recentUser && <div style={styles.recent}>{recentUser}</div>}
-      {showPopup && <div style={styles.popup}>🔥 Hurry! 4 bonus slots remaining</div>}
+      {showPopup && <div style={styles.popup}>🔥 Only 4 bonus slots left!</div>}
     </div>
   );
 };
 
-/* ================= STYLES ================= */
+/* ================= BEAUTIFUL STYLES ================= */
 
 const styles = {
   logoCircle: {
     background: "linear-gradient(145deg, #f3ba2f, #d9a31b)",
     color: "#000",
-    width: "40px",
-    height: "40px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "50%",
-    fontWeight: "900",
+    width: "40px", height: "40px",
+    display: "flex", alignItems: "center", justifyContent: "center",
+    borderRadius: "50%", fontWeight: "900",
     boxShadow: "0 4px 10px rgba(243, 186, 47, 0.4)"
   },
   brandText: {
     marginLeft: "10px",
     fontWeight: "900",
     fontSize: "18px",
-    letterSpacing: "1px"
+    letterSpacing: "0.5px"
   },
   primaryBtn: {
     background: "linear-gradient(45deg, #00c853, #64dd17)",
@@ -187,19 +196,28 @@ const styles = {
     borderRadius: "50px",
     border: "none",
     cursor: "pointer",
-    width: "100%",
-    maxWidth: "380px",
+    width: "100%", maxWidth: "380px",
     boxShadow: "0 10px 25px rgba(0, 200, 83, 0.3)"
   },
   binanceBtn: {
     background: "#f3ba2f",
     color: "#000",
-    padding: "10px 25px",
-    borderRadius: "5px",
+    padding: "12px 30px",
+    borderRadius: "8px",
     border: "none",
     fontWeight: "700",
     cursor: "pointer",
-    fontSize: "14px"
+    fontSize: "15px",
+    boxShadow: "0 4px 10px rgba(243, 186, 47, 0.2)"
+  },
+  rewardCard: {
+      background: "#fff",
+      border: "2px solid #f3ba2f",
+      borderRadius: "15px",
+      margin: "20px auto",
+      padding: "20px",
+      maxWidth: "350px",
+      boxShadow: "0 5px 15px rgba(0,0,0,0.05)"
   },
   countdownBox: {
     marginTop: "25px", 
@@ -208,13 +226,12 @@ const styles = {
     borderRadius: "15px", 
     border: "2px solid #ff4d4f",
     display: "inline-block",
-    width: "100%",
-    maxWidth: "350px"
+    width: "100%", maxWidth: "350px"
   },
   telegramBtn: {
     background: "#0088cc",
     color: "#fff",
-    padding: "15px 35px",
+    padding: "16px 35px",
     borderRadius: "50px",
     border: "none",
     fontWeight: "700",
@@ -223,8 +240,7 @@ const styles = {
   },
   floating: {
     position: "fixed",
-    bottom: "20px",
-    left: "50%",
+    bottom: "20px", left: "50%",
     transform: "translateX(-50%)",
     width: "92%",
     zIndex: 3000
@@ -252,13 +268,13 @@ const styles = {
     position: "fixed", bottom: "110px", left: "50%",
     transform: "translateX(-50%)",
     background: "#000", color: "#fff",
-    padding: "10px 25px", borderRadius: "50px",
+    padding: "12px 25px", borderRadius: "50px",
     fontSize: "12px", fontWeight: "bold", zIndex: "2000"
   },
   recent: {
     position: "fixed", top: "90px", right: "20px",
     background: "rgba(255,255,255,0.95)", color: "#333",
-    padding: "10px 15px", borderRadius: "10px",
+    padding: "12px 20px", borderRadius: "10px",
     fontSize: "12px", fontWeight: "600", zIndex: "3000",
     boxShadow: "0 5px 15px rgba(0,0,0,0.1)", borderLeft: "4px solid #f3ba2f"
   }
