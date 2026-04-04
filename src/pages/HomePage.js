@@ -15,266 +15,201 @@ function ScrollToTopOnMount() {
 }
 
 const HomePage = (props) => {
-useEffect(() => {
-  if (window.fbq) {
-    const params = new URLSearchParams(window.location.search);
-    const testEventCode = params.get('fbp_test_event_code');
+  useEffect(() => {
+    if (window.fbq) {
+      const params = new URLSearchParams(window.location.search);
+      const testEventCode = params.get('fbp_test_event_code');
 
-    if (testEventCode) {
-      fbq('track', 'PageView', {}, {
-        eventID: testEventCode
-      });
-
-      console.log("✅ Test PageView fired:", testEventCode);
-    } else {
-      fbq('track', 'PageView');
+      if (testEventCode) {
+        fbq('track', 'PageView', {}, {
+          eventID: testEventCode
+        });
+        console.log("✅ Test PageView fired:", testEventCode);
+      } else {
+        fbq('track', 'PageView');
+      }
     }
-  }
-}, []);
+  }, []);
 
   const handleLeadClick = (url) => {
-  if (window.fbq) {
-    const params = new URLSearchParams(window.location.search);
-    const testEventCode = params.get('fbp_test_event_code');
+    if (window.fbq) {
+      const params = new URLSearchParams(window.location.search);
+      const testEventCode = params.get('fbp_test_event_code');
 
-    if (testEventCode) {
-      console.log("Sending Lead with test code:", testEventCode);
-
-      fbq('track', 'Lead', {}, {
-        eventID: testEventCode
-      });
-    } else {
-      fbq('track', 'Lead');
+      if (testEventCode) {
+        fbq('track', 'Lead', {}, { eventID: testEventCode });
+      } else {
+        fbq('track', 'Lead');
+      }
     }
+    setTimeout(() => {
+      window.open(url, "_blank");
+    }, 1000);
+  };
 
-    console.log("Lead event fired");
-  }
-
-  setTimeout(() => {
-    window.open(url, "_blank");
-  }, 1500);
-};
-
-  
   const [showPopup, setShowPopup] = useState(false);
-  const names = ["Rahul", "Amit", "Priya", "Kiran", "Sneha"];
-const [recentUser, setRecentUser] = useState("");
-  const [usersOnline, setUsersOnline] = useState(127);
-      
+  const names = ["Rahul", "Amit", "Priya", "Kiran", "Sneha", "Vikram", "Anjali"];
+  const [recentUser, setRecentUser] = useState("");
+  const [usersOnline, setUsersOnline] = useState(128);
+
+  // FOMO: Notification Popup
   useEffect(() => {
     const interval = setInterval(() => {
       setShowPopup(true);
       setTimeout(() => setShowPopup(false), 4000);
-    }, 20000);
-
-      return () => clearInterval(interval);
-}, []);
-    
-useEffect(() => {
-  const interval = setInterval(() => {
-    setUsersOnline((prev) => prev + Math.floor(Math.random() * 3));
-  }, 5000);
-
- return () => clearInterval(interval);
+    }, 25000);
+    return () => clearInterval(interval);
   }, []);
-  useEffect(() => {
-  const interval = setInterval(() => {
-    const random = names[Math.floor(Math.random() * names.length)];
-    setRecentUser(`${random} just signed up! 🎉`);
-    setTimeout(() => setRecentUser(""), 3000);
-  }, 15000);
 
-  return () => clearInterval(interval);
-}, []);
+  // Live Users Counter
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setUsersOnline((prev) => prev + Math.floor(Math.random() * 3));
+    }, 8000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Recent Signup Alerts
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const random = names[Math.floor(Math.random() * names.length)];
+      setRecentUser(`${random} just earned a $100 bonus! 🎉`);
+      setTimeout(() => setRecentUser(""), 4000);
+    }, 18000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="page_wrap">
+    <div className="page_wrap" style={{ backgroundColor: "#fff", color: "#333" }}>
       <ScrollToTopOnMount />
 
       {/* HEADER */}
-  <Header
-  color="transparent"
-  brand={
-    <a href="/" style={{ display: "flex", alignItems: "center" }}>
-      <img
-        src={logo}
-        alt="logo"
-        style={{ height: "38px", display: "block" }}
+      <Header
+        color="dark"
+        brand={
+          <a href="/" style={{ display: "flex", alignItems: "center" }}>
+            <img
+              src={logo}
+              alt="Crypto Lakeside Logo"
+              style={{ height: "35px", display: "block" }}
+            />
+            <span style={{ marginLeft: "10px", fontWeight: "bold", color: "#fff", fontSize: "18px" }}>Crypto Lakeside</span>
+          </a>
+        }
+        rightLinks={<HeaderLinks />}
+        {...props}
       />
-    </a>
-  }
-  rightLinks={<HeaderLinks />}
-  changeColorOnScroll={{
-    height: 20,
-    color: "dark"
-  }}
-  {...props}
-/>
 
       {/* HERO SECTION */}
-      <div className="hero_section text-center" style={{ padding: "80px 20px" }}>
+      <div className="hero_section text-center" style={{ padding: "100px 20px 40px 20px" }}>
         <div className="container">
-
-          <h1 style={{ fontWeight: "800", fontSize: "36px" }}>
-            Start Crypto Trading in 5 Minutes 🚀
+          
+          <h1 style={{ fontWeight: "800", fontSize: "32px", lineHeight: "1.2", color: "#111" }}>
+            Start Crypto Trading <br/> in 5 Minutes 🚀
           </h1>
-<h2 style={{ color: "#f4b52c", marginTop: "10px" }}>
-  🎁 Get $100+ Bonus on Signup
-</h2>
 
-<p style={{ color: "#28a745", fontWeight: "600", marginTop: "5px" }}>
-  👥 {usersOnline}+ users are trading now
-</p>
+          <h2 style={{ color: "#d97706", marginTop: "15px", fontWeight: "700", fontSize: "24px" }}>
+            🎁 Get $100+ Bonus on Signup
+          </h2>
 
-          <p style={{ color: "red", fontSize: "14px", marginTop: "8px" }}>
-            ⚠️ Crypto involves risk. Start small & learn first.
+          <p style={{ color: "#16a34a", fontWeight: "700", marginTop: "10px", fontSize: "16px" }}>
+            ● {usersOnline} traders active now
           </p>
-              <p style={{ fontSize: "13px", color: "#888", marginTop: "10px" }}>
-  👇 Click below to start in under 2 minutes
-</p>
-{/* FIXED WRAPPER */}
 
-<div className="text-center my-5">
-  <h3>📚 Learn Before You Trade</h3>
-  <p>Read our beginner guides and platform reviews.</p>
-
-  <Link to="/blog">
-  <button style={styles.secondaryBtn}>
-    Read Guides
-  </button>
-</Link>
-</div>
-
-          {/* COUNTDOWN */}
-          <div style={{ marginTop: "15px", fontWeight: "700", color: "red" }}>
-            ⏳ Bonus expires in:
-            <Countdown date={Date.now() + 86400000} />
-              <p style={{ color: "#ff4d4f", fontWeight: "600", marginTop: "5px" }}>
-  ⚡ Limited-time bonus – don’t miss this!
-</p>
-    <p style={{ color: "#ff4d4f", fontWeight: "700" }}>
-  ⏳ Offer expires today for new users only
-</p>
+          {/* MAIN CTA BUTTON */}
+          <div style={{ marginTop: "25px" }}>
+            <button
+              style={styles.primaryBtn}
+              onClick={() => handleLeadClick("https://partner.bybit.com/b/157106")}
+            >
+              🚀 CLAIM $100 BONUS & START
+            </button>
+            <p style={{ color: "#dc2626", fontWeight: "600", marginTop: "10px", fontSize: "13px" }}>
+              ⚠️ Limited Spots Available Today
+            </p>
           </div>
 
-          {/* CTA BUTTONS */}
-       
-  <button
-  style={styles.primaryBtn}
-  onClick={() => handleLeadClick("https://partner.bybit.com/b/157106")}
->
-  🚀 Start Trading & Earn Daily
-</button>
+          {/* COUNTDOWN */}
+          <div style={{ marginTop: "20px", padding: "15px", background: "#fff5f5", borderRadius: "10px", border: "1px dashed #ff4d4f" }}>
+            <span style={{ fontWeight: "700", color: "#333" }}>⏳ OFFER EXPIRES IN: </span>
+            <span style={{ color: "#ff4d4f", fontWeight: "800", fontSize: "18px" }}>
+              <Countdown date={Date.now() + 86400000} />
+            </span>
+          </div>
 
-  <p style={{ color: "#ff4d4f", fontWeight: "600", marginTop: "8px" }}>
-    ⚡ 87% users start within 2 minutes
-  </p>
-
-  <p style={{ color: "#28a745", fontWeight: "700", marginTop: "6px" }}>
-    ✅ Verified payouts | Trusted by 2000+ users
-  </p>
-
-       <div style={{ marginTop: "10px" }}>
-              <button 
-                style={styles.secondaryBtn}
-                onClick={() => handleLeadClick("https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00M4SS7Z7U&utm_source=referral_entrance")}
-              >
-                Open Binance Account
-              </button>
-              <p style={{ fontSize: "11px", color: "#888", marginTop: "4px" }}>
-                Referral ID: <b>CPA_00M4SS7Z7U</b>
-              </p>
-            </div>
-          
-
-          {/* TRUST */}
-          <p style={{ marginTop: "15px", fontSize: "14px" }}>
-            ✔ Trusted by Millions | ✔ Secure | ✔ Beginner Friendly
+          <p style={{ color: "#666", fontSize: "13px", marginTop: "15px", fontStyle: "italic" }}>
+            ⚠️ Crypto involves risk. Start with a small amount.
           </p>
-              <p style={{ fontSize: "13px", color: "#28a745", fontWeight: "600" }}>
-  🔐 100% Secure Signup | No KYC Delay
-</p>
-              <p style={{ fontSize: "13px", color: "#888" }}>
-  🔒 Official Bybit Partner | Instant Signup | No Hidden Fees
-   </p>
-
         </div>
       </div>
 
       {/* HOW IT WORKS */}
-      <div className="text-center my-5">
-        <h3>How to Start</h3>
-        <p>1️⃣ Create a free account</p>
-        <p>2️⃣ Deposit small amount ($10–$50)</p>
-        <p>3️⃣ Start learning & trading</p>
+      <div className="container text-center" style={{ padding: "40px 20px", background: "#f9fafb" }}>
+        <h3 style={{ fontWeight: "800" }}>How to Start</h3>
+        <div style={{ textAlign: "left", maxWidth: "300px", margin: "0 auto", marginTop: "20px" }}>
+          <p><strong>1️⃣ Create Account:</strong> Instant Signup</p>
+          <p><strong>2️⃣ Get Bonus:</strong> Claim your trading credits</p>
+          <p><strong>3️⃣ Earn:</strong> Start your first trade</p>
+        </div>
+        
+        <button 
+          style={styles.secondaryBtn}
+          onClick={() => handleLeadClick("https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00M4SS7Z7U")}
+        >
+          Alternative: Join via Binance
+        </button>
       </div>
 
-      {/* BENEFITS */}
-      <div className="text-center my-5">
-        <h3>Why Choose These Platforms?</h3>
-        <p>✔ No experience needed</p>
-        <p>✔ Start with small investment</p>
-        <p>✔ Beginner-friendly tools</p>
-        <p>✔ Mobile app available</p>
+      {/* TELEGRAM TRUST SECTION */}
+      <div className="text-center" style={{ padding: "30px 20px" }}>
+         <h3>💬 Need Help?</h3>
+         <p>Join our community for daily trading signals.</p>
+         <button 
+            style={styles.telegramBtn}
+            onClick={() => window.open("https://t.me/YOUR_TELEGRAM_LINK", "_blank")}
+         >
+           Join Official Telegram
+         </button>
       </div>
 
-      {/* SOCIAL PROOF */}
-      <div className="text-center my-5">
-        <h3 style={{ color: "#f4b52c" }}>🔥 2,000+ users joined this week</h3>
+      {/* BLOG / LEARN SECTION - Moved lower to prioritize signups */}
+      <div className="text-center" style={{ padding: "40px 20px" }}>
+        <h3>📚 New to Crypto?</h3>
+        <p>Read our 2024 Beginner's Success Guide.</p>
+        <Link to="/blog">
+          <button style={{ background: "#eee", color: "#333", border: "none", padding: "10px 20px", borderRadius: "5px" }}>
+            Read Free Guides
+          </button>
+        </Link>
       </div>
 
-      {/* FINAL CTA */}
-      <div className="text-center my-5">
-        <button
-  style={styles.ctaBtn}
-  onClick={() => handleLeadClick("https://partner.bybit.com/b/157106")}
->
-  🚀 Start Learning Now
-</button>
-      </div>
-{recentUser && (
-  <div style={styles.recent}>
-    🔥 {recentUser} — earning now!
-  </div>
-)}
-      {/* FLOATING BUTTON */}
-      <div style={styles.floating}>
-     
-        <button
-  style={styles.floatingBtn}
-  onClick={() => handleLeadClick("https://partner.bybit.com/b/157106")}
->
-  🔥 Claim Your Bonus Now
-</button>
+      {/* TRUST FOOTER */}
+      <div style={{ background: "#111", color: "#fff", padding: "40px 20px", textAlign: "center" }}>
+        <p style={{ fontSize: "14px", fontWeight: "600" }}>✅ Official Bybit & Binance Partner</p>
+        <p style={{ fontSize: "14px", opacity: 0.8 }}>✔ Secure SSL Encryption | ✔ Trusted by 2000+ Users</p>
+        <p style={{ fontSize: "11px", marginTop: "20px", opacity: 0.6 }}>
+          Risk Disclaimer: Trading involves significant risk. Crypto Lakeside provides educational links and is not a financial advisor.
+        </p>
       </div>
 
-      {/* POPUP */}
+      {/* DYNAMIC COMPONENTS */}
+      {recentUser && <div style={styles.recent}>{recentUser}</div>}
+      
       {showPopup && (
         <div style={styles.popup}>
-          🔥 Only few bonus slots left today!
+          🔥 Only 4 bonus slots left for Indian users!
         </div>
       )}
-{/* BACK TO HOME */}
-<div style={{ textAlign: "center", marginTop: "30px" }}>
-  <a href="/" style={{
-    display: "inline-block",
-    padding: "12px 20px",
-    background: "#1f3b4d",
-    color: "#fff",
-    borderRadius: "30px",
-    textDecoration: "none",
-    fontWeight: "600"
-  }}>
-    ⬅ Back to Home
-  </a>
-</div>
 
-
-      {/* FOOTER */}
-      <p style={styles.footer}>
-        Risk Disclaimer: Crypto trading involves risk. Do your own research.
-      </p>
-
+      {/* FLOATING CTA FOR MOBILE */}
+      <div style={styles.floating}>
+        <button
+          style={styles.floatingBtn}
+          onClick={() => handleLeadClick("https://partner.bybit.com/b/157106")}
+        >
+          🔥 CLAIM YOUR $100 BONUS NOW
+        </button>
+      </div>
     </div>
   );
 };
@@ -283,84 +218,81 @@ useEffect(() => {
 
 const styles = {
   primaryBtn: {
-  background: "linear-gradient(45deg, #ff4d8d, #ff7a18)",
-  color: "#fff",
-  padding: "14px 22px",
-  fontSize: "16px",
-  fontWeight: "700",
-  borderRadius: "30px",
-  border: "none",
-  cursor: "pointer",
-  boxShadow: "0 4px 15px rgba(0,0,0,0.2)"
-},
+    background: "linear-gradient(45deg, #16a34a, #22c55e)",
+    color: "#fff",
+    padding: "18px 30px",
+    fontSize: "18px",
+    fontWeight: "800",
+    borderRadius: "50px",
+    border: "none",
+    cursor: "pointer",
+    width: "100%",
+    maxWidth: "350px",
+    boxShadow: "0 10px 20px rgba(22, 163, 74, 0.3)"
+  },
   secondaryBtn: {
     background: "#f3ba2f",
     color: "#000",
     padding: "12px 18px",
     borderRadius: "8px",
     border: "none",
-    fontWeight: "600",
+    fontWeight: "700",
+    marginTop: "20px",
     cursor: "pointer"
   },
-  ctaBtn: {
-    background: "#f4b52c",
-    color: "#000",
+  telegramBtn: {
+    background: "#0088cc",
+    color: "#fff",
+    padding: "12px 25px",
+    borderRadius: "30px",
+    border: "none",
     fontWeight: "700",
-    padding: "12px 20px"
+    cursor: "pointer"
   },
-floating: {
-  position: "fixed",
-  bottom: "15px",
-  left: "50%",
-  transform: "translateX(-50%)",
-  width: "90%",
-  zIndex: 3000
-},
-
-floatingBtn: {
-  width: "100%",
-  background: "linear-gradient(45deg, #25D366, #1ebe5d)",
-  color: "#fff",
-  padding: "16px",
-  borderRadius: "40px",
-  border: "none",
-  fontWeight: "800",
-  fontSize: "16px",
-  cursor: "pointer",
-  boxShadow: "0 6px 20px rgba(0,0,0,0.3)"
-},
-
+  floating: {
+    position: "fixed",
+    bottom: "20px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "90%",
+    zIndex: 3000
+  },
+  floatingBtn: {
+    width: "100%",
+    background: "linear-gradient(45deg, #ff4d8d, #ff7a18)",
+    color: "#fff",
+    padding: "16px",
+    borderRadius: "40px",
+    border: "none",
+    fontWeight: "800",
+    fontSize: "16px",
+    boxShadow: "0 6px 20px rgba(0,0,0,0.3)"
+  },
   popup: {
-  position: "fixed",
-  bottom: "120px",   // 👈 increased spacing
-  left: "50%",
-  transform: "translateX(-50%)", // 👈 center align
-  background: "#000",
-  color: "#fff",
-  padding: "12px 16px",
-  borderRadius: "10px",
-  fontSize: "14px",
-  zIndex: "2000"
-},
-recent: {
-  position: "fixed",
-  bottom: "180px",
-  left: "50%",
-  transform: "translateX(-50%)",
-  background: "linear-gradient(45deg, #000, #222)",
-  color: "#fff",
-  padding: "12px 16px",
-  borderRadius: "10px",
-  fontSize: "13px",
-  zIndex: "2000",
-  boxShadow: "0 4px 15px rgba(0,0,0,0.4)",
-  animation: "fadeIn 0.3s ease"
-},
-  footer: {
-    textAlign: "center",
+    position: "fixed",
+    bottom: "100px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    background: "#dc2626",
+    color: "#fff",
+    padding: "10px 20px",
+    borderRadius: "30px",
     fontSize: "12px",
-    color: "#777",
-    marginTop: "20px"
+    fontWeight: "bold",
+    zIndex: "2000",
+    whiteSpace: "nowrap"
+  },
+  recent: {
+    position: "fixed",
+    top: "80px",
+    right: "20px",
+    background: "rgba(0,0,0,0.85)",
+    color: "#fff",
+    padding: "10px 15px",
+    borderRadius: "8px",
+    fontSize: "12px",
+    zIndex: "3000",
+    animation: "fadeIn 0.5s ease"
   }
 };
 
