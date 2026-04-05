@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getTopTraders } from "../services/bybitService"; // Import the live service
-
+ 
 // Components
 import Header from "../components/Header/Header.js";
 import HeaderLinks from "../components/Header/HeaderLinks.js";
