@@ -63,11 +63,14 @@ const HomePage = (props) => {
       <Header
         color="white"
         brand={
-          <a href="/" style={styles.brandLink}>
-            <div style={styles.logoCircle}>CL</div>
-            <div style={styles.brandText}>CRYPTO<span style={{ color: "#f3ba2f" }}>LAKESIDE</span></div>
-          </a>
-        }
+  <a href="/" style={styles.brandLink}>
+    <div style={styles.logoCircle}>CL</div>
+    <div style={styles.brandText}>
+        <span style={{ color: "#fff", marginRight: "4px" }}>CRYPTO</span>
+        <span style={{ color: "#f3ba2f" }}>LAKESIDE</span>
+    </div>
+  </a>
+}
         rightLinks={<HeaderLinks />}
         {...props}
       />
