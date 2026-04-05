@@ -5,10 +5,10 @@ import Header from "../components/Header/Header.js";
 import HeaderLinks from "../components/Header/HeaderLinks.js";
 
 const HomePage = (props) => {
-  const [usersOnline, setUsersOnline] = useState(149);
+  const [usersOnline, setUsersOnline] = useState(151);
   const [recentUser, setRecentUser] = useState("");
   
-  // Using Verified Static Data because the Bybit API is currently returning 404
+  // FIXED: Verified paths and leaderMarks from your Bybit dashboard screenshots
   const traders = [
     { 
         nickname: "Rubedo Engine", 
@@ -56,14 +56,13 @@ const HomePage = (props) => {
   }, []);
 
   /**
-   * FIXED: Direct Referral Logic
-   * Sends users directly to the page + appends your ref ID. 
-   * This is the most reliable way to avoid the 404/Home redirection.
+   * FINAL FIXED: handleLeadClick
+   * Uses the correct '/copyTrade/' path and ensures standard ref parameter.
    */
   const handleLeadClick = (baseUrl, platformName) => {
     const refId = "157106"; // Your Affiliate ID
     
-    // Construct the final URL with the ref parameter
+    // Add the referral parameter correctly
     const finalUrl = baseUrl.includes("?") 
         ? `${baseUrl}&ref=${refId}` 
         : `${baseUrl}?ref=${refId}`;
@@ -71,7 +70,6 @@ const HomePage = (props) => {
     if (window.gtag) {
       window.gtag('event', 'generate_lead', {
         'platform': platformName,
-        'currency': 'USD',
         'value': 1.0
       });
     }
@@ -115,7 +113,7 @@ const HomePage = (props) => {
         </div>
       </div>
 
-      {/* TRADER SECTION */}
+      {/* TRADER SECTION - FIXED PATHS */}
       <div style={styles.traderSection}>
           <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
               <h3 style={{ fontWeight: "800", marginBottom: "30px", fontSize: "24px" }}>🔥 Top Performing Master Traders</h3>
@@ -136,7 +134,7 @@ const HomePage = (props) => {
                           </div>
                           <button 
                             style={styles.copyBtn}
-                            onClick={() => handleLeadClick(`https://www.bybit.com/copyTrading/trade-center/detail?leaderMark=${trader.leaderMark}`, `Copy-${trader.nickname}`)}
+                            onClick={() => handleLeadClick(`https://www.bybit.com/copyTrade/trade-center/detail?leaderMark=${trader.leaderMark}`, `Copy-${trader.nickname}`)}
                           >
                             COPY STRATEGY
                           </button>
@@ -146,7 +144,6 @@ const HomePage = (props) => {
           </div>
       </div>
 
-      {/* GUIDE & SUPPORT */}
       <div style={styles.rewardSection}>
           <h3 style={{ fontWeight: "800", color: "#000", marginBottom: "20px" }}>Step-by-Step Reward Guide</h3>
           <div style={styles.guideContent}>
