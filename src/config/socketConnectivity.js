@@ -1,4 +1,4 @@
-// import package
+/* // import package
 import io from 'socket.io-client';
 
 // import lib
@@ -23,4 +23,4 @@ socket.on('userAsset', function (data) {
 export {
     socket,
     createSocketUser
-}
+} */
