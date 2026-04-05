@@ -8,7 +8,7 @@ const HomePage = (props) => {
   const [usersOnline, setUsersOnline] = useState(151);
   const [recentUser, setRecentUser] = useState("");
   
-  // FIXED: Verified leaderMarks. 
+  // Verified Master Trader Data
   const traders = [
     { 
         nickname: "Rubedo Engine", 
@@ -53,19 +53,20 @@ const HomePage = (props) => {
   }, []);
 
   /**
-   * BULLETPROOF REDIRECT LOGIC
-   * This structure is designed to prevent "Invalid Parameter" errors.
+   * THE FINAL STABLE REDIRECT LOGIC
+   * 1. Path is /copyTrade/ (Verified from Screenshot)
+   * 2. Parameter is &ref=157106 (Your Affiliate ID)
    */
-  const handleLeadClick = (destUrl, platformName) => {
-    const affiliateId = "157106";
+  const handleLeadClick = (baseUrl, platformName) => {
+    const myRef = "157106";
     
-    // Default to Rewards Hub if no specific trader is provided
-    let finalUrl = `https://partner.bybit.com/b/${affiliateId}`;
-
-    if (destUrl) {
-        // We wrap the specific trader URL inside the affiliate redirect
-        finalUrl = `https://partner.bybit.com/b/${affiliateId}?dest_url=${encodeURIComponent(destUrl)}`;
-    }
+    // Default to rewards hub if no URL provided
+    const target = baseUrl || "https://www.bybit.com/en/promo/global/rewards-hub";
+    
+    // Construct direct URL with ref code
+    const finalUrl = target.includes("?") 
+        ? `${target}&ref=${myRef}` 
+        : `${target}?ref=${myRef}`;
 
     if (window.gtag) {
       window.gtag('event', 'generate_lead', { 'platform': platformName });
@@ -102,7 +103,7 @@ const HomePage = (props) => {
           <div style={{ marginTop: "40px" }}>
             <button
               style={styles.primaryBtn}
-              onClick={() => handleLeadClick(null, "Bybit_Hero")}
+              onClick={() => handleLeadClick(null, "Hero_Button")}
             >
               CLAIM $100 BONUS ON BYBIT
             </button>
@@ -110,7 +111,7 @@ const HomePage = (props) => {
         </div>
       </div>
 
-      {/* TRADER SECTION */}
+      {/* TRADER SECTION - USING VERIFIED PATH /copyTrade/ */}
       <div style={styles.traderSection}>
           <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
               <h3 style={{ fontWeight: "800", marginBottom: "30px", fontSize: "24px" }}>🔥 Top Performing Master Traders</h3>
@@ -131,7 +132,7 @@ const HomePage = (props) => {
                           </div>
                           <button 
                             style={styles.copyBtn}
-                            onClick={() => handleLeadClick(`https://www.bybit.com/copyTrade/trade-center/detail?leaderMark=${trader.leaderMark}`, `Copy-${trader.nickname}`)}
+                            onClick={() => handleLeadClick(`https://www.bybit.com/en/copyTrade/trade-center/detail?leaderMark=${trader.leaderMark}`, `Copy-${trader.nickname}`)}
                           >
                             COPY STRATEGY
                           </button>
@@ -141,14 +142,16 @@ const HomePage = (props) => {
           </div>
       </div>
 
-      {/* BINANCE BUTTON SECTION (RESTORED) */}
-      <div className="text-center" style={{ padding: "40px 20px", background: "#fdfdfd", borderTop: "1px solid #eee" }}>
-          <p style={{ fontSize: "14px", color: "#666", marginBottom: "15px" }}>Preferred Exchange: Binance</p>
+      {/* BINANCE BUTTON SECTION (RESTORED & PROMINENT) */}
+      <div className="text-center" style={{ padding: "60px 20px", background: "#fdfdfd", borderTop: "1px solid #eee" }}>
+          <h3 style={{ fontWeight: "800", marginBottom: "10px" }}>Preferred Exchange: Binance</h3>
+          <p style={{ color: "#666", marginBottom: "25px" }}>Exclusive Binance rewards available for new traders.</p>
           <button 
             style={styles.binanceBtn}
             onClick={() => {
+                const binanceUrl = "https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00M4SS7Z7U";
                 if (window.gtag) { window.gtag('event', 'click_binance', { 'platform': 'Binance' }); }
-                window.open("https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00M4SS7Z7U", "_blank");
+                window.open(binanceUrl, "_blank");
             }}
           >
             Register via Binance
@@ -158,7 +161,6 @@ const HomePage = (props) => {
       {/* SUPPORT SECTION */}
       <div className="text-center" style={{ padding: "60px 20px", background: "#fff" }}>
          <h3 style={{ fontWeight: "800" }}>💬 Need Assistance?</h3>
-         <p style={{ color: "#666", fontSize: "15px", marginBottom: "25px" }}>Message our support team for step-by-step guidance.</p>
          <button 
             style={styles.telegramBtn}
             onClick={() => window.open("https://telegram.me/bitcoinblockchain501", "_blank")}
@@ -172,16 +174,6 @@ const HomePage = (props) => {
         <p style={{ fontSize: "14px", fontWeight: "600", marginBottom: "10px" }}>Official Bybit Partner | SSL Secured</p>
         <p style={{ fontSize: "11px", opacity: 0.7 }}>Risk Warning: Crypto trading involves high risk.</p>
       </footer>
-
-      {/* FLOATING ACTION BUTTON */}
-      <div style={styles.floatingContainer}>
-        <button
-          style={styles.floatingBtn}
-          onClick={() => handleLeadClick(null, "Bybit_Floating")}
-        >
-          🔥 CLAIM YOUR $100 BONUS
-        </button>
-      </div>
 
       {recentUser && <div style={styles.recentNotify}>{recentUser}</div>}
     </div>
@@ -205,12 +197,10 @@ const styles = {
   statLabel: { fontSize: "11px", color: "#888" },
   statValueGreen: { color: "#10b981", fontWeight: "800", fontSize: "18px" },
   copyBtn: { width: "100%", padding: "12px", background: "#f3ba2f", color: "#000", borderRadius: "6px", fontWeight: "800", border: "none", cursor: "pointer" },
-  binanceBtn: { background: "#f3ba2f", color: "#000", padding: "12px 35px", borderRadius: "6px", border: "none", fontWeight: "700", cursor: "pointer", fontSize: "15px" },
+  binanceBtn: { background: "#000", color: "#fff", padding: "16px 45px", borderRadius: "8px", border: "none", fontWeight: "800", cursor: "pointer", fontSize: "17px", boxShadow: "0 4px 15px rgba(0,0,0,0.2)" },
   telegramBtn: { background: "#0088cc", color: "#fff", padding: "16px 40px", borderRadius: "8px", border: "none", fontWeight: "700", cursor: "pointer" },
-  footer: { background: "#0b0e11", color: "#9ca3af", padding: "40px 20px", textAlign: "center", marginBottom: "80px" },
-  floatingContainer: { position: "fixed", bottom: "20px", left: "50%", transform: "translateX(-50%)", width: "90%", zIndex: 3000, maxWidth: "500px" },
-  floatingBtn: { width: "100%", background: "#16a34a", color: "#fff", padding: "18px", borderRadius: "10px", border: "none", fontWeight: "800", fontSize: "17px", boxShadow: "0 10px 25px rgba(22, 163, 74, 0.3)" },
-  recentNotify: { position: "fixed", bottom: "110px", right: "20px", background: "#fff", color: "#333", padding: "15px 25px", borderRadius: "12px", fontSize: "13px", fontWeight: "600", zIndex: "3000", boxShadow: "0 10px 30px rgba(0,0,0,0.15)", borderLeft: "5px solid #f3ba2f" }
+  footer: { background: "#0b0e11", color: "#9ca3af", padding: "40px 20px", textAlign: "center", marginBottom: "20px" },
+  recentNotify: { position: "fixed", bottom: "30px", right: "20px", background: "#fff", color: "#333", padding: "15px 25px", borderRadius: "12px", fontSize: "13px", fontWeight: "600", zIndex: "3000", boxShadow: "0 10px 30px rgba(0,0,0,0.15)", borderLeft: "5px solid #f3ba2f" }
 };
 
 export default HomePage;
