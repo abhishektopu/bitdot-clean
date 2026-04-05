@@ -5,24 +5,25 @@ import Header from "../components/Header/Header.js";
 import HeaderLinks from "../components/Header/HeaderLinks.js";
 
 const HomePage = (props) => {
-  const [usersOnline, setUsersOnline] = useState(151);
+  const [usersOnline, setUsersOnline] = useState(148);
   const [recentUser, setRecentUser] = useState("");
   
-  // FIXED: Verified paths and leaderMarks from your Bybit dashboard screenshots
+  // FIXED: Verified leaderMarks. 
+  // IMPORTANT: Do not include the %3D%3D here, the code will handle it.
   const traders = [
     { 
         nickname: "Rubedo Engine", 
         roi: "81.28", 
         maxDrawdown: "0.23", 
         color: "#f3ba2f", 
-        leaderMark: "AbWEdoxJjic3JRWCtxUL1w%3D%3D" 
+        leaderMark: "AbWEdoxJjic3JRWCtxUL1w==" 
     },
     { 
         nickname: "caleon8", 
         roi: "52.08", 
         maxDrawdown: "0.00", 
         color: "#000", 
-        leaderMark: "zuhkoRlHodkzaCgGiSSdQw%3D%3D" 
+        leaderMark: "zuhkoRlHodkzaCgGiSSdQw==" 
     },
     { 
         nickname: "Liafe", 
@@ -38,17 +39,14 @@ const HomePage = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Crypto Lakeside - Official Rewards";
-
     const onlineTimer = setInterval(() => {
       setUsersOnline((prev) => prev + (Math.random() > 0.5 ? 1 : -1));
     }, 10000);
-
     const notificationTimer = setInterval(() => {
       const name = names[Math.floor(Math.random() * names.length)];
       setRecentUser(`${name} just claimed a $100 bonus! 🎉`);
       setTimeout(() => setRecentUser(""), 5000);
     }, 20000);
-
     return () => {
       clearInterval(onlineTimer);
       clearInterval(notificationTimer);
@@ -56,22 +54,21 @@ const HomePage = (props) => {
   }, []);
 
   /**
-   * FINAL FIXED: handleLeadClick
-   * Uses the correct '/copyTrade/' path and ensures standard ref parameter.
+   * FINAL STABLE VERSION: handleLeadClick
+   * This uses the official partner portal redirect with double encoding.
+   * This prevents the "Invalid Parameter" error by keeping the URL clean.
    */
-  const handleLeadClick = (baseUrl, platformName) => {
-    const refId = "157106"; // Your Affiliate ID
+  const handleLeadClick = (targetPage, platformName) => {
+    const affiliateId = "157106";
     
-    // Add the referral parameter correctly
-    const finalUrl = baseUrl.includes("?") 
-        ? `${baseUrl}&ref=${refId}` 
-        : `${baseUrl}?ref=${refId}`;
+    // We construct the destination URL first
+    const destination = targetPage || "https://www.bybit.com/en/promo/global/rewards-hub";
+    
+    // We use the partner portal link to drop the cookie first
+    const finalUrl = `https://partner.bybit.com/b/${affiliateId}?dest_url=${encodeURIComponent(destination)}`;
 
     if (window.gtag) {
-      window.gtag('event', 'generate_lead', {
-        'platform': platformName,
-        'value': 1.0
-      });
+      window.gtag('event', 'generate_lead', { 'platform': platformName });
     }
 
     window.open(finalUrl, "_blank");
@@ -94,7 +91,6 @@ const HomePage = (props) => {
         {...props}
       />
 
-      {/* HERO SECTION */}
       <div className="hero_section text-center" style={{ padding: "120px 20px 40px 20px" }}>
         <div className="container" style={{ maxWidth: "800px", margin: "0 auto" }}>
           <h1 style={styles.mainTitle}>Start Crypto Trading <br/> and Unlock Rewards 🚀</h1>
@@ -105,7 +101,7 @@ const HomePage = (props) => {
           <div style={{ marginTop: "40px" }}>
             <button
               style={styles.primaryBtn}
-              onClick={() => handleLeadClick("https://www.bybit.com/en/promo/global/rewards-hub", "Hero_Main")}
+              onClick={() => handleLeadClick(null, "Hero_Main")}
             >
               CLAIM $100 BONUS ON BYBIT
             </button>
@@ -113,7 +109,6 @@ const HomePage = (props) => {
         </div>
       </div>
 
-      {/* TRADER SECTION - FIXED PATHS */}
       <div style={styles.traderSection}>
           <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
               <h3 style={{ fontWeight: "800", marginBottom: "30px", fontSize: "24px" }}>🔥 Top Performing Master Traders</h3>
@@ -134,7 +129,7 @@ const HomePage = (props) => {
                           </div>
                           <button 
                             style={styles.copyBtn}
-                            onClick={() => handleLeadClick(`https://www.bybit.com/copyTrade/trade-center/detail?leaderMark=${trader.leaderMark}`, `Copy-${trader.nickname}`)}
+                            onClick={() => handleLeadClick(`https://www.bybit.com/copyTrade/trade-center/detail?leaderMark=${encodeURIComponent(trader.leaderMark)}`, `Copy-${trader.nickname}`)}
                           >
                             COPY STRATEGY
                           </button>
