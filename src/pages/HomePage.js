@@ -67,12 +67,13 @@ const HomePage = (props) => {
   return (
     <div className="page_wrap" style={styles.mainWrapper}>
       <Header
-        color="transparent"
+        color="white"
         brand={
           <a href="/" style={styles.brandLink}>
             <div style={styles.logoCircle}>CL</div>
             <div style={styles.brandText}>
-                <span style={{ color: "#ffffff", marginRight: "6px" }}>CRYPTO</span>
+                {/* FIXED: Color changed to #000000 for visibility on white background */}
+                <span style={{ color: "#000000", marginRight: "6px" }}>CRYPTO</span>
                 <span style={{ color: "#f3ba2f" }}>LAKESIDE</span>
             </div>
           </a>
