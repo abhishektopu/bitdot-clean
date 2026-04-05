@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
-import { getTopTraders } from '../services/bybitService';
+
 // Components
 import Header from "../components/Header/Header.js";
 import HeaderLinks from "../components/Header/HeaderLinks.js";
@@ -10,12 +10,18 @@ const HomePage = (props) => {
   const [recentUser, setRecentUser] = useState("");
   const names = ["Rahul", "Amit", "Priya", "Kiran", "Sneha", "Vikram", "Anjali"];
 
+  // 1. GATEWAY DATA: These are the traders from your screenshots.
+  // When clicked, they go directly to the Bybit Copy Trading Leaderboard.
+  const featuredTraders = [
+    { name: "Rubedo Engine", roi: "+81.28%", drawdown: "0.23%", color: "#f3ba2f" },
+    { name: "caleon8", roi: "+52.08%", drawdown: "0.00%", color: "#000" },
+    { name: "Liafe", roi: "+48.57%", drawdown: "4.32%", color: "#0088cc" }
+  ];
+
   useEffect(() => {
-    // 1. Setup Page View and Title
     window.scrollTo(0, 0);
     document.title = "Crypto Lakeside - Official Rewards";
     
-    // 2. Track Page View in Analytics
     if (window.gtag) {
       window.gtag('event', 'page_view', {
         page_title: 'Home - Crypto Lakeside',
@@ -23,12 +29,10 @@ const HomePage = (props) => {
       });
     }
 
-    // 3. Realistic Online Users fluctuation
     const onlineTimer = setInterval(() => {
       setUsersOnline((prev) => prev + (Math.random() > 0.5 ? 1 : -1));
     }, 10000);
 
-    // 4. Recent Claims notification
     const notificationTimer = setInterval(() => {
       const name = names[Math.floor(Math.random() * names.length)];
       setRecentUser(`${name} just claimed a $100 bonus! 🎉`);
@@ -42,7 +46,6 @@ const HomePage = (props) => {
   }, []);
 
   const handleLeadClick = (url, platformName) => {
-    // Track the click in Google Analytics
     if (window.gtag) {
       window.gtag('event', 'generate_lead', {
         'event_category': 'Affiliate Link',
@@ -50,7 +53,6 @@ const HomePage = (props) => {
         'value': 1.0
       });
     }
-    // Open affiliate link in new tab
     window.open(url, "_blank");
   };
 
@@ -74,37 +76,54 @@ const HomePage = (props) => {
       {/* HERO SECTION */}
       <div className="hero_section text-center" style={{ padding: "120px 20px 40px 20px" }}>
         <div className="container" style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <h1 style={styles.mainTitle}>
-            Start Crypto Trading <br/> and Unlock Rewards 🚀
-          </h1>
-
-          <h2 style={styles.subTitle}>
-            🎁 New User Bonus: $100 — $600 Vouchers
-          </h2>
-
+          <h1 style={styles.mainTitle}>Start Crypto Trading <br/> and Unlock Rewards 🚀</h1>
+          <h2 style={styles.subTitle}>🎁 New User Bonus: $100 — $600 Vouchers</h2>
           <div style={styles.statusBadge}>
             <span style={styles.pulseDot}></span> {usersOnline} active traders online
           </div>
-
           <div style={{ marginTop: "40px" }}>
             <button
               style={styles.primaryBtn}
-              onClick={() => handleLeadClick("https://partner.bybit.com/b/157106", "Bybit Main")}
+              onClick={() => handleLeadClick("https://partner.bybit.com/b/157106", "Bybit Hero")}
             >
               CLAIM $100 BONUS ON BYBIT
             </button>
-            <p style={styles.urgencyText}>
-              ⚠️ Limited Time Offer for New Accounts
-            </p>
-          </div>
-
-          <div style={styles.countdownBox}>
-            <span style={{ fontWeight: "600", fontSize: "14px" }}>OFFER EXPIRES IN: </span>
-            <span style={styles.timerNumbers}>
-              <Countdown date={Date.now() + 86400000} />
-            </span>
           </div>
         </div>
+      </div>
+
+      {/* 2. NEW GATEWAY SECTION: FEATURED TRADERS */}
+      <div style={styles.traderSection}>
+          <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
+              <h3 style={{ fontWeight: "800", marginBottom: "30px", fontSize: "24px" }}>🔥 Top Performing Master Traders</h3>
+              <div style={styles.traderGrid}>
+                  {featuredTraders.map((trader, idx) => (
+                      <div key={idx} style={styles.traderCard}>
+                          <div style={{...styles.traderIcon, background: trader.color}}>{trader.name[0]}</div>
+                          <h4 style={{ fontWeight: "700", margin: "10px 0" }}>{trader.name}</h4>
+                          <div style={styles.statsRow}>
+                              <div>
+                                  <p style={styles.statLabel}>ROI (30d)</p>
+                                  <p style={styles.statValueGreen}>{trader.roi}</p>
+                              </div>
+                              <div style={{ textAlign: "right" }}>
+                                  <p style={styles.statLabel}>Drawdown</p>
+                                  <p style={{ fontWeight: "700", color: "#333" }}>{trader.drawdown}</p>
+                              </div>
+                          </div>
+                          <button 
+                            style={styles.copyBtn}
+                            onClick={() => handleLeadClick("https://www.bybit.com/copyTrading?ref=157106", `Copy-${trader.name}`)}
+                          >
+                            COPY STRATEGY
+                          </button>
+                      </div>
+                  ))}
+              </div>
+              <p style={{ marginTop: "25px", fontSize: "13px", color: "#666" }}>
+                Click any trader to see their <b>Full Live Performance</b> on the Bybit Leaderboard.
+              </p>
+          </div>
       </div>
 
       {/* REWARD GUIDE SECTION */}
@@ -161,7 +180,6 @@ const HomePage = (props) => {
         </button>
       </div>
 
-      {/* NOTIFICATIONS */}
       {recentUser && <div style={styles.recentNotify}>{recentUser}</div>}
     </div>
   );
@@ -191,17 +209,23 @@ const styles = {
     background: "#000", color: "#fff",
     padding: "20px 40px", fontSize: "18px", fontWeight: "800",
     borderRadius: "8px", border: "none", cursor: "pointer",
-    width: "100%", maxWidth: "400px", transition: "0.3s"
+    width: "100%", maxWidth: "400px"
   },
-  urgencyText: { color: "#dc2626", fontWeight: "700", marginTop: "12px", fontSize: "13px" },
-  countdownBox: {
-    marginTop: "30px", padding: "12px 20px", 
-    background: "#fef2f2", borderRadius: "8px", 
-    border: "1px solid #fecaca", display: "inline-block"
+  // NEW STYLES FOR TRADER SECTION
+  traderSection: { padding: "60px 20px", background: "#f9fafb", textAlign: "center", borderTop: "1px solid #eee" },
+  traderGrid: { display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" },
+  traderCard: { 
+    background: "#fff", padding: "20px", borderRadius: "12px", width: "280px", 
+    boxShadow: "0 4px 15px rgba(0,0,0,0.05)", border: "1px solid #eee" 
   },
-  timerNumbers: { color: "#ef4444", fontWeight: "800", fontSize: "22px", marginLeft: "10px" },
+  traderIcon: { width: "50px", height: "50px", borderRadius: "50%", color: "#fff", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "bold", fontSize: "20px" },
+  statsRow: { display: "flex", justifyContent: "space-between", margin: "20px 0", textAlign: "left" },
+  statLabel: { fontSize: "11px", color: "#888", margin: 0 },
+  statValueGreen: { color: "#10b981", fontWeight: "800", fontSize: "18px", margin: 0 },
+  copyBtn: { width: "100%", padding: "12px", background: "#000", color: "#fff", borderRadius: "6px", fontWeight: "700", border: "none", cursor: "pointer" },
+
   rewardSection: {
-      background: "#fafafa", border: "1px solid #eee",
+      background: "#fff", border: "1px solid #eee",
       borderRadius: "12px", margin: "40px auto",
       padding: "30px", maxWidth: "500px", textAlign: "center"
   },
