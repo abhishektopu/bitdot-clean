@@ -39,6 +39,22 @@ const HomePage = (props) => {
     window.scrollTo(0, 0);
     document.title = "Crypto Lakeside | Institutional Trading Terminal";
     
+    // --- SCRIPT TO REMOVE WHATSAPP BUTTON ---
+    const removeWhatsapp = () => {
+        const buttons = document.querySelectorAll('a[href*="wa.me"], div[class*="whatsapp"], button[class*="whatsapp"]');
+        buttons.forEach(btn => btn.style.display = 'none');
+        // Specifically targeting the "Start Earning Now" button by text if needed
+        const allElements = document.getElementsByTagName('button');
+        for (let i = 0; i < allElements.length; i++) {
+            if (allElements[i].textContent.includes('Start Earning Now')) {
+                allElements[i].style.display = 'none';
+            }
+        }
+    };
+    removeWhatsapp();
+    setTimeout(removeWhatsapp, 2000); // Run again after 2 seconds to be sure
+    // ----------------------------------------
+
     const onlineTimer = setInterval(() => {
         setUsersOnline((prev) => prev + (Math.random() > 0.5 ? 1 : -1));
     }, 10000);
@@ -72,7 +88,8 @@ const HomePage = (props) => {
           <a href="/" style={styles.brandLink}>
             <div style={styles.logoCircle}>CL</div>
             <div style={styles.brandText}>
-                <span style={{ color: "#000000", fontWeight: "900", marginRight: "6px" }}>CRYPTO</span>
+                {/* FIXED: Using forced black color to ensure visibility */}
+                <span style={{ color: "#000000 !important", color: "black", fontWeight: "900", marginRight: "6px" }}>CRYPTO</span>
                 <span style={{ color: "#f3ba2f", fontWeight: "900" }}>LAKESIDE</span>
             </div>
           </a>
@@ -133,7 +150,7 @@ const HomePage = (props) => {
           </div>
       </div>
 
-      {/* TECHNICAL INFRASTRUCTURE SECTION - (NEW) */}
+      {/* TECHNICAL INFRASTRUCTURE SECTION */}
       <div style={{ background: "#020617", padding: "60px 20px", borderTop: "1px solid #1e293b" }}>
           <h3 style={{ color: "#f3ba2f", fontWeight: "900", textAlign: "center", marginBottom: "30px" }}>Institutional Infrastructure</h3>
           <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
