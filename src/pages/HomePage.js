@@ -217,3 +217,11 @@ const styles = {
 };
 
 export default HomePage;
+brandText: { 
+    marginLeft: "12px", 
+    fontWeight: "900", 
+    fontSize: "20px", 
+    letterSpacing: "0.5px",
+    display: "flex",
+    alignItems: "center"
+},
