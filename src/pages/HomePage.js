@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getTopTraders } from "../services/bybitService"; // Import the live service
+import { getTopTraders } from "../services/bybitService"; 
  
 // Components
 import Header from "../components/Header/Header.js";
@@ -8,10 +8,30 @@ import HeaderLinks from "../components/Header/HeaderLinks.js";
 const HomePage = (props) => {
   const [usersOnline, setUsersOnline] = useState(149);
   const [recentUser, setRecentUser] = useState("");
+  
+  // Default values used while API is fetching or as fallback
   const [traders, setTraders] = useState([
-    { nickname: "Rubedo Engine", roi: "+81.28", maxDrawdown: "0.23", color: "#f3ba2f", leaderMark: "AbWEdoxJjic3JRWCtxUL1w%3D%3D" },
-    { nickname: "caleon8", roi: "+52.08", maxDrawdown: "0.00", color: "#000", leaderMark: "zuhkoRlHodkzaCgGiSSdQw%3D%3D" },
-    { nickname: "Liafe", roi: "+48.57", maxDrawdown: "4.32", color: "#0088cc", leaderMark: "AbWEdoxJjic3JRWCtxUL1w%3D%3D" }
+    { 
+        nickname: "Rubedo Engine", 
+        roi: "81.28", 
+        maxDrawdown: "0.23", 
+        color: "#f3ba2f", 
+        leaderMark: "AbWEdoxJjic3JRWCtxUL1w%3D%3D" 
+    },
+    { 
+        nickname: "caleon8", 
+        roi: "52.08", 
+        maxDrawdown: "0.00", 
+        color: "#000", 
+        leaderMark: "zuhkoRlHodkzaCgGiSSdQw%3D%3D" 
+    },
+    { 
+        nickname: "Liafe", 
+        roi: "48.57", 
+        maxDrawdown: "4.32", 
+        color: "#0088cc", 
+        leaderMark: "MzA1NDM4OTI3NDkzNzIzMTM2" 
+    }
   ]);
 
   const names = ["Rahul", "Amit", "Priya", "Kiran", "Sneha", "Vikram", "Anjali"];
@@ -20,17 +40,19 @@ const HomePage = (props) => {
     window.scrollTo(0, 0);
     document.title = "Crypto Lakeside - Official Rewards";
 
-    // FETCH LIVE BYBIT DATA
+    // FETCH LIVE BYBIT DATA FROM YOUR SERVICE
     getTopTraders().then((liveData) => {
       if (liveData && liveData.length > 0) {
         setTraders(liveData);
       }
     });
 
+    // Social Proof: Online Counter
     const onlineTimer = setInterval(() => {
       setUsersOnline((prev) => prev + (Math.random() > 0.5 ? 1 : -1));
     }, 10000);
 
+    // Social Proof: Fake Claim Notifications
     const notificationTimer = setInterval(() => {
       const name = names[Math.floor(Math.random() * names.length)];
       setRecentUser(`${name} just claimed a $100 bonus! 🎉`);
@@ -43,17 +65,20 @@ const HomePage = (props) => {
     };
   }, []);
 
-  // FIXED: Function to handle Deep Linking and Tracking
+  /**
+   * CORE FUNCTION: handleLeadClick
+   * Fixes the "Homepage Redirection" by properly encoding the deep link.
+   */
   const handleLeadClick = (destUrl, platformName) => {
-    // Standard Affiliate ID
-    const partnerId = "157106";
-    let finalUrl = `https://partner.bybit.com/b/${partnerId}`;
+    const affiliateId = "157106";
+    let finalUrl = `https://partner.bybit.com/b/${affiliateId}`;
 
-    // If a destination is provided, create a Deep Link
+    // If we have a specific page (like a trader profile), we wrap it in dest_url
     if (destUrl) {
         finalUrl += `?dest_url=${encodeURIComponent(destUrl)}`;
     }
 
+    // Track event in Google Analytics
     if (window.gtag) {
       window.gtag('event', 'generate_lead', {
         'platform': platformName,
@@ -61,6 +86,7 @@ const HomePage = (props) => {
         'value': 1.0
       });
     }
+
     window.open(finalUrl, "_blank");
   };
 
@@ -92,7 +118,7 @@ const HomePage = (props) => {
           <div style={{ marginTop: "40px" }}>
             <button
               style={styles.primaryBtn}
-              onClick={() => handleLeadClick("https://www.bybit.com/en/promo/global/rewards-hub", "Bybit Hero")}
+              onClick={() => handleLeadClick("https://www.bybit.com/en/promo/global/rewards-hub", "Hero_Main_Button")}
             >
               CLAIM $100 BONUS ON BYBIT
             </button>
@@ -100,7 +126,7 @@ const HomePage = (props) => {
         </div>
       </div>
 
-      {/* FIXED: TRADER SECTION WITH DEEP LINKS */}
+      {/* TRADER SECTION: LIVE COPY TRADING DATA */}
       <div style={styles.traderSection}>
           <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
               <h3 style={{ fontWeight: "800", marginBottom: "30px", fontSize: "24px" }}>🔥 Top Performing Master Traders</h3>
@@ -139,7 +165,7 @@ const HomePage = (props) => {
           <h3 style={{ fontWeight: "800", color: "#000", marginBottom: "20px" }}>Step-by-Step Reward Guide</h3>
           <div style={styles.guideContent}>
               <p><strong>1. Register:</strong> Sign up through the official link above.</p>
-              <p><strong>2. Identity:</strong> Complete quick ID verification (KYC) in the app.</p>
+              <p><strong>2. Identity:</strong> Complete quick ID verification (KYC) in the Bybit app.</p>
               <p><strong>3. Claim:</strong> Visit the <b>"Rewards Hub"</b> to instantly unlock your signup vouchers.</p>
           </div>
       </div>
@@ -161,22 +187,23 @@ const HomePage = (props) => {
 
       {/* FOOTER */}
       <footer style={styles.footer}>
-        <p style={{ fontSize: "14px", fontWeight: "600", marginBottom: "10px" }}>Official Global Partner | SSL Secured</p>
+        <p style={{ fontSize: "14px", fontWeight: "600", marginBottom: "10px" }}>Official Bybit Partner | SSL Secured</p>
         <p style={styles.disclaimer}>
           Risk Warning: Crypto trading involves high risk. Bonuses and vouchers are subject to platform terms and conditions.
         </p>
       </footer>
 
-      {/* FLOATING ACTION BUTTON */}
+      {/* FLOATING ACTION BUTTON (MOBILE) */}
       <div style={styles.floatingContainer}>
         <button
           style={styles.floatingBtn}
-          onClick={() => handleLeadClick("https://www.bybit.com/en/promo/global/rewards-hub", "Bybit Floating")}
+          onClick={() => handleLeadClick("https://www.bybit.com/en/promo/global/rewards-hub", "Floating_Mobile_Button")}
         >
           🔥 CLAIM YOUR $100 BONUS
         </button>
       </div>
 
+      {/* Notification popup */}
       {recentUser && <div style={styles.recentNotify}>{recentUser}</div>}
     </div>
   );
