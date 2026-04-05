@@ -5,7 +5,7 @@ import Header from "../components/Header/Header.js";
 import HeaderLinks from "../components/Header/HeaderLinks.js";
 
 const HomePage = (props) => {
-  const [usersOnline, setUsersOnline] = useState(151);
+  const [usersOnline, setUsersOnline] = useState(156);
   const [recentUser, setRecentUser] = useState("");
   
   const traders = [
@@ -72,9 +72,8 @@ const HomePage = (props) => {
           <a href="/" style={styles.brandLink}>
             <div style={styles.logoCircle}>CL</div>
             <div style={styles.brandText}>
-                {/* FIXED: Color changed to #000000 for visibility on white background */}
-                <span style={{ color: "#000000", marginRight: "6px" }}>CRYPTO</span>
-                <span style={{ color: "#f3ba2f" }}>LAKESIDE</span>
+                <span style={{ color: "#000000", fontWeight: "900", marginRight: "6px" }}>CRYPTO</span>
+                <span style={{ color: "#f3ba2f", fontWeight: "900" }}>LAKESIDE</span>
             </div>
           </a>
         }
@@ -131,6 +130,16 @@ const HomePage = (props) => {
                       </div>
                   ))}
               </div>
+          </div>
+      </div>
+
+      {/* TECHNICAL INFRASTRUCTURE SECTION - (NEW) */}
+      <div style={{ background: "#020617", padding: "60px 20px", borderTop: "1px solid #1e293b" }}>
+          <h3 style={{ color: "#f3ba2f", fontWeight: "900", textAlign: "center", marginBottom: "30px" }}>Institutional Infrastructure</h3>
+          <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
+              <div style={styles.techSpec}>⚡ <b>Low Latency:</b> &lt; 5ms API Response</div>
+              <div style={styles.techSpec}>🛡️ <b>Security:</b> Multi-Sig Cold Storage</div>
+              <div style={styles.techSpec}>📊 <b>Liquidity:</b> $20B+ Daily Volume</div>
           </div>
       </div>
 
@@ -220,6 +229,15 @@ const styles = {
   
   copyBtn: { width: "100%", padding: "15px", background: "transparent", color: "#f3ba2f", borderRadius: "4px", fontWeight: "800", border: "2px solid #f3ba2f", cursor: "pointer" },
   
+  techSpec: {
+    color: "#94a3b8",
+    fontSize: "14px",
+    background: "#1e293b",
+    padding: "15px 25px",
+    borderRadius: "4px",
+    border: "1px solid #334155"
+  },
+
   binanceSection: { padding: "80px 20px", background: "#020617", textAlign: "center", borderTop: "1px solid #1e293b" },
   binanceLabel: { fontSize: "11px", letterSpacing: "2px", color: "#f3ba2f", fontWeight: "800", marginBottom: "10px" },
   binanceBtn: { background: "#ffffff", color: "#000000", padding: "18px 45px", borderRadius: "4px", border: "none", fontWeight: "900", cursor: "pointer", fontSize: "16px" },
