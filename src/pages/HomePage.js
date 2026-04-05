@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
-
+import { getTopTraders } from '../services/bybitService';
 // Components
 import Header from "../components/Header/Header.js";
 import HeaderLinks from "../components/Header/HeaderLinks.js";
