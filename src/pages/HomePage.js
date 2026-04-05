@@ -1,33 +1,31 @@
 import React, { useEffect, useState } from "react";
-import Countdown from "react-countdown";
+import { getTopTraders } from "../services/bybitService"; // Import the live service
 
 // Components
 import Header from "../components/Header/Header.js";
 import HeaderLinks from "../components/Header/HeaderLinks.js";
 
 const HomePage = (props) => {
-  const [usersOnline, setUsersOnline] = useState(148);
+  const [usersOnline, setUsersOnline] = useState(149);
   const [recentUser, setRecentUser] = useState("");
-  const names = ["Rahul", "Amit", "Priya", "Kiran", "Sneha", "Vikram", "Anjali"];
+  const [traders, setTraders] = useState([
+    { nickname: "Rubedo Engine", roi: "+81.28", maxDrawdown: "0.23", color: "#f3ba2f", leaderMark: "AbWEdoxJjic3JRWCtxUL1w%3D%3D" },
+    { nickname: "caleon8", roi: "+52.08", maxDrawdown: "0.00", color: "#000", leaderMark: "zuhkoRlHodkzaCgGiSSdQw%3D%3D" },
+    { nickname: "Liafe", roi: "+48.57", maxDrawdown: "4.32", color: "#0088cc", leaderMark: "AbWEdoxJjic3JRWCtxUL1w%3D%3D" }
+  ]);
 
-  // 1. GATEWAY DATA: These are the traders from your screenshots.
-  // When clicked, they go directly to the Bybit Copy Trading Leaderboard.
-  const featuredTraders = [
-    { name: "Rubedo Engine", roi: "+81.28%", drawdown: "0.23%", color: "#f3ba2f" },
-    { name: "caleon8", roi: "+52.08%", drawdown: "0.00%", color: "#000" },
-    { name: "Liafe", roi: "+48.57%", drawdown: "4.32%", color: "#0088cc" }
-  ];
+  const names = ["Rahul", "Amit", "Priya", "Kiran", "Sneha", "Vikram", "Anjali"];
 
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Crypto Lakeside - Official Rewards";
-    
-    if (window.gtag) {
-      window.gtag('event', 'page_view', {
-        page_title: 'Home - Crypto Lakeside',
-        page_location: window.location.href
-      });
-    }
+
+    // FETCH LIVE BYBIT DATA
+    getTopTraders().then((liveData) => {
+      if (liveData && liveData.length > 0) {
+        setTraders(liveData);
+      }
+    });
 
     const onlineTimer = setInterval(() => {
       setUsersOnline((prev) => prev + (Math.random() > 0.5 ? 1 : -1));
@@ -45,15 +43,25 @@ const HomePage = (props) => {
     };
   }, []);
 
-  const handleLeadClick = (url, platformName) => {
+  // FIXED: Function to handle Deep Linking and Tracking
+  const handleLeadClick = (destUrl, platformName) => {
+    // Standard Affiliate ID
+    const partnerId = "157106";
+    let finalUrl = `https://partner.bybit.com/b/${partnerId}`;
+
+    // If a destination is provided, create a Deep Link
+    if (destUrl) {
+        finalUrl += `?dest_url=${encodeURIComponent(destUrl)}`;
+    }
+
     if (window.gtag) {
       window.gtag('event', 'generate_lead', {
-        'event_category': 'Affiliate Link',
-        'event_label': platformName,
+        'platform': platformName,
+        'currency': 'USD',
         'value': 1.0
       });
     }
-    window.open(url, "_blank");
+    window.open(finalUrl, "_blank");
   };
 
   return (
@@ -84,7 +92,7 @@ const HomePage = (props) => {
           <div style={{ marginTop: "40px" }}>
             <button
               style={styles.primaryBtn}
-              onClick={() => handleLeadClick("https://partner.bybit.com/b/157106", "Bybit Hero")}
+              onClick={() => handleLeadClick("https://www.bybit.com/en/promo/global/rewards-hub", "Bybit Hero")}
             >
               CLAIM $100 BONUS ON BYBIT
             </button>
@@ -92,28 +100,28 @@ const HomePage = (props) => {
         </div>
       </div>
 
-      {/* 2. NEW GATEWAY SECTION: FEATURED TRADERS */}
+      {/* FIXED: TRADER SECTION WITH DEEP LINKS */}
       <div style={styles.traderSection}>
           <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
               <h3 style={{ fontWeight: "800", marginBottom: "30px", fontSize: "24px" }}>🔥 Top Performing Master Traders</h3>
               <div style={styles.traderGrid}>
-                  {featuredTraders.map((trader, idx) => (
+                  {traders.slice(0, 3).map((trader, idx) => (
                       <div key={idx} style={styles.traderCard}>
-                          <div style={{...styles.traderIcon, background: trader.color}}>{trader.name[0]}</div>
-                          <h4 style={{ fontWeight: "700", margin: "10px 0" }}>{trader.name}</h4>
+                          <div style={{...styles.traderIcon, background: trader.color || "#000"}}>{trader.nickname[0]}</div>
+                          <h4 style={{ fontWeight: "700", margin: "10px 0" }}>{trader.nickname}</h4>
                           <div style={styles.statsRow}>
                               <div>
                                   <p style={styles.statLabel}>ROI (30d)</p>
-                                  <p style={styles.statValueGreen}>{trader.roi}</p>
+                                  <p style={styles.statValueGreen}>+{trader.roi}%</p>
                               </div>
                               <div style={{ textAlign: "right" }}>
                                   <p style={styles.statLabel}>Drawdown</p>
-                                  <p style={{ fontWeight: "700", color: "#333" }}>{trader.drawdown}</p>
+                                  <p style={{ fontWeight: "700", color: "#333" }}>{trader.maxDrawdown}%</p>
                               </div>
                           </div>
                           <button 
                             style={styles.copyBtn}
-                            onClick={() => handleLeadClick("https://www.bybit.com/copyTrading?ref=157106", `Copy-${trader.name}`)}
+                            onClick={() => handleLeadClick(`https://www.bybit.com/copyTrading/trade-center/detail?leaderMark=${trader.leaderMark}`, `Copy-${trader.nickname}`)}
                           >
                             COPY STRATEGY
                           </button>
@@ -136,17 +144,6 @@ const HomePage = (props) => {
           </div>
       </div>
 
-      {/* BINANCE OPTION */}
-      <div className="text-center" style={{ padding: "40px 20px", background: "#fdfdfd", borderTop: "1px solid #eee" }}>
-          <p style={{ fontSize: "14px", color: "#666", marginBottom: "15px" }}>Preferred Exchange: Binance</p>
-          <button 
-            style={styles.binanceBtn}
-            onClick={() => handleLeadClick("https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00M4SS7Z7U", "Binance Alt")}
-          >
-            Register via Binance
-          </button>
-      </div>
-
       {/* SUPPORT SECTION */}
       <div className="text-center" style={{ padding: "60px 20px", background: "#fff" }}>
          <h3 style={{ fontWeight: "800" }}>💬 Need Assistance?</h3>
@@ -155,7 +152,7 @@ const HomePage = (props) => {
             style={styles.telegramBtn}
             onClick={() => {
                 if (window.gtag) { window.gtag('event', 'click_support', { 'platform': 'Telegram' }); }
-                window.location.href = "https://telegram.me/bitcoinblockchain501";
+                window.open("https://telegram.me/bitcoinblockchain501", "_blank");
             }}
          >
            Message Support Now
@@ -174,7 +171,7 @@ const HomePage = (props) => {
       <div style={styles.floatingContainer}>
         <button
           style={styles.floatingBtn}
-          onClick={() => handleLeadClick("https://partner.bybit.com/b/157106", "Bybit Floating")}
+          onClick={() => handleLeadClick("https://www.bybit.com/en/promo/global/rewards-hub", "Bybit Floating")}
         >
           🔥 CLAIM YOUR $100 BONUS
         </button>
@@ -211,7 +208,6 @@ const styles = {
     borderRadius: "8px", border: "none", cursor: "pointer",
     width: "100%", maxWidth: "400px"
   },
-  // NEW STYLES FOR TRADER SECTION
   traderSection: { padding: "60px 20px", background: "#f9fafb", textAlign: "center", borderTop: "1px solid #eee" },
   traderGrid: { display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" },
   traderCard: { 
@@ -222,7 +218,7 @@ const styles = {
   statsRow: { display: "flex", justifyContent: "space-between", margin: "20px 0", textAlign: "left" },
   statLabel: { fontSize: "11px", color: "#888", margin: 0 },
   statValueGreen: { color: "#10b981", fontWeight: "800", fontSize: "18px", margin: 0 },
-  copyBtn: { width: "100%", padding: "12px", background: "#000", color: "#fff", borderRadius: "6px", fontWeight: "700", border: "none", cursor: "pointer" },
+  copyBtn: { width: "100%", padding: "12px", background: "#f3ba2f", color: "#000", borderRadius: "6px", fontWeight: "800", border: "none", cursor: "pointer" },
 
   rewardSection: {
       background: "#fff", border: "1px solid #eee",
@@ -230,11 +226,6 @@ const styles = {
       padding: "30px", maxWidth: "500px", textAlign: "center"
   },
   guideContent: { textAlign: "left", fontSize: "15px", lineHeight: "1.8", color: "#444" },
-  binanceBtn: {
-    background: "#f3ba2f", color: "#000",
-    padding: "12px 35px", borderRadius: "6px",
-    border: "none", fontWeight: "700", cursor: "pointer", fontSize: "15px"
-  },
   telegramBtn: {
     background: "#0088cc", color: "#fff",
     padding: "16px 40px", borderRadius: "8px",
