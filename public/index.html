@@ -5,7 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="theme-color" content="#000000" />
     
-    <title>Crypto Lakeside - Institutional Trading Terminal</title>
+    <!-- Primary SEO -->
+    <title>Crypto Lakeside | Institutional Trading Terminal</title>
+    <meta name="description" content="Access high-alpha institutional trading data. Mirror verified master traders on Bybit with real-time whale flow and market sentiment dashboard." />
+    <meta name="keywords" content="Bybit Copy Trading, Crypto Whale Tracker, Bitcoin Fear and Greed Index, Institutional Trading, Mirror Trading, Crypto Lakeside" />
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cryptolakeside.co.in/" />
+    <meta property="og:title" content="Crypto Lakeside | Institutional Trading Terminal" />
+    <meta property="og:description" content="Real-time institutional trade execution feed and market sentiment backbone." />
+    <meta property="og:image" content="%PUBLIC_URL%/favicon.png" />
 
     <!-- 1. Google Analytics (GA4) Tracking -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2Y9M643E6E"></script>
@@ -14,26 +24,25 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      // Configuration for your specific ID
+      // Global Configuration
       gtag('config', 'G-2Y9M643E6E', {
         'send_page_view': true,
         'anonymize_ip': true
       });
 
       /**
-       * 2. CUSTOM CONVERSION TRACKER (FIXED)
-       * This tracks every time a user clicks a Bybit link with your Ref ID.
+       * 2. AFFILIATE CONVERSION TRACKER
+       * Automatically captures leads when users click Bybit referral links.
        */
       document.addEventListener('click', function(e) {
         var target = e.target.closest('a');
-        // Fixed: Now checks for your actual referral ID 157106
         if (target && target.href.includes('bybit.com') && target.href.includes('157106')) {
           gtag('event', 'generate_lead', {
-            'event_category': 'Affiliate_Click',
-            'event_label': 'Bybit_Terminal_Redirect',
+            'event_category': 'Affiliate_Redirect',
+            'event_label': 'Bybit_CopyTrade_Hub',
             'value': 1.0
           });
-          console.log('Conversion Captured: Bybit Referral Clicked');
+          console.log('Lead Captured: Institutional Mirror Redirect');
         }
       });
     </script>
@@ -52,16 +61,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     
     <style>
-      /* Smooth loading transition */
+      /* Page Loader Transition */
       body.loading #root { opacity: 0; }
-      body.loaded #root { opacity: 1; transition: opacity 0.5s ease-in; }
+      body.loaded #root { opacity: 1; transition: opacity 0.6s ease-in; }
+      body { background-color: #0f172a; } /* Prevents white flash on load */
     </style>
   </head>
 
   <body class="loading">
     <noscript>
-      <div style="padding: 20px; text-align: center; background: #000; color: #fff;">
-        Please enable JavaScript to access the Crypto Lakeside Institutional Terminal.
+      <div style="padding: 50px; text-align: center; background: #0f172a; color: #fff; height: 100vh;">
+        <h3>Terminal Access Restricted</h3>
+        <p>Please enable JavaScript to access the Crypto Lakeside Institutional Data Feed.</p>
       </div>
     </noscript>
     
@@ -77,9 +88,9 @@
     <script src="%PUBLIC_URL%/datafeeds/udf/dist/bundle.js"></script>
     
     <script>
-      // Initialize AOS Animations
+      // Initialize Scroll Animations
       AOS.init({
-        duration: 800,
+        duration: 1000,
         once: true
       });
 
@@ -87,7 +98,7 @@
       $(document).ready(function() {
         setTimeout(function(){
           $('body').removeClass('loading').addClass('loaded');
-        }, 300);
+        }, 400);
       });
     </script>
   </body>
