@@ -1,57 +1,61 @@
 import requests
 import json
 import os
+import time
 
 def fetch_market_data():
-    print("Gathering Institutional Market Intelligence...")
+    print("--- 🚀 Institutional Market Intelligence Start ---")
     symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
     
-    # Standard Headers to prevent being blocked by Bybit
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    }
+    # Use a session for better persistence
+    session = requests.Session()
+    session.headers.update({
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+        "Accept": "application/json"
+    })
 
-    # 1. FETCH FEAR & GREED INDEX
-    fng_data = {}
+    # 1. FETCH FEAR & GREED
+    fng_data = {"value": "50", "classification": "Neutral"}
     try:
-        fng_res = requests.get("https://api.alternative.me/fng/", timeout=10).json()
+        fng_res = session.get("https://api.alternative.me/fng/", timeout=15).json()
         fng_data = {
             "value": fng_res['data'][0]['value'],
             "classification": fng_res['data'][0]['value_classification'],
             "timestamp": fng_res['data'][0]['timestamp']
         }
+        print(f"✅ Sentiment: {fng_data['classification']}")
     except Exception as e:
-        print(f"Sentiment API Error: {e}")
-        fng_data = {"value": "50", "classification": "Neutral"}
+        print(f"❌ Sentiment Fail: {e}")
 
-    # 2. FETCH LIVE PRICES & WHALE TRADES (Using bytick.com for Cloud Stability)
+    # 2. FETCH PRICES & TRADES
     prices = {}
     whale_list = []
 
     for symbol in symbols:
         try:
-            # Get Price Ticker - using bytick.com
-            tick_url = f"https://api.bytick.com/v5/market/tickers?category=spot&symbol={symbol}"
-            price_res = requests.get(tick_url, headers=headers, timeout=10).json()
+            # Try official API first, then fallback
+            url = f"https://api.bybit.com/v5/market/tickers?category=spot&symbol={symbol}"
+            resp = session.get(url, timeout=15)
+            data = resp.json()
             
-            if price_res['retCode'] == 0:
-                last_price = price_res['result']['list'][0]['lastPrice']
-                prices[symbol.replace("USDT", "")] = last_price
-                print(f"Successfully fetched price for {symbol}: {last_price}")
+            if data.get('retCode') == 0:
+                price = data['result']['list'][0]['lastPrice']
+                prices[symbol.replace("USDT", "")] = price
+                print(f"✅ {symbol}: ${price}")
+            else:
+                print(f"⚠️ Bybit error for {symbol}: {data.get('retMsg')}")
 
-            # Get Recent Trades
-            trade_url = f"https://api.bytick.com/v5/market/recent-trade?category=spot&symbol={symbol}&limit=100"
-            trade_res = requests.get(trade_url, headers=headers, timeout=10).json()
+            # Fetch Trades
+            t_url = f"https://api.bybit.com/v5/market/recent-trade?category=spot&symbol={symbol}&limit=50"
+            t_data = session.get(t_url, timeout=15).json()
             
-            if trade_res['retCode'] == 0:
-                trades = trade_res['result']['list']
-                for t in trades:
+            if t_data.get('retCode') == 0:
+                for t in t_data['result']['list']:
                     p = float(t['price'])
-                    # Bybit V5 uses 'size'
                     s = float(t['size'])
                     val = p * s
-                    # Lowered to $500 for testing to ensure the terminal fills up
-                    if val > 500:
+                    # Threshold: $1000 to ensure we get data
+                    if val > 1000:
                         whale_list.append({
                             "symbol": symbol.replace("USDT", ""),
                             "time": t['time'],
@@ -59,26 +63,27 @@ def fetch_market_data():
                             "value": f"${val:,.2f}",
                             "price": f"${p:,.2f}"
                         })
-        except Exception as e:
-            print(f"Error fetching data for {symbol}: {e}")
-            continue
+            
+            # Small sleep to avoid rate limits
+            time.sleep(1)
 
-    # 3. CONSOLIDATE & SAVE
+        except Exception as e:
+            print(f"❌ Bybit Connection Fail for {symbol}: {e}")
+
+    # 3. SAVE DATA
     whale_list.sort(key=lambda x: x['time'], reverse=True)
-    
     final_output = {
         "sentiment": fng_data,
         "prices": prices,
         "trades": whale_list[:50]
     }
 
-    # Ensure public folder exists locally
+    # IMPORTANT: Use absolute paths for GitHub Actions
     os.makedirs('public', exist_ok=True)
-    
     with open('public/whales.json', 'w') as f:
         json.dump(final_output, f, indent=4)
         
-    print(f"✅ Market Data Synced. Found {len(whale_list)} trades.")
+    print(f"--- 🏁 Sync Complete. Trades Captured: {len(whale_list)} ---")
 
 if __name__ == "__main__":
     fetch_market_data()
