@@ -9,7 +9,7 @@ const HomePage = (props) => {
   const [recentUser, setRecentUser] = useState("");
   const [whales, setWhales] = useState([]);
   
-  // TRADER DATA - Cleaned LeaderMarks to prevent redirect breaks
+  // TRADER DATA - Using raw IDs
   const traders = [
     { 
         nickname: "Rubedo Engine", 
@@ -81,15 +81,18 @@ const HomePage = (props) => {
     };
   }, []);
 
-  // MASTER REFERRAL FUNCTION - FIXED TO PREVENT BREAKS
-  const handleLeadClick = (baseUrl, platformName) => {
+  // MASTER REFERRAL FUNCTION - PREPENDING REF TO PREVENT "INVALID PARAMETER"
+  const handleLeadClick = (baseUrl, platformName, isCopyTrade = false, leaderMark = "") => {
     const myRef = "157106";
-    const base = baseUrl || "https://www.bybit.com/en/promo/global/rewards-hub";
-    
-    // We encode the URL components to ensure Bybit's server accepts the special characters
-    const finalUrl = base.includes("?") 
-        ? `${base}&ref=${myRef}` 
-        : `${base}?ref=${myRef}`;
+    let finalUrl;
+
+    if (isCopyTrade) {
+        // Putting the referral FIRST fixes the "Invalid Parameter" error on Bybit
+        finalUrl = `https://www.bybit.com/copyTrade/trade-center/detail?ref=${myRef}&leaderMark=${encodeURIComponent(leaderMark)}`;
+    } else {
+        const base = baseUrl || "https://www.bybit.com/en/promo/global/rewards-hub";
+        finalUrl = base.includes("?") ? `${base}&ref=${myRef}` : `${base}?ref=${myRef}`;
+    }
 
     if (window.gtag) { 
         window.gtag('event', 'generate_lead', { 'platform': platformName }); 
@@ -185,11 +188,7 @@ const HomePage = (props) => {
                           </div>
                           <button 
                             style={styles.copyBtn}
-                            onClick={() => {
-                                // We manually construct the URL to ensure leaderMark is not double-encoded
-                                const traderUrl = "https://www.bybit.com/copyTrade/trade-center/detail?leaderMark=" + encodeURIComponent(trader.leaderMark);
-                                handleLeadClick(traderUrl, "Copy-" + trader.nickname);
-                            }}
+                            onClick={() => handleLeadClick("", "Copy-" + trader.nickname, true, trader.leaderMark)}
                           >
                             MIRROR STRATEGY
                           </button>
