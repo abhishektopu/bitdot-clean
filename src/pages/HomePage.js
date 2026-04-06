@@ -7,6 +7,8 @@ import HeaderLinks from "../components/Header/HeaderLinks.js";
 const HomePage = (props) => {
   const [usersOnline, setUsersOnline] = useState(156);
   const [recentUser, setRecentUser] = useState("");
+  // --- NEW: STATE FOR WHALE DATA ---
+  const [whales, setWhales] = useState([]);
   
   const traders = [
     { 
@@ -38,12 +40,21 @@ const HomePage = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Crypto Lakeside | Institutional Trading Terminal";
+
+    // --- NEW: FETCH WHALES.JSON PRODUCED BY PYTHON ---
+    const getWhaleData = () => {
+        fetch('/whales.json')
+            .then(res => res.json())
+            .then(data => setWhales(data))
+            .catch(err => console.log("Whale feed syncing..."));
+    };
+    getWhaleData();
+    const whaleInterval = setInterval(getWhaleData, 30000); // Check for new data every 30s
     
     // --- SCRIPT TO REMOVE WHATSAPP BUTTON ---
     const removeWhatsapp = () => {
         const buttons = document.querySelectorAll('a[href*="wa.me"], div[class*="whatsapp"], button[class*="whatsapp"]');
         buttons.forEach(btn => btn.style.display = 'none');
-        // Specifically targeting the "Start Earning Now" button by text if needed
         const allElements = document.getElementsByTagName('button');
         for (let i = 0; i < allElements.length; i++) {
             if (allElements[i].textContent.includes('Start Earning Now')) {
@@ -52,8 +63,7 @@ const HomePage = (props) => {
         }
     };
     removeWhatsapp();
-    setTimeout(removeWhatsapp, 2000); // Run again after 2 seconds to be sure
-    // ----------------------------------------
+    setTimeout(removeWhatsapp, 2000);
 
     const onlineTimer = setInterval(() => {
         setUsersOnline((prev) => prev + (Math.random() > 0.5 ? 1 : -1));
@@ -69,6 +79,7 @@ const HomePage = (props) => {
     return () => { 
         clearInterval(onlineTimer); 
         clearInterval(notificationTimer); 
+        clearInterval(whaleInterval); // Cleanup
     };
   }, []);
 
@@ -88,8 +99,7 @@ const HomePage = (props) => {
           <a href="/" style={styles.brandLink}>
             <div style={styles.logoCircle}>CL</div>
             <div style={styles.brandText}>
-                {/* FIXED: Using forced black color to ensure visibility */}
-                <span style={{ color: "#000000 !important", color: "black", fontWeight: "900", marginRight: "6px" }}>CRYPTO</span>
+                <span style={{ color: "black", fontWeight: "900", marginRight: "6px" }}>CRYPTO</span>
                 <span style={{ color: "#f3ba2f", fontWeight: "900" }}>LAKESIDE</span>
             </div>
           </a>
@@ -115,6 +125,34 @@ const HomePage = (props) => {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* --- NEW: LIVE WHALE TRACKER SECTION --- */}
+      <div style={styles.whaleSection}>
+          <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
+            <div style={styles.terminalHeader}>
+                <div style={styles.terminalDot}></div>
+                <span style={{ fontWeight: "800", fontSize: "12px", color: "#94a3b8" }}>LIVE WHALE DATA FEED (BYBIT V5)</span>
+            </div>
+            <div style={styles.terminalBody}>
+                {whales.length > 0 ? (
+                    whales.map((whale, i) => (
+                        <div key={i} style={styles.whaleRow}>
+                            <span style={{ color: "#64748b" }}>[{new Date(parseInt(whale.time)).toLocaleTimeString()}]</span>
+                            <span style={{ color: whale.side === "Buy" ? "#4ade80" : "#ef4444", fontWeight: "bold", marginLeft: "10px" }}>
+                                {whale.side.toUpperCase()}
+                            </span>
+                            <span style={{ color: "#ffffff", marginLeft: "10px", fontWeight: "800" }}>{whale.value} BTCUSDT</span>
+                            <span style={{ color: "#94a3b8", marginLeft: "10px" }}>@ {whale.price}</span>
+                        </div>
+                    ))
+                ) : (
+                    <div style={{ color: "#94a3b8", padding: "20px", textAlign: "center" }}>
+                        Scanning Bybit Order Book for orders {'>'} $50k...
+                    </div>
+                )}
+            </div>
+          </div>
       </div>
 
       {/* TRADER GRID */}
@@ -210,58 +248,40 @@ const styles = {
   mainWrapper: { backgroundColor: "#0f172a", color: "#f8fafc", fontFamily: "sans-serif" },
   brandLink: { display: "flex", alignItems: "center", textDecoration: "none" },
   logoCircle: { background: "#f3ba2f", color: "#000000", width: "36px", height: "36px", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "6px", fontWeight: "900", fontSize: "16px" },
-  
-  brandText: { 
-    marginLeft: "12px", 
-    fontWeight: "900", 
-    fontSize: "20px", 
-    letterSpacing: "0.5px",
-    display: "flex",
-    alignItems: "center"
-  },
-  
+  brandText: { marginLeft: "12px", fontWeight: "900", fontSize: "20px", letterSpacing: "0.5px", display: "flex", alignItems: "center" },
   heroSection: { padding: "140px 20px 80px 20px", textAlign: "center", background: "radial-gradient(circle at center, #1e293b 0%, #0f172a 100%)" },
   mainTitle: { fontWeight: "900", fontSize: "44px", color: "#ffffff", lineHeight: "1.1", letterSpacing: "-1px" },
   heroSubText: { color: "#94a3b8", fontSize: "18px", marginTop: "20px", maxWidth: "700px", margin: "20px auto" },
-  
   statusBadge: { display: "inline-flex", alignItems: "center", background: "rgba(34, 197, 94, 0.1)", padding: "8px 20px", borderRadius: "4px", color: "#4ade80", fontWeight: "700", marginTop: "30px", fontSize: "14px" },
   pulseDot: { height: "8px", width: "8px", backgroundColor: "#4ade80", borderRadius: "50%", marginRight: "10px", boxShadow: "0 0 10px #4ade80" },
-  
   primaryBtn: { background: "#f3ba2f", color: "#000000", padding: "20px 50px", fontSize: "16px", fontWeight: "900", borderRadius: "4px", border: "none", cursor: "pointer" },
   
+  // NEW WHALE SECTION STYLES
+  whaleSection: { padding: "40px 20px", background: "#0f172a" },
+  terminalHeader: { background: "#1e293b", padding: "10px 20px", borderRadius: "8px 8px 0 0", borderBottom: "1px solid #334155", display: "flex", alignItems: "center" },
+  terminalDot: { height: "10px", width: "10px", background: "#ef4444", borderRadius: "50%", marginRight: "15px", boxShadow: "0 0 8px #ef4444" },
+  terminalBody: { background: "#020617", padding: "20px", borderRadius: "0 0 8px 8px", border: "1px solid #334155", height: "200px", overflowY: "auto", fontFamily: "'Courier New', Courier, monospace" },
+  whaleRow: { padding: "8px 0", borderBottom: "1px solid #1e293b", fontSize: "14px", letterSpacing: "0.5px" },
+
   traderSection: { padding: "80px 20px", background: "#0f172a" },
   sectionTitle: { fontWeight: "900", fontSize: "28px", color: "#ffffff", marginBottom: "40px", textAlign: "center" },
   traderGrid: { display: "flex", flexWrap: "wrap", gap: "30px", justifyContent: "center" },
-  
   traderCard: { background: "#1e293b", padding: "30px", borderRadius: "8px", width: "320px", border: "1px solid #334155" },
   cardHeader: { display: "flex", alignItems: "center", marginBottom: "25px" },
   traderIcon: { width: "45px", height: "45px", borderRadius: "4px", color: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "bold", fontSize: "18px" },
   traderName: { fontWeight: "800", marginLeft: "15px", color: "#ffffff", fontSize: "20px" },
-  
   statBox: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "30px" },
   statItem: { textAlign: "left" },
   statLabel: { fontSize: "10px", color: "#64748b", fontWeight: "800", textTransform: "uppercase", marginBottom: "5px" },
   statValueGreen: { color: "#4ade80", fontWeight: "900", fontSize: "22px" },
   statValue: { color: "#ffffff", fontWeight: "900", fontSize: "22px" },
-  
   copyBtn: { width: "100%", padding: "15px", background: "transparent", color: "#f3ba2f", borderRadius: "4px", fontWeight: "800", border: "2px solid #f3ba2f", cursor: "pointer" },
-  
-  techSpec: {
-    color: "#94a3b8",
-    fontSize: "14px",
-    background: "#1e293b",
-    padding: "15px 25px",
-    borderRadius: "4px",
-    border: "1px solid #334155"
-  },
-
+  techSpec: { color: "#94a3b8", fontSize: "14px", background: "#1e293b", padding: "15px 25px", borderRadius: "4px", border: "1px solid #334155" },
   binanceSection: { padding: "80px 20px", background: "#020617", textAlign: "center", borderTop: "1px solid #1e293b" },
   binanceLabel: { fontSize: "11px", letterSpacing: "2px", color: "#f3ba2f", fontWeight: "800", marginBottom: "10px" },
   binanceBtn: { background: "#ffffff", color: "#000000", padding: "18px 45px", borderRadius: "4px", border: "none", fontWeight: "900", cursor: "pointer", fontSize: "16px" },
-
   vipSection: { padding: "100px 20px", background: "#0f172a", textAlign: "center", borderTop: "1px solid #1e293b" },
   telegramBtn: { background: "transparent", color: "#ffffff", padding: "16px 40px", borderRadius: "4px", border: "2px solid #ffffff", fontWeight: "800", cursor: "pointer" },
-  
   footer: { padding: "60px 20px", textAlign: "center", background: "#020617" },
   recentNotify: { position: "fixed", bottom: "30px", left: "30px", background: "#1e293b", color: "#ffffff", padding: "15px 25px", borderRadius: "4px", fontSize: "13px", fontWeight: "600", zIndex: "3000", borderLeft: "4px solid #f3ba2f" }
 };
