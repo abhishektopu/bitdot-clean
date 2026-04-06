@@ -20,11 +20,12 @@ const HomePage = (props) => {
     window.scrollTo(0, 0);
     document.title = "Crypto Lakeside | Institutional Trading Terminal";
 
+    // FETCH MULTI-ASSET DATA (BTC, ETH, SOL)
     const getWhaleData = () => {
         fetch('/whales.json')
             .then(res => res.json())
             .then(data => setWhales(data))
-            .catch(err => console.log("Feed syncing..."));
+            .catch(err => console.log("Market feed syncing..."));
     };
     getWhaleData();
     const whaleInterval = setInterval(getWhaleData, 30000); 
@@ -54,15 +55,16 @@ const HomePage = (props) => {
     };
   }, []);
 
-  // --- FAILSAFE REDIRECT FUNCTION ---
+  // --- FAILSAFE REDIRECT FUNCTION (BYBIT HUB) ---
   const handleLeadClick = (platformName) => {
     const myRef = "157106";
-    // We point directly to the main Copy Trading Hub. 
-    // This is the most stable URL for Indian users.
     const finalUrl = `https://www.bybit.com/copyTrade/?ref=${myRef}`;
 
     if (window.gtag) { 
-        window.gtag('event', 'generate_lead', { 'platform': platformName }); 
+        window.gtag('event', 'generate_lead', { 
+            'platform': platformName,
+            'event_category': 'Market_Trend_Action'
+        }); 
     }
 
     window.open(finalUrl, "_blank");
@@ -104,28 +106,35 @@ const HomePage = (props) => {
         </div>
       </div>
 
-      {/* LIVE WHALE TRACKER */}
+      {/* MULTI-ASSET LIVE TERMINAL FEED */}
       <div style={styles.whaleSection}>
           <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
             <div style={styles.terminalHeader}>
                 <div style={styles.terminalDot}></div>
-                <span style={{ fontWeight: "800", fontSize: "12px", color: "#94a3b8" }}>LIVE TERMINAL FEED (BYBIT V5 API)</span>
+                <span style={{ fontWeight: "800", fontSize: "12px", color: "#94a3b8" }}>LIVE TERMINAL FEED (BTC • ETH • SOL)</span>
             </div>
             <div style={styles.terminalBody}>
                 {whales.length > 0 ? (
                     whales.map((whale, i) => (
                         <div key={i} style={styles.whaleRow}>
                             <span style={{ color: "#64748b" }}>[{new Date(parseInt(whale.time)).toLocaleTimeString()}]</span>
+                            
+                            {/* DYNAMIC SYMBOL DISPLAY */}
+                            <span style={{ color: "#f3ba2f", fontWeight: "900", marginLeft: "10px", minWidth: "40px", display: "inline-block" }}>
+                                {whale.symbol}
+                            </span>
+
                             <span style={{ color: whale.side === "Buy" ? "#4ade80" : "#ef4444", fontWeight: "bold", marginLeft: "10px" }}>
                                 {whale.side.toUpperCase()}
                             </span>
-                            <span style={{ color: "#ffffff", marginLeft: "10px", fontWeight: "800" }}>{whale.value} BTCUSDT</span>
+                            
+                            <span style={{ color: "#ffffff", marginLeft: "10px", fontWeight: "800" }}>{whale.value}</span>
                             <span style={{ color: "#94a3b8", marginLeft: "10px" }}>@ {whale.price}</span>
                         </div>
                     ))
                 ) : (
                     <div style={{ color: "#94a3b8", padding: "20px", textAlign: "center" }}>
-                        Scanning Bybit Order Book for Large Volume Execution...
+                        Aggregating Cross-Asset Whale Flow (Bybit V5)...
                     </div>
                 )}
             </div>
