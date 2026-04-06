@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetch all history for a clean merge
+          fetch-depth: 0
       
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -29,8 +29,13 @@ jobs:
         run: |
           git config --global user.name 'WhaleBot'
           git config --global user.email 'bot@cryptolakeside.co.in'
+          
+          # Stage the new data first
           git add public/whales.json
-          # Pull latest changes from you to prevent the "rejected" error
-          git pull --rebase origin main
+          
+          # Pull any changes you made in the browser and merge the data
+          git pull --rebase --autostash origin main
+          
+          # Save and send to the website
           git commit -m "Automated Data Update" || exit 0
           git push origin main
