@@ -2,48 +2,65 @@ import requests
 import json
 import os
 
-def fetch_whale_trades():
-    # 1. Define the Market Trend Leaders
+def fetch_market_data():
+    print("Gathering Institutional Market Intelligence...")
     symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
-    whale_list = []
     
-    print(f"Monitoring Market Trends: {symbols}")
+    # 1. FETCH FEAR & GREED INDEX (Sentiment Backbone)
+    fng_data = {}
+    try:
+        fng_res = requests.get("https://api.alternative.me/fng/").json()
+        fng_data = {
+            "value": fng_res['data'][0]['value'],
+            "classification": fng_res['data'][0]['value_classification'],
+            "timestamp": fng_res['data'][0]['timestamp']
+        }
+    except:
+        fng_data = {"value": "50", "classification": "Neutral"}
+
+    # 2. FETCH LIVE PRICES & WHALE TRADES
+    prices = {}
+    whale_list = []
 
     for symbol in symbols:
-        url = f"https://api.bybit.com/v5/market/recent-trade?category=spot&symbol={symbol}&limit=100"
-        
         try:
-            response = requests.get(url)
-            data = response.json()
-            trades = data['result']['list']
+            # Get Price Ticker
+            tick_url = f"https://api.bybit.com/v5/market/tickers?category=spot&symbol={symbol}"
+            price_res = requests.get(tick_url).json()
+            prices[symbol.replace("USDT", "")] = price_res['result']['list'][0]['lastPrice']
+
+            # Get Recent Trades
+            trade_url = f"https://api.bybit.com/v5/market/recent-trade?category=spot&symbol={symbol}&limit=100"
+            trades = requests.get(trade_url).json()['result']['list']
             
             for t in trades:
-                price = float(t['price'])
-                size = float(t['size'])
-                value = price * size
-                
-                # Filter for 'Whale' activity based on the coin's trend
-                # We use > $5000 to keep the feed active and 'busy'
-                if value > 5000:
+                p = float(t['price'])
+                s = float(t['size'])
+                val = p * s
+                if val > 5000:
                     whale_list.append({
-                        "symbol": symbol.replace("USDT", ""), # Clean name: BTC, ETH, etc.
+                        "symbol": symbol.replace("USDT", ""),
                         "time": t['time'],
                         "side": t['side'],
-                        "value": f"${value:,.2f}",
-                        "price": f"${price:,.2f}"
+                        "value": f"${val:,.2f}",
+                        "price": f"${p:,.2f}"
                     })
-        except Exception as e:
-            print(f"Error skipping {symbol}: {e}")
+        except:
+            continue
 
-    # 2. Sort by time so the newest trades from ALL coins are at the top
+    # 3. CONSOLIDATE & SAVE
     whale_list.sort(key=lambda x: x['time'], reverse=True)
+    
+    final_output = {
+        "sentiment": fng_data,
+        "prices": prices,
+        "trades": whale_list[:50]
+    }
 
-    # 3. Save the top 50 most recent trend-setting trades
-    output_path = 'public/whales.json'
-    with open(output_path, 'w') as f:
-        json.dump(whale_list[:50], f, indent=4)
+    with open('public/whales.json', 'w') as f:
+        json.dump(final_output, f, indent=4)
         
-    print(f"✅ Success! Captured {len(whale_list)} trend-based trades.")
+    print(f"✅ Market Data Synced. Sentiment: {fng_data['classification']} ({fng_data['value']})")
 
 if __name__ == "__main__":
-    fetch_whale_trades()
+    fetch_market_data()
