@@ -2,49 +2,71 @@
  * =============================================================================
  * PROJECT:        Crypto Lakeside Institutional Terminal
  * MODULE:         Core.View.HomePage
- * VERSION:        5.5.0 (Platinum Enterprise Build)
+ * VERSION:        5.7.0 (Platinum Mobile Enterprise Build)
  * DEVELOPER:      Abhishek Topu (SAP Certified)
- * ARCHITECTURE:   React 18.x / USDT Liquid Aggregate / GA4 Integration
+ * ARCHITECTURE:   React 18.x / USDT Liquid Aggregate / Responsive UI
  * 
- * DESCRIPTION:    Institutional-grade financial dashboard featuring:
- *                 - Individual USDT-paired Asset Intelligence
- *                 - Dynamic SVG Sentiment Gauges (Asset-Specific)
- *                 - Cache-Busted High-Frequency Heartbeat (20s Cycle)
- *                 - Multi-Node Authorized Connectivity Notifications
- *                 - High-Density Tabular Order Book Execution Tape
- *                 - Regionally Compliant (India FIU) Redirect Handlers
+ * SYSTEM REQUIREMENTS:
+ * - Backend: whale_tracker.py (v5.2+)
+ * - Data: public/whales.json
+ * - Tracking: G-2Y9M643E6E
+ * 
+ * CHANGE LOG:
+ * - Migrated to 5-Column Responsive CSS Grid
+ * - Implemented Asset-Specific SVG Sentiment Gauges
+ * - Fixed LTC/XRP Zero-Price Sync Errors
+ * - Added Mobile Horizontal Execution Tape Swiping
+ * - Integrated Regional India FIU Referral Logic
  * =============================================================================
  */
 
-import React, { useEffect, useState } from "react";
+import React, { 
+    useEffect, 
+    useState 
+} from "react";
 
 // Institutional Layout Architecture
 import Header from "../components/Header/Header.js";
 import HeaderLinks from "../components/Header/HeaderLinks.js";
 
 /**
- * --- SUB-COMPONENT: SENTIMENT GAUGE ---
+ * -----------------------------------------------------------------------------
+ * SUB-COMPONENT: SentimentGauge
+ * -----------------------------------------------------------------------------
  * Logic: Maps a 0-100 sentiment index to a -90/+90 degree needle rotation.
- * visual: Uses SVG paths for high-performance rendering on institutional screens.
+ * Performance: Uses optimized SVG paths for mobile GPU rendering.
  */
-const SentimentGauge = ({ value, classification }) => {
+const SentimentGauge = ({ 
+    value, 
+    classification 
+}) => {
     const numericValue = parseInt(value) || 50;
     const needleRotation = (numericValue / 100) * 180 - 90;
     
-    // Institutional Grade Color Scale
+    // Institutional Grade Color Scale Mapping
     const getSentimentColor = (val) => {
-        if (val <= 25) return "#ef4444"; // Extreme Fear
-        if (val <= 45) return "#f97316"; // Fear
-        if (val <= 75) return "#eab308"; // Greed
-        return "#22c55e"; // Extreme Greed
+        if (val <= 25) {
+            return "#ef4444"; // Extreme Fear (Red)
+        }
+        if (val <= 45) {
+            return "#f97316"; // Fear (Orange)
+        }
+        if (val <= 75) {
+            return "#eab308"; // Greed (Yellow)
+        }
+        return "#22c55e"; // Extreme Greed (Green)
     };
 
     const activeColor = getSentimentColor(numericValue);
 
     return (
         <div style={gaugeStyles.container}>
-            <svg width="140" height="80" viewBox="0 0 140 80">
-                {/* Static Background Arc */}
+            <svg 
+                width="140" 
+                height="80" 
+                viewBox="0 0 140 80"
+            >
+                {/* Static Background Arc Path */}
                 <path 
                     d="M20,70 A50,50 0 0,1 120,70" 
                     fill="none" 
@@ -52,7 +74,7 @@ const SentimentGauge = ({ value, classification }) => {
                     strokeWidth="12" 
                     strokeLinecap="round" 
                 />
-                {/* Dynamic Progress Arc */}
+                {/* Dynamic Progress Arc Path */}
                 <path 
                     d="M20,70 A50,50 0 0,1 120,70" 
                     fill="none" 
@@ -61,41 +83,68 @@ const SentimentGauge = ({ value, classification }) => {
                     strokeLinecap="round" 
                     strokeDasharray="157" 
                     strokeDashoffset={157 - (numericValue / 100) * 157}
-                    style={{ transition: 'stroke-dashoffset 1.2s ease-in-out, stroke 1.2s' }}
+                    style={{ 
+                        transition: 'stroke-dashoffset 1.2s ease-in-out, stroke 1.2s' 
+                    }}
                 />
-                {/* Needle Vector */}
+                {/* Needle Vector Line */}
                 <line 
-                    x1="70" y1="70" x2="70" y2="25" 
+                    x1="70" 
+                    y1="70" 
+                    x2="70" 
+                    y2="25" 
                     stroke="#ffffff" 
                     strokeWidth="3" 
                     strokeLinecap="round" 
                     transform={`rotate(${needleRotation} 70 70)`}
-                    style={{ transition: 'transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)' }}
+                    style={{ 
+                        transition: 'transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)' 
+                    }}
                 />
-                {/* Axis Pivot */}
-                <circle cx="70" cy="70" r="6" fill="#ffffff" />
+                {/* Axis Pivot Circle */}
+                <circle 
+                    cx="70" 
+                    cy="70" 
+                    r="6" 
+                    fill="#ffffff" 
+                />
             </svg>
             <div style={gaugeStyles.labelContainer}>
-                <p style={{ ...gaugeStyles.statusText, color: activeColor }}>
+                <p style={{ 
+                    ...gaugeStyles.statusText, 
+                    color: activeColor 
+                }}>
                     {classification.toUpperCase()}
                 </p>
                 <p style={gaugeStyles.indexValue}>
-                    USDT INDEX: {numericValue}
+                    S-INDEX: {numericValue}
                 </p>
             </div>
         </div>
     );
 };
 
+/**
+ * -----------------------------------------------------------------------------
+ * MAIN COMPONENT: HomePage
+ * -----------------------------------------------------------------------------
+ */
 const HomePage = (props) => {
-    // --- 1. ENTERPRISE SYSTEM STATE ---
+
+    // --- 1. CORE SYSTEM STATE INITIALIZATION ---
     const [usersOnline, setUsersOnline] = useState(157);
     const [recentUser, setRecentUser] = useState("");
     const [lastHeartbeat, setLastHeartbeat] = useState(new Date().toLocaleTimeString());
     
-    // Unified Multi-Asset Hub
+    // Unified Multi-Asset Data Hub
     const [marketData, setMarketData] = useState({
-        prices: { BTC: "0", ETH: "0", SOL: "0", LTC: "0", XRP: "0" },
+        prices: { 
+            BTC: "0", 
+            ETH: "0", 
+            SOL: "0", 
+            LTC: "0", 
+            XRP: "0" 
+        },
         sentiment: { 
             BTC: { value: "50", classification: "Neutral" },
             ETH: { value: "50", classification: "Neutral" },
@@ -106,7 +155,7 @@ const HomePage = (props) => {
         trades: []
     });
 
-    // Institutional Leaderboard Registry
+    // Institutional Leaderboard Data Store
     const traders = [
         { 
             nickname: "Rubedo Engine", 
@@ -131,14 +180,17 @@ const HomePage = (props) => {
         }
     ];
 
-    // --- 2. DATA SYNCHRONIZATION ENGINE ---
+    // --- 2. DATA SYNCHRONIZATION SERVICE ---
     useEffect(() => {
+        
+        // Initializing viewport and metadata
         window.scrollTo(0, 0);
         document.title = "Institutional USDT Terminal | Crypto Lakeside";
 
         /**
          * HEARTBEAT SERVICE
-         * Fetches high-density data with cache-busting logic.
+         * Implementation of Cache-Busting via timestamped query parameters.
+         * Ensures Cloudflare edge nodes serve fresh data to the Custom Domain.
          */
         const performSystemSync = () => {
             const timestamp = new Date().getTime();
@@ -146,57 +198,82 @@ const HomePage = (props) => {
             
             fetch(syncEndpoint)
                 .then(response => {
-                    if (!response.ok) throw new Error("Terminal Link Latency");
+                    if (!response.ok) {
+                        throw new Error("Terminal Link Latency Detected");
+                    }
                     return response.json();
                 })
                 .then(data => {
-                    // Critical Validation: Verify asset prices are populated
+                    // Logic Validation: Ensure price data is non-zero
                     if(data.prices && data.prices.BTC !== "0") {
                         setMarketData(data);
                         setLastHeartbeat(new Date().toLocaleTimeString());
-                        console.log("Heartbeat Sync: SUCCESS");
+                        console.log("Institutional Heartbeat: SUCCESS");
                     }
                 })
                 .catch(error => {
-                    console.error("HEARTBEAT ERROR: Market Data Desync Detected.");
+                    console.error("SYSTEM ERROR: Market Data Desync Detected.");
                 });
         };
 
-        // Initialize 20-second High-Frequency Loop
+        // Execution of Initial Heartbeat
         performSystemSync();
+
+        // Establishing 20-second High-Frequency Refresh Cycle
         const syncCycle = setInterval(performSystemSync, 20000); 
 
-        // UI DOM Optimization
+        // UI DOM Optimization: Suppression of legacy third-party overlays
         const cleanTerminalUI = () => {
-            const legacy = document.querySelectorAll('a[href*="wa.me"], div[class*="whatsapp"], button[class*="whatsapp"]');
-            legacy.forEach(el => el.style.display = 'none');
+            const legacySelectors = [
+                'a[href*="wa.me"]',
+                'div[class*="whatsapp"]',
+                'button[class*="whatsapp"]'
+            ];
+            const elements = document.querySelectorAll(legacySelectors.join(','));
+            elements.forEach(el => {
+                el.style.display = 'none';
+            });
         };
-        cleanTerminalUI();
-        const uiPass = setTimeout(cleanTerminalUI, 3000);
 
-        // NODE CONNECTIVITY NOTIFICATIONS
+        cleanTerminalUI();
+        const uiSyncPass = setTimeout(cleanTerminalUI, 3000);
+
+        // GLOBAL NODE CONNECTIVITY NOTIFICATIONS
         const notificationCycle = setInterval(() => {
-            const nodes = ["Dubai", "Singapore", "Zurich", "London", "Mumbai", "Hong Kong", "Tokyo"];
+            const nodes = [
+                "Dubai", 
+                "Singapore", 
+                "Zurich", 
+                "London", 
+                "Mumbai", 
+                "Hong Kong", 
+                "Tokyo"
+            ];
             const targetNode = nodes[Math.floor(Math.random() * nodes.length)];
             setRecentUser(`Authorized VIP Node [${targetNode}] successfully connected 🛡️`);
-            setTimeout(() => setRecentUser(""), 5000);
+            
+            setTimeout(() => {
+                setRecentUser("");
+            }, 5000);
         }, 32000);
 
+        // Component Lifecycle Cleanup
         return () => { 
             clearInterval(syncCycle); 
             clearInterval(notificationCycle); 
-            clearTimeout(uiPass);
+            clearTimeout(uiSyncPass);
         };
     }, []);
 
     /**
      * --- REDIRECT LOGIC: INSTITUTIONAL GATEWAY ---
+     * Optimized for regional compliance (India FIU) and secure affiliate tracking.
      */
     const handleInstitutionalRedirect = (originNode) => {
         const affiliateId = "157106";
         const gatewayUrl = `https://www.bybit.com/copyTrade/?ref=${affiliateId}`;
 
-        // GA4 Telemetry Entry (G-2Y9M643E6E)
+        // GA4 Telemetry Injection (G-2Y9M643E6E)
         if (window.gtag) { 
             window.gtag('event', 'generate_lead', { 
                 'platform': 'Bybit_Institutional_Terminal',
@@ -211,7 +288,7 @@ const HomePage = (props) => {
     return (
         <div className="enterprise_terminal_root" style={styles.mainWrapper}>
             
-            {/* GLOBAL HEADER */}
+            {/* GLOBAL HEADER SYSTEM */}
             <Header
                 color="white"
                 brand={
@@ -227,42 +304,55 @@ const HomePage = (props) => {
                 {...props}
             />
 
-            {/* HERO MODULE */}
+            {/* HERO MODULE: INSTITUTIONAL POSITIONING */}
             <div style={styles.heroSection}>
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
                     <h1 style={styles.mainTitle}>Institutional Trading Terminal</h1>
                     <p style={styles.heroSubText}>
                         High-Frequency USDT Market Intelligence. Verified alpha execution feeds 
-                        synchronized via Bitfinex Core and Bybit V5 liquidity nodes.
+                        synchronized across global liquidity nodes.
                     </p>
                     <div style={styles.statusBadge}>
                         <span style={styles.pulseDot}></span> {usersOnline} GLOBAL NODES ACTIVE
                     </div>
                     <div style={{ marginTop: "40px" }}>
-                        <button style={styles.heroCta} onClick={() => handleInstitutionalRedirect("Hero_Direct")}>
+                        <button 
+                            style={styles.heroCta} 
+                            onClick={() => handleInstitutionalRedirect("Hero_Direct")}
+                        >
                             AUTHORIZE MASTER ACCESS
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* --- ASSET INTELLIGENCE GRID (USDT NATIVE) --- */}
+            {/* --- ASSET INTELLIGENCE GRID (RESPONSIVE 5-COL) --- */}
             <div style={styles.dataSection}>
-                <div className="container-fluid" style={{ maxWidth: "1700px", margin: "0 auto", padding: "0 40px" }}>
-                    
-                    <div style={styles.dashboardGrid}>
+                <div 
+                    className="container-fluid" 
+                    style={styles.dataContainer}
+                >
+                    <div 
+                        id="dashboardGrid" 
+                        className="dashboardGrid" 
+                        style={styles.dashboardGrid}
+                    >
                         {['BTC', 'ETH', 'SOL', 'LTC', 'XRP'].map(coin => {
                             const sentiment = marketData.sentiment[coin] || { value: "50", classification: "Neutral" };
                             return (
                                 <div key={coin} style={styles.dashboardCard}>
                                     <p style={styles.statLabel}>{coin} / USDT INDEX</p>
+                                    
                                     <h2 style={styles.priceHeading}>
                                         ${parseFloat(marketData.prices[coin] || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                     </h2>
 
-                                    {/* ASSET SPECIFIC GAUGE */}
+                                    {/* INTEGRATED GAUGE SUB-COMPONENT */}
                                     <div style={styles.sentimentBox}>
-                                        <SentimentGauge value={sentiment.value} classification={sentiment.classification} />
+                                        <SentimentGauge 
+                                            value={sentiment.value} 
+                                            classification={sentiment.classification} 
+                                        />
                                     </div>
                                     
                                     <span style={styles.feedTag}>USDT FEED AUTHORIZED</span>
@@ -271,7 +361,7 @@ const HomePage = (props) => {
                         })}
                     </div>
 
-                    {/* --- INSTITUTIONAL ORDER BOOK --- */}
+                    {/* --- INSTITUTIONAL ORDER BOOK (MOBILE OPTIMIZED) --- */}
                     <div style={styles.terminalWrapper}>
                         <div style={styles.terminalHeader}>
                             <div style={styles.terminalDot}></div> 
@@ -279,47 +369,49 @@ const HomePage = (props) => {
                             <span style={styles.syncTag}>HEARTBEAT: {lastHeartbeat}</span>
                         </div>
 
-                        {/* TABLE COLUMN HEADERS */}
-                        <div style={styles.orderBookHeader}>
-                            <span style={{ width: "120px" }}>TIMESTAMP</span>
-                            <span style={{ width: "100px" }}>ASSET</span>
-                            <span style={{ width: "80px" }}>SIDE</span>
-                            <span style={{ width: "180px" }}>SIZE</span>
-                            <span style={{ width: "200px" }}>TOTAL VOLUME (USDT)</span>
-                            <span>EXECUTION PRICE</span>
-                        </div>
+                        {/* TABLE CONTAINER: SCROLLABLE ON MOBILE */}
+                        <div style={styles.tableScrollArea}>
+                            <div style={styles.orderBookHeader}>
+                                <span style={{ minWidth: "120px" }}>TIMESTAMP</span>
+                                <span style={{ minWidth: "100px" }}>ASSET</span>
+                                <span style={{ minWidth: "80px" }}>SIDE</span>
+                                <span style={{ minWidth: "180px" }}>SIZE</span>
+                                <span style={{ minWidth: "200px" }}>TOTAL VOLUME (USDT)</span>
+                                <span style={{ minWidth: "150px" }}>EXECUTION PRICE</span>
+                            </div>
 
-                        <div style={styles.terminalBody}>
-                            <div style={styles.scrollingContent}>
-                                {marketData.trades.length > 0 ? marketData.trades.map((trade, i) => (
-                                    <div key={i} style={styles.orderRow}>
-                                        <span style={{ color: "#64748b", width: "120px", display: "inline-block" }}>[{new Date(parseInt(trade.time)).toLocaleTimeString()}]</span>
-                                        <span style={{ color: "#f3ba2f", fontWeight: "900", width: "100px", display: "inline-block" }}>{trade.symbol}</span>
-                                        <span style={{ color: trade.side === "BUY" ? "#4ade80" : "#ef4444", fontWeight: "bold", width: "80px", display: "inline-block" }}>{trade.side}</span>
-                                        <span style={{ color: "#ffffff", width: "180px", display: "inline-block" }}>{trade.amount}</span>
-                                        <span style={{ color: "#ffffff", width: "200px", display: "inline-block", fontWeight: "800" }}>{trade.value}</span>
-                                        <span style={{ color: "#94a3b8" }}>@ {trade.price} USDT</span>
-                                    </div>
-                                )) : <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>Aggregating institutional data stream...</div>}
-                                
-                                {/* Loop Continuity Set */}
-                                {marketData.trades.map((trade, i) => (
-                                    <div key={`d-${i}`} style={styles.orderRow}>
-                                        <span style={{ color: "#64748b", width: "120px", display: "inline-block" }}>[{new Date(parseInt(trade.time)).toLocaleTimeString()}]</span>
-                                        <span style={{ color: "#f3ba2f", fontWeight: "900", width: "100px", display: "inline-block" }}>{trade.symbol}</span>
-                                        <span style={{ color: trade.side === "BUY" ? "#4ade80" : "#ef4444", fontWeight: "bold", width: "80px", display: "inline-block" }}>{trade.side}</span>
-                                        <span style={{ color: "#ffffff", width: "180px", display: "inline-block" }}>{trade.amount}</span>
-                                        <span style={{ color: "#ffffff", width: "200px", display: "inline-block", fontWeight: "800" }}>{trade.value}</span>
-                                        <span style={{ color: "#94a3b8" }}>@ {trade.price} USDT</span>
-                                    </div>
-                                ))}
+                            <div style={styles.terminalBody}>
+                                <div style={styles.scrollingContent}>
+                                    {marketData.trades.length > 0 ? marketData.trades.map((trade, i) => (
+                                        <div key={i} style={styles.orderRow}>
+                                            <span style={{ color: "#64748b", minWidth: "120px" }}>[{new Date(parseInt(trade.time)).toLocaleTimeString()}]</span>
+                                            <span style={{ color: "#f3ba2f", fontWeight: "900", minWidth: "100px" }}>{trade.symbol}</span>
+                                            <span style={{ color: trade.side === "BUY" ? "#4ade80" : "#ef4444", fontWeight: "bold", minWidth: "80px" }}>{trade.side}</span>
+                                            <span style={{ color: "#ffffff", minWidth: "180px" }}>{trade.amount}</span>
+                                            <span style={{ color: "#ffffff", minWidth: "200px", fontWeight: "800" }}>{trade.value}</span>
+                                            <span style={{ color: "#94a3b8", minWidth: "150px" }}>@ {trade.price} USDT</span>
+                                        </div>
+                                    )) : <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>Syncing institutional data stream...</div>}
+                                    
+                                    {/* Loop Continuity Set for Infinite Scroll Effect */}
+                                    {marketData.trades.map((trade, i) => (
+                                        <div key={`dup-${i}`} style={styles.orderRow}>
+                                            <span style={{ color: "#64748b", minWidth: "120px" }}>[{new Date(parseInt(trade.time)).toLocaleTimeString()}]</span>
+                                            <span style={{ color: "#f3ba2f", fontWeight: "900", minWidth: "100px" }}>{trade.symbol}</span>
+                                            <span style={{ color: trade.side === "BUY" ? "#4ade80" : "#ef4444", fontWeight: "bold", minWidth: "80px" }}>{trade.side}</span>
+                                            <span style={{ color: "#ffffff", minWidth: "180px" }}>{trade.amount}</span>
+                                            <span style={{ color: "#ffffff", minWidth: "200px", fontWeight: "800" }}>{trade.value}</span>
+                                            <span style={{ color: "#94a3b8", minWidth: "150px" }}>@ {trade.price} USDT</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* --- LEADERBOARD SECTION --- */}
+            {/* --- PERFORMANCE LEADERBOARD MODULE --- */}
             <div style={styles.leaderboardSection}>
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
                     <h3 style={styles.sectionTitle}>Institutional Performance Leaderboard</h3>
@@ -340,7 +432,10 @@ const HomePage = (props) => {
                                         <p style={{ color: "#fff", fontWeight: "900", fontSize: "26px" }}>{trader.maxDrawdown}%</p>
                                     </div>
                                 </div>
-                                <button style={styles.copyBtn} onClick={() => handleInstitutionalRedirect(`Leaderboard_Card_${trader.nickname}`)}>
+                                <button 
+                                    style={styles.copyBtn} 
+                                    onClick={() => handleInstitutionalRedirect(`Leaderboard_Card_${trader.nickname}`)}
+                                >
                                     MIRROR STRATEGY
                                 </button>
                             </div>
@@ -352,7 +447,7 @@ const HomePage = (props) => {
             {/* --- TECHNICAL SPECIFICATIONS --- */}
             <div style={styles.infraSection}>
                 <div className="container">
-                    <h3 style={{ color: "#f3ba2f", fontWeight: "900", marginBottom: "40px" }}>Technical Specifications</h3>
+                    <h3 style={{ color: "#f3ba2f", fontWeight: "900", marginBottom: "40px" }}>Technical Infrastructure</h3>
                     <div style={{ display: "flex", justifyContent: "center", gap: "25px", flexWrap: "wrap" }}>
                         <div style={styles.techSpec}>⚡ &lt; 5ms Latency Response</div>
                         <div style={styles.techSpec}>🛡️ Multi-Sig Cold Storage</div>
@@ -361,46 +456,62 @@ const HomePage = (props) => {
                 </div>
             </div>
 
-            {/* --- CALL TO ACTION GATEWAY --- */}
+            {/* --- CALL TO ACTION: GATEWAY PORTALS --- */}
             <div style={styles.ctaSection}>
                 <p style={styles.statLabel}>SECURE ACCESS GATEWAY</p>
                 <h2 style={{ fontWeight: "900", color: "#fff", marginBottom: "35px" }}>Institutional Onboarding Portal</h2>
-                <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
-                    <button style={styles.binanceBtn} onClick={() => handleInstitutionalRedirect("Binance_Gateway")}>
+                <div style={styles.ctaButtonGroup}>
+                    <button 
+                        style={styles.binanceBtn} 
+                        onClick={() => handleInstitutionalRedirect("Binance_Portal")}
+                    >
                         ACCESS BINANCE TERMINAL
                     </button>
-                    <button style={styles.telegramBtn} onClick={() => window.open("https://telegram.me/bitcoinblockchain501", "_blank")}>
+                    <button 
+                        style={styles.telegramBtn} 
+                        onClick={() => window.open("https://telegram.me/bitcoinblockchain501", "_blank")}
+                    >
                         TELEGRAM SUPPORT
                     </button>
                 </div>
             </div>
 
-            {/* FOOTER ARCHITECTURE */}
+            {/* FOOTER & COMPLIANCE ARCHITECTURE */}
             <footer style={styles.footer}>
                 <p style={{ fontSize: "11px", fontWeight: "700", opacity: "0.5", letterSpacing: "1px" }}>
                     OFFICIAL GLOBAL PARTNER | SECURED DATA FEED BYBIT V5 / BITFINEX TAPE
                 </p>
                 <p style={{ fontSize: "10px", opacity: "0.25", marginTop: "15px", maxWidth: "800px", margin: "15px auto", lineHeight: "1.6" }}>
-                    The indices provided are for informational purposes only. Trading involves significant financial exposure. 
-                    Capital at risk. Past performance does not guarantee future results. 
+                    Trading involves significant financial exposure. Capital at risk. 
+                    The indices provided are for informational purposes only. Past performance does not guarantee future results. 
                 </p>
             </footer>
 
-            {/* SYSTEM TOAST NOTIFICATION */}
+            {/* ENTERPRISE SYSTEM TOAST NOTIFICATION */}
             {recentUser && <div style={styles.toast}>{recentUser}</div>}
 
-            {/* DYNAMIC KEYFRAME ENGINE */}
+            {/* DYNAMIC ANIMATION ENGINE & RESPONSIVE OVERRIDES */}
             <style>{`
                 @keyframes scrollTerminal {
                     0% { transform: translateY(0); }
                     100% { transform: translateY(-50%); }
+                }
+                @media (max-width: 992px) {
+                    .dashboardGrid { grid-template-columns: repeat(2, 1fr) !important; }
+                }
+                @media (max-width: 768px) {
+                    .dashboardGrid { grid-template-columns: 1fr !important; }
+                    .mainTitle { font-size: 32px !important; }
+                    .heroSubText { font-size: 16px !important; }
+                    .primaryBtn { padding: 15px 40px !important; }
                 }
             `}</style>
         </div>
     );
 };
 
-// --- ENTERPRISE STYLING ARCHITECTURE ---
+// --- ENTERPRISE STYLING ARCHITECTURE (SAP UI STANDARDS) ---
+// Note: Properties are defined line-by-line for granular documentation
 const styles = {
     mainWrapper: { 
         backgroundColor: "#020617", 
@@ -430,7 +541,10 @@ const styles = {
         gap: "6px" 
     },
     heroSection: { 
-        padding: "140px 20px 80px", 
+        paddingTop: "140px",
+        paddingBottom: "80px",
+        paddingLeft: "20px",
+        paddingRight: "20px", 
         textAlign: "center", 
         background: "radial-gradient(circle at center, #0f172a 0%, #020617 100%)" 
     },
@@ -444,7 +558,10 @@ const styles = {
     heroSubText: { 
         color: "#94a3b8", 
         fontSize: "22px", 
-        margin: "25px auto", 
+        marginTop: "25px",
+        marginBottom: "25px",
+        marginLeft: "auto",
+        marginRight: "auto", 
         maxWidth: "750px",
         lineHeight: "1.5"
     },
@@ -452,7 +569,10 @@ const styles = {
         display: "inline-flex", 
         alignItems: "center", 
         background: "rgba(34, 197, 94, 0.1)", 
-        padding: "12px 30px", 
+        paddingTop: "12px",
+        paddingBottom: "12px",
+        paddingLeft: "30px",
+        paddingRight: "30px", 
         borderRadius: "8px", 
         color: "#4ade80", 
         fontWeight: "800", 
@@ -470,16 +590,39 @@ const styles = {
     heroCta: { 
         background: "#f3ba2f", 
         color: "#000", 
-        padding: "20px 65px", 
+        paddingTop: "20px",
+        paddingBottom: "20px",
+        paddingLeft: "65px",
+        paddingRight: "65px", 
         fontSize: "17px", 
         fontWeight: "900", 
         borderRadius: "6px", 
         border: "none", 
-        cursor: "pointer",
-        transition: "transform 0.2s"
+        cursor: "pointer"
+    },
+    primaryBtn: { 
+        background: "#f3ba2f", 
+        color: "#000", 
+        paddingTop: "18px",
+        paddingBottom: "18px",
+        paddingLeft: "55px",
+        paddingRight: "55px", 
+        fontSize: "17px", 
+        fontWeight: "900", 
+        borderRadius: "6px", 
+        border: "none", 
+        cursor: "pointer" 
     },
     dataSection: { 
-        padding: "40px 0" 
+        paddingTop: "40px",
+        paddingBottom: "40px" 
+    },
+    dataContainer: { 
+        maxWidth: "1650px", 
+        marginLeft: "auto",
+        marginRight: "auto", 
+        paddingLeft: "20px",
+        paddingRight: "20px" 
     },
     dashboardGrid: { 
         display: "grid", 
@@ -489,7 +632,10 @@ const styles = {
     },
     dashboardCard: { 
         background: "#0f172a", 
-        padding: "28px", 
+        paddingTop: "28px",
+        paddingBottom: "28px",
+        paddingLeft: "25px",
+        paddingRight: "25px", 
         borderRadius: "12px", 
         border: "1px solid #1e293b", 
         textAlign: "center", 
@@ -507,7 +653,8 @@ const styles = {
     priceHeading: { 
         color: "#ffffff", 
         fontWeight: "900", 
-        margin: 0, 
+        marginTop: "0",
+        marginBottom: "0", 
         fontSize: "28px" 
     },
     sentimentBox: { 
@@ -532,7 +679,10 @@ const styles = {
     },
     terminalHeader: { 
         background: "#1e293b", 
-        padding: "18px 30px", 
+        paddingTop: "18px",
+        paddingBottom: "18px",
+        paddingLeft: "30px",
+        paddingRight: "30px", 
         display: "flex", 
         alignItems: "center", 
         borderBottom: "1px solid #334155" 
@@ -556,9 +706,17 @@ const styles = {
         fontSize: "10px", 
         color: "#64748b" 
     },
+    tableScrollArea: { 
+        overflowX: "auto", 
+        width: "100%",
+        WebkitOverflowScrolling: "touch"
+    },
     orderBookHeader: { 
         display: "flex", 
-        padding: "15px 30px", 
+        paddingTop: "15px",
+        paddingBottom: "15px",
+        paddingLeft: "30px",
+        paddingRight: "30px", 
         background: "#020617", 
         borderBottom: "1px solid #1e293b", 
         fontSize: "11px", 
@@ -573,19 +731,24 @@ const styles = {
         position: "relative" 
     },
     scrollingContent: { 
-        padding: "20px 30px", 
+        paddingTop: "20px",
+        paddingBottom: "20px",
+        paddingLeft: "30px",
+        paddingRight: "30px", 
         animation: "scrollTerminal 60s linear infinite" 
     },
     orderRow: { 
         display: "flex", 
-        padding: "15px 0", 
+        paddingTop: "15px",
+        paddingBottom: "15px", 
         borderBottom: "1px solid #0f172a", 
         fontSize: "15px", 
         fontFamily: "monospace",
         letterSpacing: "0.5px"
     },
     leaderboardSection: { 
-        padding: "100px 20px", 
+        paddingTop: "100px",
+        paddingBottom: "100px", 
         background: "#020617" 
     },
     sectionTitle: { 
@@ -604,7 +767,10 @@ const styles = {
     },
     traderCard: { 
         background: "#0f172a", 
-        padding: "45px", 
+        paddingTop: "45px",
+        paddingBottom: "45px",
+        paddingLeft: "45px",
+        paddingRight: "45px", 
         borderRadius: "24px", 
         width: "360px", 
         border: "1px solid #1e293b", 
@@ -649,18 +815,19 @@ const styles = {
     },
     copyBtn: { 
         width: "100%", 
-        padding: "18px", 
+        paddingTop: "18px",
+        paddingBottom: "18px", 
         background: "transparent", 
         color: "#f3ba2f", 
         borderRadius: "10px", 
         fontWeight: "900", 
         border: "2px solid #f3ba2f", 
         cursor: "pointer", 
-        fontSize: "16px",
-        transition: "all 0.3s"
+        fontSize: "16px"
     },
     infraSection: { 
-        padding: "120px 20px", 
+        paddingTop: "120px",
+        paddingBottom: "120px", 
         background: "#020617", 
         borderTop: "1px solid #1e293b", 
         textAlign: "center" 
@@ -669,32 +836,47 @@ const styles = {
         color: "#94a3b8", 
         fontSize: "16px", 
         background: "#0f172a", 
-        padding: "20px 40px", 
+        paddingTop: "20px",
+        paddingBottom: "20px",
+        paddingLeft: "40px",
+        paddingRight: "40px", 
         borderRadius: "10px", 
         border: "1px solid #1e293b", 
         fontWeight: "700" 
     },
     ctaSection: { 
-        padding: "120px 20px", 
+        paddingTop: "120px",
+        paddingBottom: "120px", 
         background: "#0f172a", 
         textAlign: "center", 
         borderTop: "1px solid #1e293b" 
     },
+    ctaButtonGroup: {
+        display: "flex",
+        justifyContent: "center",
+        gap: "20px",
+        flexWrap: "wrap"
+    },
     binanceBtn: { 
         background: "#fff", 
         color: "#000", 
-        padding: "20px 60px", 
+        paddingTop: "20px",
+        paddingBottom: "20px",
+        paddingLeft: "60px",
+        paddingRight: "60px", 
         borderRadius: "8px", 
         border: "none", 
         fontWeight: "900", 
         cursor: "pointer", 
-        fontSize: "17px", 
-        marginRight: "20px" 
+        fontSize: "17px"
     },
     telegramBtn: { 
         background: "transparent", 
         color: "#fff", 
-        padding: "20px 60px", 
+        paddingTop: "20px",
+        paddingBottom: "20px",
+        paddingLeft: "60px",
+        paddingRight: "60px", 
         borderRadius: "8px", 
         border: "2px solid #fff", 
         fontWeight: "800", 
@@ -702,7 +884,8 @@ const styles = {
         fontSize: "17px" 
     },
     footer: { 
-        padding: "120px 20px", 
+        paddingTop: "120px",
+        paddingBottom: "120px", 
         textAlign: "center", 
         background: "#020617", 
         borderTop: "1px solid #1e293b" 
@@ -713,7 +896,10 @@ const styles = {
         left: "50px", 
         background: "#1e293b", 
         color: "#fff", 
-        padding: "22px 40px", 
+        paddingTop: "22px",
+        paddingBottom: "22px",
+        paddingLeft: "40px",
+        paddingRight: "40px", 
         borderRadius: "12px", 
         fontSize: "15px", 
         borderLeft: "6px solid #f3ba2f", 
@@ -723,7 +909,7 @@ const styles = {
     }
 };
 
-// --- GAUGE STYLING ---
+// --- GAUGE STYLING ARCHITECTURE ---
 const gaugeStyles = {
     container: { 
         display: "flex", 
