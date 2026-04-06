@@ -4,17 +4,16 @@ import os
 import time
 
 def fetch_market_data():
-    print("--- 🚀 Institutional Market Intelligence Start ---")
+    print("--- 🚀 Institutional Market Intelligence: Binance Engine ---")
+    # Mapping symbols for Binance
     symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
     
-    # Use a session for better persistence
     session = requests.Session()
     session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-        "Accept": "application/json"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     })
 
-    # 1. FETCH FEAR & GREED
+    # 1. FETCH FEAR & GREED (Alternative.me - Already Working)
     fng_data = {"value": "50", "classification": "Neutral"}
     try:
         fng_res = session.get("https://api.alternative.me/fng/", timeout=15).json()
@@ -23,67 +22,60 @@ def fetch_market_data():
             "classification": fng_res['data'][0]['value_classification'],
             "timestamp": fng_res['data'][0]['timestamp']
         }
-        print(f"✅ Sentiment: {fng_data['classification']}")
-    except Exception as e:
-        print(f"❌ Sentiment Fail: {e}")
+        print(f"✅ Sentiment Synced: {fng_data['classification']}")
+    except:
+        print("⚠️ Sentiment API throttle - using default.")
 
-    # 2. FETCH PRICES & TRADES
+    # 2. FETCH PRICES & TRADES FROM BINANCE (More stable for Cloud)
     prices = {}
     whale_list = []
 
     for symbol in symbols:
         try:
-            # Try official API first, then fallback
-            url = f"https://api.bybit.com/v5/market/tickers?category=spot&symbol={symbol}"
-            resp = session.get(url, timeout=15)
-            data = resp.json()
-            
-            if data.get('retCode') == 0:
-                price = data['result']['list'][0]['lastPrice']
-                prices[symbol.replace("USDT", "")] = price
-                print(f"✅ {symbol}: ${price}")
-            else:
-                print(f"⚠️ Bybit error for {symbol}: {data.get('retMsg')}")
+            # Get Price from Binance
+            p_url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol}"
+            p_data = session.get(p_url, timeout=15).json()
+            price = p_data['price']
+            prices[symbol.replace("USDT", "")] = price
+            print(f"✅ {symbol} Price: ${float(price):,.2f}")
 
-            # Fetch Trades
-            t_url = f"https://api.bybit.com/v5/market/recent-trade?category=spot&symbol={symbol}&limit=50"
-            t_data = session.get(t_url, timeout=15).json()
+            # Get Recent Trades from Binance
+            t_url = f"https://api.binance.com/api/v3/trades?symbol={symbol}&limit=50"
+            trades = session.get(t_url, timeout=15).json()
             
-            if t_data.get('retCode') == 0:
-                for t in t_data['result']['list']:
-                    p = float(t['price'])
-                    s = float(t['size'])
-                    val = p * s
-                    # Threshold: $1000 to ensure we get data
-                    if val > 1000:
-                        whale_list.append({
-                            "symbol": symbol.replace("USDT", ""),
-                            "time": t['time'],
-                            "side": t['side'],
-                            "value": f"${val:,.2f}",
-                            "price": f"${p:,.2f}"
-                        })
-            
-            # Small sleep to avoid rate limits
-            time.sleep(1)
+            for t in trades:
+                p = float(t['price'])
+                q = float(t['qty'])
+                val = p * q
+                # Keeping threshold at $1000 to keep terminal busy
+                if val > 1000:
+                    whale_list.append({
+                        "symbol": symbol.replace("USDT", ""),
+                        "time": str(t['time']),
+                        "side": "Buy" if t['isBuyerMaker'] == False else "Sell",
+                        "value": f"${val:,.2f}",
+                        "price": f"${p:,.2f}"
+                    })
+            time.sleep(0.5) # Prevent rate limiting
 
         except Exception as e:
-            print(f"❌ Bybit Connection Fail for {symbol}: {e}")
+            print(f"❌ Binance Error for {symbol}: {e}")
 
-    # 3. SAVE DATA
-    whale_list.sort(key=lambda x: x['time'], reverse=True)
+    # 3. CONSOLIDATE & SAVE
+    # Sort by time (Binance uses milliseconds)
+    whale_list.sort(key=lambda x: int(x['time']), reverse=True)
+    
     final_output = {
         "sentiment": fng_data,
         "prices": prices,
         "trades": whale_list[:50]
     }
 
-    # IMPORTANT: Use absolute paths for GitHub Actions
     os.makedirs('public', exist_ok=True)
     with open('public/whales.json', 'w') as f:
         json.dump(final_output, f, indent=4)
         
-    print(f"--- 🏁 Sync Complete. Trades Captured: {len(whale_list)} ---")
+    print(f"--- 🏁 Final Sync Complete. Captured: {len(whale_list)} trades ---")
 
 if __name__ == "__main__":
     fetch_market_data()
