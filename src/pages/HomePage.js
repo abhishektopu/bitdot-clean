@@ -1,26 +1,29 @@
 /**
  * =============================================================================
  * PROJECT:        Crypto Lakeside Institutional Terminal
- * MODULE:         Core.View.HomePage
- * VERSION:        6.5.0 (Platinum Enterprise Gold Build)
+ * MODULE:         Core.View.HomePage.Enterprise
+ * VERSION:        7.0.0 (Platinum Gold Build)
  * DEVELOPER:      Abhishek Topu (SAP Certified)
- * ARCHITECTURE:   React 18.x / USDT Liquid Aggregate / Multi-Node Relay
+ * ARCHITECTURE:   React 18.x / Multi-Asset Data Relay / Responsive UI
  * 
  * -----------------------------------------------------------------------------
- * TECHNICAL SPECIFICATIONS:
+ * SYSTEM ARCHITECTURE OVERVIEW:
  * -----------------------------------------------------------------------------
- * 1. DATA KERNEL:      whale_tracker.py v5.2 (High-Frequency Scraper)
- * 2. SYNC PROTOCOL:    Asynchronous JSON Heartbeat / Cache-Buster v=Date.now()
- * 3. COMPLIANCE:       India FIU / Bybit Affiliate Protocol (Ref: 157106)
- * 4. TELEMETRY:        Google Analytics 4 / Measurement ID: G-2Y9M643E6E
- * 5. UI ENGINE:        CSS Grid 2.0 / SVG Vector Interpolation / Marquee 4.0
+ * This module serves as the primary entry point for the Institutional Terminal.
+ * It implements a multi-layered rendering engine with the following priority:
+ * 
+ * LAYER 1 (Z-INDEX 9000): Global High-Frequency Price Ticker
+ * LAYER 2 (Z-INDEX 8000): Institutional Navigation Header (Offset 40px)
+ * LAYER 3 (Z-INDEX 7000): System Toast & Authorization Notifications
+ * LAYER 4 (Z-INDEX 1000): Data Dashboard & Execution Tape
  * 
  * -----------------------------------------------------------------------------
- * RESPONSIVE BREAKPOINTS:
+ * DATA SPECIFICATIONS:
  * -----------------------------------------------------------------------------
- * - Ultra-Wide:       5-Column Institutional Intelligence Grid
- * - Desktop/Tablet:   Responsive Wrapping / Swipable Order Book Tape
- * - Mobile:           Vertical Asset Stacking / Compact Sentiment Gauges
+ * - KERNEL:         Bitfinex Core Tape / Bybit V5 Liquid Aggregate
+ * - REFRESH:        20,000ms Heartbeat Cycle
+ * - CACHE:          Enforced v=timestamp Query Protocol
+ * - ANALYTICS:      GA4 G-2Y9M643E6E Integration
  * =============================================================================
  */
 
@@ -37,8 +40,8 @@ import HeaderLinks from "../components/Header/HeaderLinks.js";
  * -----------------------------------------------------------------------------
  * SUB-COMPONENT: PriceTicker
  * -----------------------------------------------------------------------------
- * Purpose: Provides high-level institutional authority via real-time data.
- * Function: Continuous horizontal scroll of USDT-paired index prices.
+ * Objective: Instant institutional data presence.
+ * Function: Continuous horizontal marquee of USDT paired assets.
  */
 const PriceTicker = ({ 
     prices 
@@ -52,8 +55,14 @@ const PriceTicker = ({
     ];
     
     return (
-        <div style={tickerStyles.container}>
-            <div style={tickerStyles.scrollWrapper}>
+        <div 
+            id="global-ticker-container"
+            style={tickerStyles.container}
+        >
+            <div 
+                id="global-ticker-scroll-wrapper"
+                style={tickerStyles.scrollWrapper}
+            >
                 {assets.map(asset => (
                     <span 
                         key={asset} 
@@ -70,7 +79,11 @@ const PriceTicker = ({
                         </span>
                     </span>
                 ))}
-                {/* Continuity Set for Seamless Marquee Loop */}
+                {/* 
+                  * Continuity Set:
+                  * Duplicating the asset map ensures that the marquee 
+                  * has no "gap" during the transition cycle.
+                  */}
                 {assets.map(asset => (
                     <span 
                         key={`loop-${asset}`} 
@@ -96,8 +109,8 @@ const PriceTicker = ({
  * -----------------------------------------------------------------------------
  * SUB-COMPONENT: SentimentGauge
  * -----------------------------------------------------------------------------
- * Purpose: Visual representation of asset-specific momentum.
- * Logic: Interpolates 0-100 value into SVG path offsets and needle rotation.
+ * Logic: maps a 0-100 index value to a -90 to +90 degree vector rotation.
+ * UI: Implements institutional color coding for Extreme Fear/Greed.
  */
 const SentimentGauge = ({ 
     value, 
@@ -105,7 +118,7 @@ const SentimentGauge = ({
 }) => {
     const numericValue = parseInt(value) || 50;
     
-    // Rotation Mapping: 0% = -90deg, 100% = +90deg
+    // Mapping: 0% = -90deg, 100% = +90deg
     const needleRotation = (numericValue / 100) * 180 - 90;
     
     /**
@@ -113,27 +126,30 @@ const SentimentGauge = ({
      */
     const getSentimentColor = (val) => {
         if (val <= 25) {
-            return "#ef4444"; // Extreme Fear
+            return "#ef4444"; // Extreme Fear (Red)
         }
         if (val <= 45) {
-            return "#f97316"; // Fear
+            return "#f97316"; // Fear (Orange)
         }
         if (val <= 75) {
-            return "#eab308"; // Greed
+            return "#eab308"; // Greed (Yellow)
         }
-        return "#22c55e"; // Extreme Greed
+        return "#22c55e"; // Extreme Greed (Green)
     };
 
     const activeColor = getSentimentColor(numericValue);
 
     return (
-        <div style={gaugeStyles.container}>
+        <div 
+            id="gauge-root-container"
+            style={gaugeStyles.container}
+        >
             <svg 
                 width="140" 
                 height="80" 
                 viewBox="0 0 140 80"
             >
-                {/* Gauge Background Arc */}
+                {/* Institutional Track Background */}
                 <path 
                     d="M20,70 A50,50 0 0,1 120,70" 
                     fill="none" 
@@ -141,7 +157,7 @@ const SentimentGauge = ({
                     strokeWidth="12" 
                     strokeLinecap="round" 
                 />
-                {/* Gauge Active Progress Path */}
+                {/* Asset Specific Progress Track */}
                 <path 
                     d="M20,70 A50,50 0 0,1 120,70" 
                     fill="none" 
@@ -151,10 +167,10 @@ const SentimentGauge = ({
                     strokeDasharray="157" 
                     strokeDashoffset={157 - (numericValue / 100) * 157}
                     style={{ 
-                        transition: 'stroke-dashoffset 1.5s ease-in-out, stroke 1s' 
+                        transition: 'stroke-dashoffset 1.8s ease-in-out, stroke 1.5s' 
                     }}
                 />
-                {/* Gauge Needle Line */}
+                {/* The Gauge Needle Vector */}
                 <line 
                     x1="70" 
                     y1="70" 
@@ -165,10 +181,10 @@ const SentimentGauge = ({
                     strokeLinecap="round" 
                     transform={`rotate(${needleRotation} 70 70)`}
                     style={{ 
-                        transition: 'transform 1.8s cubic-bezier(0.34, 1.56, 0.64, 1)' 
+                        transition: 'transform 2s cubic-bezier(0.34, 1.56, 0.64, 1)' 
                     }}
                 />
-                {/* Needle Pivot Circle */}
+                {/* Center Pivot Point */}
                 <circle 
                     cx="70" 
                     cy="70" 
@@ -176,7 +192,10 @@ const SentimentGauge = ({
                     fill="#ffffff" 
                 />
             </svg>
-            <div style={gaugeStyles.labelContainer}>
+            <div 
+                id="gauge-label-container"
+                style={gaugeStyles.labelContainer}
+            >
                 <p style={{ 
                     ...gaugeStyles.statusText, 
                     color: activeColor 
@@ -203,7 +222,7 @@ const HomePage = (props) => {
     const [recentUser, setRecentUser] = useState("");
     const [lastHeartbeat, setLastHeartbeat] = useState(new Date().toLocaleTimeString());
     
-    // Consolidated Multi-Asset Intelligence Registry
+    // Unified Institutional Data Registry
     const [marketData, setMarketData] = useState({
         prices: { 
             BTC: "0", 
@@ -222,7 +241,7 @@ const HomePage = (props) => {
         trades: []
     });
 
-    // Institutional Leaderboard Data (Static Reference)
+    // Master Leaderboard Registry
     const traders = [
         { 
             nickname: "Rubedo Engine", 
@@ -250,14 +269,14 @@ const HomePage = (props) => {
     // --- 2. DATA SYNCHRONIZATION ENGINE ---
     useEffect(() => {
         
-        // Initializing viewport orientation and metadata
+        // Initializing viewport orientation and browser metadata
         window.scrollTo(0, 0);
         document.title = "Institutional USDT Terminal | Crypto Lakeside";
 
         /**
-         * TRANSACTION SYNCHRONIZATION SERVICE
-         * Execution: Fetches high-density tape data via public/whales.json.
-         * Optimization: Cache-busting parameter enforced for cloud relay.
+         * HEARTBEAT SERVICE
+         * Logic: Implements cache-busting v=timestamp protocol.
+         * Purpose: Ensures Custom Domain edge nodes bypass historical cache.
          */
         const performSystemSync = () => {
             const timestamp = new Date().getTime();
@@ -266,30 +285,30 @@ const HomePage = (props) => {
             fetch(syncEndpoint)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error("Terminal Link Desync detected.");
+                        throw new Error("Institutional Uplink Latency");
                     }
                     return response.json();
                 })
                 .then(data => {
-                    // Verification Logic: Ensure index prices are non-zero
+                    // Logic Validation: Price Data Integrity Check
                     if(data.prices && data.prices.BTC !== "0") {
                         setMarketData(data);
                         setLastHeartbeat(new Date().toLocaleTimeString());
-                        console.log("Institutional Heartbeat: SUCCESS");
+                        console.log("Terminal Heartbeat: SUCCESSFUL");
                     }
                 })
                 .catch(error => {
-                    console.error("CRITICAL: Market Data Heartbeat Failure.");
+                    console.error("CRITICAL SYSTEM ALERT: Market Data Desynchronization.");
                 });
         };
 
-        // Execution of Bootstrap Sync
+        // Execution of Initial Bootstrap Sync
         performSystemSync();
 
-        // Establishing 20-second High-Frequency Polling Cycle
+        // Establishing 20-second High-Frequency Heartbeat Cycle
         const syncCycle = setInterval(performSystemSync, 20000); 
 
-        // UI DOM Refinement: Systematic suppression of extraneous third-party elements
+        // UI DOM Optimization Service
         const cleanTerminalUI = () => {
             const legacySelectors = [
                 'a[href*="wa.me"]',
@@ -305,7 +324,7 @@ const HomePage = (props) => {
         cleanTerminalUI();
         const uiSyncPass = setTimeout(cleanTerminalUI, 3000);
 
-        // GLOBAL NODE CONNECTIVITY NOTIFICATIONS (Simulation)
+        // GLOBAL NODE CONNECTIVITY SIMULATION (Marketing Logic)
         const notificationCycle = setInterval(() => {
             const nodes = [
                 "Dubai", 
@@ -317,14 +336,14 @@ const HomePage = (props) => {
                 "Tokyo"
             ];
             const targetNode = nodes[Math.floor(Math.random() * nodes.length)];
-            setRecentUser(`VIP Node [${targetNode}] terminal successfully authorized 🛡️`);
+            setRecentUser(`Institutional Node [${targetNode}] successfully authorized 🛡️`);
             
             setTimeout(() => {
                 setRecentUser("");
             }, 5000);
         }, 32000);
 
-        // Memory Cleanup on Unmount
+        // System Garbage Collection on Component Unmount
         return () => { 
             clearInterval(syncCycle); 
             clearInterval(notificationCycle); 
@@ -333,15 +352,15 @@ const HomePage = (props) => {
     }, []);
 
     /**
-     * --- TRANSACTION HANDLER: INSTITUTIONAL REDIRECT ---
-     * Compliance: Optimized for regional India FIU standards.
-     * Attribution: Enforces Ref ID 157106.
+     * --- REDIRECT LOGIC: INSTITUTIONAL GATEWAY ---
+     * Compliance: Regional India FIU Logic enabled.
+     * Attribution: Referral ID 157106.
      */
     const handleInstitutionalRedirect = (originNode) => {
         const affiliateId = "157106";
         const gatewayUrl = `https://www.bybit.com/copyTrade/?ref=${affiliateId}`;
 
-        // GA4 Event Trigger (G-2Y9M643E6E)
+        // GA4 Telemetry Injection
         if (window.gtag) { 
             window.gtag('event', 'generate_lead', { 
                 'platform': 'Bybit_Institutional_Terminal',
@@ -354,34 +373,49 @@ const HomePage = (props) => {
     };
 
     return (
-        <div className="enterprise_terminal_root" style={styles.mainWrapper}>
+        <div 
+            id="institutional-app-root"
+            className="enterprise_terminal_root" 
+            style={styles.mainWrapper}
+        >
             
-            {/* 1. TOP SCROLLING PRICE TICKER (FIXED) */}
+            {/* 1. LAYER 9000: GLOBAL PRICE TICKER SYSTEM */}
             <PriceTicker prices={marketData.prices} />
 
-            {/* 2. GLOBAL ENTERPRISE HEADER */}
-            <Header
-                color="white"
-                brand={
-                    <a href="/" style={styles.brandLink}>
-                        <div style={styles.logoCircle}>CL</div>
-                        <div style={styles.brandText}>
-                            <span style={{ color: "#000", fontWeight: "900" }}>CRYPTO</span>
-                            <span style={{ color: "#f3ba2f", fontWeight: "900" }}>LAKESIDE</span>
-                        </div>
-                    </a>
-                }
-                rightLinks={<HeaderLinks />}
-                {...props}
-            />
+            {/* 
+              * 2. LAYER 8000: GLOBAL NAVIGATION HEADER
+              * OFFSET: 40PX to account for Ticker height and logo visibility.
+              */}
+            <div 
+                id="global-header-offset-container"
+                style={styles.headerContainer}
+            >
+                <Header
+                    color="white"
+                    brand={
+                        <a href="/" style={styles.brandLink}>
+                            <div style={styles.logoCircle}>CL</div>
+                            <div style={styles.brandText}>
+                                <span style={{ color: "#000", fontWeight: "900" }}>CRYPTO</span>
+                                <span style={{ color: "#f3ba2f", fontWeight: "900" }}>LAKESIDE</span>
+                            </div>
+                        </a>
+                    }
+                    rightLinks={<HeaderLinks />}
+                    {...props}
+                />
+            </div>
 
-            {/* 3. HERO MODULE: INSTITUTIONAL POSITIONING */}
-            <div style={styles.heroSection}>
+            {/* 3. HERO COMPONENT: CORPORATE POSITIONING */}
+            <div 
+                id="terminal-hero-section"
+                style={styles.heroSection}
+            >
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
                     <h1 style={styles.mainTitle}>Institutional Trading Terminal</h1>
                     <p style={styles.heroSubText}>
                         High-Frequency USDT Market Intelligence. Verified alpha execution feeds 
-                        synchronized across global liquidity nodes.
+                        synchronized across global liquidity nodes via Bitfinex Tape.
                     </p>
                     <div style={styles.statusBadge}>
                         <span style={styles.pulseDot}></span> {usersOnline} GLOBAL NODES ACTIVE
@@ -397,8 +431,11 @@ const HomePage = (props) => {
                 </div>
             </div>
 
-            {/* 4. ASSET INTELLIGENCE GRID (USDT NATIVE) */}
-            <div style={styles.dataSection}>
+            {/* 4. ASSET INTELLIGENCE GRID: DYNAMIC 5-COLUMN LAYOUT */}
+            <div 
+                id="data-intelligence-grid"
+                style={styles.dataSection}
+            >
                 <div 
                     className="container-fluid" 
                     style={styles.dataContainer}
@@ -436,8 +473,11 @@ const HomePage = (props) => {
                         })}
                     </div>
 
-                    {/* 5. INSTITUTIONAL ORDER BOOK (MOBILE OPTIMIZED) */}
-                    <div style={styles.terminalWrapper}>
+                    {/* 5. INSTITUTIONAL ORDER BOOK: CROSS-ASSET EXECUTION TAPE */}
+                    <div 
+                        id="order-book-tape-container"
+                        style={styles.terminalWrapper}
+                    >
                         <div style={styles.terminalHeader}>
                             <div style={styles.terminalDot}></div> 
                             <span style={styles.terminalTitle}>
@@ -448,7 +488,7 @@ const HomePage = (props) => {
                             </span>
                         </div>
 
-                        {/* TABLE CONTAINER: SCROLLABLE ON SMALL SCREENS */}
+                        {/* TABLE CONTAINER: SCROLLABLE ON MOBILE ORIENTATION */}
                         <div style={styles.tableScrollArea}>
                             <div style={styles.orderBookHeader}>
                                 <span style={{ minWidth: "120px" }}>TIMESTAMP</span>
@@ -470,9 +510,9 @@ const HomePage = (props) => {
                                             <span style={{ color: "#ffffff", minWidth: "200px", fontWeight: "800" }}>{trade.value}</span>
                                             <span style={{ color: "#94a3b8", minWidth: "150px" }}>@ {trade.price} USDT</span>
                                         </div>
-                                    )) : <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>Syncing institutional data stream...</div>}
+                                    )) : <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>Syncing institutional liquidity...</div>}
                                     
-                                    {/* Continuity Set for Seamless Scroll Transition */}
+                                    {/* Loop Continuity Set for Seamless Scroll Effect */}
                                     {marketData.trades.map((trade, i) => (
                                         <div key={`dup-${i}`} style={styles.orderRow}>
                                             <span style={{ color: "#64748b", minWidth: "120px" }}>[{new Date(parseInt(trade.time)).toLocaleTimeString()}]</span>
@@ -491,7 +531,10 @@ const HomePage = (props) => {
             </div>
 
             {/* 6. PERFORMANCE LEADERBOARD SECTION */}
-            <div style={styles.leaderboardSection}>
+            <div 
+                id="leaderboard-section"
+                style={styles.leaderboardSection}
+            >
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
                     <h3 style={styles.sectionTitle}>Institutional Performance Leaderboard</h3>
                     <div style={styles.traderGrid}>
@@ -523,10 +566,13 @@ const HomePage = (props) => {
                 </div>
             </div>
 
-            {/* 7. TECHNICAL INFRASTRUCTURE SPECS */}
-            <div style={styles.infraSection}>
+            {/* 7. TECHNICAL SPECIFICATIONS MODULE */}
+            <div 
+                id="infrastructure-specs"
+                style={styles.infraSection}
+            >
                 <div className="container">
-                    <h3 style={{ color: "#f3ba2f", fontWeight: "900", marginBottom: "40px" }}>Technical Specifications</h3>
+                    <h3 style={{ color: "#f3ba2f", fontWeight: "900", marginBottom: "40px" }}>Technical Infrastructure</h3>
                     <div style={{ display: "flex", justifyContent: "center", gap: "25px", flexWrap: "wrap" }}>
                         <div style={styles.techSpec}>⚡ &lt; 5ms Latency Response</div>
                         <div style={styles.techSpec}>🛡️ Multi-Sig Cold Storage</div>
@@ -535,8 +581,11 @@ const HomePage = (props) => {
                 </div>
             </div>
 
-            {/* 8. CALL TO ACTION GATEWAY (BINANCE + TELEGRAM) */}
-            <div style={styles.ctaSection}>
+            {/* 8. CALL TO ACTION GATEWAY PORTALS */}
+            <div 
+                id="institutional-onboarding"
+                style={styles.ctaSection}
+            >
                 <p style={styles.statLabel}>SECURE ACCESS GATEWAY</p>
                 <h2 style={{ fontWeight: "900", color: "#fff", marginBottom: "35px" }}>Institutional Onboarding Portal</h2>
                 <div style={styles.ctaButtonGroup}>
@@ -555,7 +604,7 @@ const HomePage = (props) => {
                 </div>
             </div>
 
-            {/* 9. FOOTER ARCHITECTURE */}
+            {/* 9. FOOTER & COMPLIANCE ARCHITECTURE */}
             <footer style={styles.footer}>
                 <p style={{ fontSize: "11px", fontWeight: "700", opacity: "0.5", letterSpacing: "1px" }}>
                     OFFICIAL GLOBAL PARTNER | SECURED DATA FEED BYBIT V5 / BITFINEX TAPE
@@ -566,7 +615,7 @@ const HomePage = (props) => {
                 </p>
             </footer>
 
-            {/* 10. SYSTEM TOAST NOTIFICATION */}
+            {/* 10. SYSTEM TOAST NOTIFICATION OVERLAY */}
             {recentUser && <div style={styles.toast}>{recentUser}</div>}
 
             {/* 11. DYNAMIC KEYFRAME ENGINE & RESPONSIVE OVERRIDES */}
@@ -596,12 +645,19 @@ const HomePage = (props) => {
     );
 };
 
-// --- ENTERPRISE STYLING ARCHITECTURE (SAP UI STANDARDS) ---
+// --- ENTERPRISE STYLING ARCHITECTURE ---
 const styles = {
     mainWrapper: { 
         backgroundColor: "#020617", 
         color: "#f8fafc", 
         fontFamily: "'Barlow', sans-serif" 
+    },
+    headerContainer: {
+        position: "fixed",
+        top: "40px",
+        left: "0",
+        width: "100%",
+        zIndex: "8000"
     },
     brandLink: { 
         display: "flex", 
@@ -626,7 +682,7 @@ const styles = {
         gap: "6px" 
     },
     heroSection: { 
-        paddingTop: "200px",
+        paddingTop: "240px",
         paddingBottom: "80px",
         paddingLeft: "20px",
         paddingRight: "20px", 
@@ -909,7 +965,8 @@ const styles = {
         fontWeight: "900", 
         border: "2px solid #f3ba2f", 
         cursor: "pointer", 
-        fontSize: "16px"
+        fontSize: "16px",
+        transition: "all 0.3s"
     },
     infraSection: { 
         paddingTop: "120px",
@@ -1001,15 +1058,18 @@ const tickerStyles = {
     container: {
         background: "#f3ba2f",
         color: "#000",
-        paddingTop: "12px",
-        paddingBottom: "12px",
+        height: "40px",
+        paddingTop: "0",
+        paddingBottom: "0",
+        display: "flex",
+        alignItems: "center",
         overflow: "hidden",
         whiteSpace: "nowrap",
         position: "fixed",
         top: "0",
         left: "0",
         width: "100%",
-        zIndex: "7000",
+        zIndex: "9000",
         fontSize: "12px",
         fontWeight: "900",
         borderBottom: "1px solid #000",
