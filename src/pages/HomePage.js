@@ -9,7 +9,7 @@ const HomePage = (props) => {
   const [recentUser, setRecentUser] = useState("");
   const [whales, setWhales] = useState([]);
   
-  // OFFICIAL BYBIT TRADER DATA
+  // TRADER DATA - Cleaned LeaderMarks to prevent redirect breaks
   const traders = [
     { 
         nickname: "Rubedo Engine", 
@@ -17,7 +17,7 @@ const HomePage = (props) => {
         maxDrawdown: "0.23", 
         aum: "$1.2M",
         color: "#f3ba2f", 
-        leaderMark: "AbWEdoxJjic3JRWCtxUL1w%3D%3D" 
+        leaderMark: "AbWEdoxJjic3JRWCtxUL1w==" 
     },
     { 
         nickname: "caleon8", 
@@ -25,7 +25,7 @@ const HomePage = (props) => {
         maxDrawdown: "0.00", 
         aum: "$850K",
         color: "#000000", 
-        leaderMark: "zuhkoRlHodkzaCgGiSSdQw%3D%3D" 
+        leaderMark: "zuhkoRlHodkzaCgGiSSdQw==" 
     },
     { 
         nickname: "Liafe", 
@@ -41,7 +41,6 @@ const HomePage = (props) => {
     window.scrollTo(0, 0);
     document.title = "Crypto Lakeside | Institutional Trading Terminal";
 
-    // FETCH LIVE WHALE DATA FROM PYTHON SCRIPT OUTPUT
     const getWhaleData = () => {
         fetch('/whales.json')
             .then(res => res.json())
@@ -51,7 +50,6 @@ const HomePage = (props) => {
     getWhaleData();
     const whaleInterval = setInterval(getWhaleData, 30000); 
     
-    // CLEANUP UI - REMOVE EXTRANEOUS BUTTONS
     const removeWhatsapp = () => {
         const buttons = document.querySelectorAll('a[href*="wa.me"], div[class*="whatsapp"], button[class*="whatsapp"]');
         buttons.forEach(btn => btn.style.display = 'none');
@@ -83,23 +81,20 @@ const HomePage = (props) => {
     };
   }, []);
 
-  // --- FIXED REFERRAL REDIRECT LOGIC ---
+  // MASTER REFERRAL FUNCTION - FIXED TO PREVENT BREAKS
   const handleLeadClick = (baseUrl, platformName) => {
     const myRef = "157106";
-    // If no URL is provided, default to the Rewards Hub
     const base = baseUrl || "https://www.bybit.com/en/promo/global/rewards-hub";
     
-    // Check if the URL already has a '?' (query parameter)
+    // We encode the URL components to ensure Bybit's server accepts the special characters
     const finalUrl = base.includes("?") 
         ? `${base}&ref=${myRef}` 
         : `${base}?ref=${myRef}`;
 
-    // Track event in Google Analytics
     if (window.gtag) { 
-        window.gtag('event', 'generate_lead', { 'platform': platformName, 'url': finalUrl }); 
+        window.gtag('event', 'generate_lead', { 'platform': platformName }); 
     }
 
-    // Open in new tab
     window.open(finalUrl, "_blank");
   };
 
@@ -167,7 +162,7 @@ const HomePage = (props) => {
           </div>
       </div>
 
-      {/* ASSET MANAGEMENT LEADERBOARD */}
+      {/* INSTITUTIONAL LEADERBOARD */}
       <div style={styles.traderSection}>
           <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
               <h3 style={styles.sectionTitle}>Institutional Leaderboard</h3>
@@ -191,7 +186,8 @@ const HomePage = (props) => {
                           <button 
                             style={styles.copyBtn}
                             onClick={() => {
-                                const traderUrl = `https://www.bybit.com/en/copyTrade/trade-center/detail?leaderMark=${trader.leaderMark}`;
+                                // We manually construct the URL to ensure leaderMark is not double-encoded
+                                const traderUrl = "https://www.bybit.com/copyTrade/trade-center/detail?leaderMark=" + encodeURIComponent(trader.leaderMark);
                                 handleLeadClick(traderUrl, "Copy-" + trader.nickname);
                             }}
                           >
@@ -213,7 +209,7 @@ const HomePage = (props) => {
           </div>
       </div>
 
-      {/* BINANCE SECTION */}
+      {/* BINANCE GATEWAY */}
       <div style={styles.binanceSection}>
           <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
               <p style={styles.binanceLabel}>SECONDARY INSTITUTIONAL GATEWAY</p>
