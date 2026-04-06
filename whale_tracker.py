@@ -1,6 +1,6 @@
 import requests, json, os, time
 
-def fetch_market_data():
+def fetch_market_data(): 
     print("--- 🚀 Institutional Data Engine v4.5: Active ---")
     # All assets required for the 6-column dashboard
     symbols = ["BTC", "ETH", "SOL", "LTC", "XRP"] 
