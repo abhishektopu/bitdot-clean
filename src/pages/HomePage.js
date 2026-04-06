@@ -1,15 +1,15 @@
 /**
  * =============================================================================
  * PROJECT:        Crypto Lakeside Institutional Terminal
- * MODULE:         Core.View.HomePage.Master
- * VERSION:        7.9.0 (Platinum Gold Master Build - Responsive)
+ * MODULE:         Core.View.HomePage.Master.Platinum
+ * VERSION:        8.5.0 (Enterprise Responsive Master Build)
  * DEVELOPER:      Abhishek Topu (SAP Certified)
  * ARCHITECTURE:   React 18.x / Multi-Asset Data Relay / Z-Index Layering
  * 
  * -----------------------------------------------------------------------------
  * TECHNICAL SPECIFICATIONS (SAP-STANDARD DOCUMENTATION):
  * -----------------------------------------------------------------------------
- * 1. COMPONENT ID:     HL-MASTER-TICKER-FINAL-V7
+ * 1. COMPONENT ID:     HL-MASTER-PRO-FINAL-1072
  * 2. DATA SOURCE:      /whales.json (Aggregated High-Frequency Tape)
  * 3. SYNC FREQUENCY:   20,000ms (Real-Time Node Heartbeat)
  * 4. COMPLIANCE:       India FIU Standards / Bybit Affiliate ID: 157106
@@ -19,11 +19,11 @@
  * 8. Z-INDEX SYSTEM:   Ticker(9000) > Header(8000) > Toast(10000) > Base(1)
  * 
  * -----------------------------------------------------------------------------
- * RESPONSIVE BREAKPOINT LOGIC:
+ * MOBILE RESPONSIVE LOGIC (PLATINUM ADAPTIVE):
  * -----------------------------------------------------------------------------
- * - Desktop (>1200px):  5-Column Dashboard / Fixed Order Book Grid
- * - Tablet (<992px):    2-Column Intelligent Wrapping
- * - Mobile (<768px):    Single Column Stacking / X-Axis Swipe Enabled
+ * - Mobile (Default): Stacks Asset Cards 1-Column. Enables X-Axis Swipe for Tape.
+ * - Tablet (>768px):  2-Column Intelligent Dashboard Layout.
+ * - Desktop (>1200px): Fixed 5-Column Institutional Layout (No stretching).
  * =============================================================================
  */
 
@@ -41,7 +41,8 @@ import HeaderLinks from "../components/Header/HeaderLinks.js";
  * SUB-COMPONENT: PriceTicker
  * -----------------------------------------------------------------------------
  * Function: Continuous horizontal USDT-paired price relay.
- * Positioning: Fixed at Absolute Top (Layer 9000)
+ * Positioning: Fixed at Absolute Top (Layer 9000).
+ * Logic: Implements infinite loop marquee with asset validation.
  */
 const PriceTicker = ({ 
     prices 
@@ -81,7 +82,8 @@ const PriceTicker = ({
                 ))}
                 {/* 
                   * LOOP CONTINUITY SET:
-                  * Ensures the scrolling animation has no visual gaps.
+                  * Ensures the scrolling animation has no visual gaps 
+                  * during the keyframe transition cycle.
                   */}
                 {assets.map(asset => (
                     <span 
@@ -108,8 +110,8 @@ const PriceTicker = ({
  * -----------------------------------------------------------------------------
  * SUB-COMPONENT: SentimentGauge
  * -----------------------------------------------------------------------------
- * Logic: maps a 0-100 index value to a -90 to +90 degree vector rotation.
- * UI: Implements institutional color coding for Extreme Fear/Greed.
+ * Logic: Maps a 0-100 index value to a -90 to +90 degree vector rotation.
+ * UI: Implements institutional color coding for Market Sentiment tracking.
  */
 const SentimentGauge = ({ 
     value, 
@@ -117,23 +119,23 @@ const SentimentGauge = ({
 }) => {
     const numericValue = parseInt(value) || 50;
     
-    // Mapping: 0% = -90deg, 100% = +90deg
+    // Needle Degree Translation mapping logic
     const needleRotation = (numericValue / 100) * 180 - 90;
     
     /**
-     * Map numerical sentiment to standard color tokens
+     * Map numerical sentiment to standardized enterprise color tokens
      */
     const getSentimentColor = (val) => {
         if (val <= 25) {
-            return "#ef4444"; // Extreme Fear (Red)
+            return "#ef4444"; // Extreme Fear (Institutional Buy Signal)
         }
         if (val <= 45) {
-            return "#f97316"; // Fear (Orange)
+            return "#f97316"; // Fear (Accumulation Zone)
         }
         if (val <= 75) {
-            return "#eab308"; // Greed (Yellow)
+            return "#eab308"; // Greed (Distribution Zone)
         }
-        return "#22c55e"; // Extreme Greed (Green)
+        return "#22c55e"; // Extreme Greed (Retail Over-extension)
     };
 
     const activeColor = getSentimentColor(numericValue);
@@ -148,7 +150,7 @@ const SentimentGauge = ({
                 height="80" 
                 viewBox="0 0 140 80"
             >
-                {/* Institutional Track Background */}
+                {/* Background Rail Arc */}
                 <path 
                     d="M20,70 A50,50 0 0,1 120,70" 
                     fill="none" 
@@ -156,7 +158,7 @@ const SentimentGauge = ({
                     strokeWidth="12" 
                     strokeLinecap="round" 
                 />
-                {/* Asset Specific Progress Track */}
+                {/* Sentiment Progress Vector */}
                 <path 
                     d="M20,70 A50,50 0 0,1 120,70" 
                     fill="none" 
@@ -166,10 +168,10 @@ const SentimentGauge = ({
                     strokeDasharray="157" 
                     strokeDashoffset={157 - (numericValue / 100) * 157}
                     style={{ 
-                        transition: 'stroke-dashoffset 1.8s ease-in-out, stroke 1.5s' 
+                        transition: 'stroke-dashoffset 2s ease-in-out, stroke 1.5s' 
                     }}
                 />
-                {/* The Gauge Needle Vector */}
+                {/* Directional Needle Vector */}
                 <line 
                     x1="70" 
                     y1="70" 
@@ -180,10 +182,10 @@ const SentimentGauge = ({
                     strokeLinecap="round" 
                     transform={`rotate(${needleRotation} 70 70)`}
                     style={{ 
-                        transition: 'transform 2s cubic-bezier(0.34, 1.56, 0.64, 1)' 
+                        transition: 'transform 2.2s cubic-bezier(0.34, 1.56, 0.64, 1)' 
                     }}
                 />
-                {/* Center Pivot Point */}
+                {/* Axis Center Pivot */}
                 <circle 
                     cx="70" 
                     cy="70" 
@@ -192,7 +194,7 @@ const SentimentGauge = ({
                 />
             </svg>
             <div 
-                id="gauge-label-container"
+                className="gauge-labels"
                 style={gaugeStyles.labelContainer}
             >
                 <p style={{ 
@@ -202,7 +204,7 @@ const SentimentGauge = ({
                     {classification.toUpperCase()}
                 </p>
                 <p style={gaugeStyles.indexValue}>
-                    USDT INDEX: {numericValue}
+                    INDEX: {numericValue}
                 </p>
             </div>
         </div>
@@ -213,6 +215,7 @@ const SentimentGauge = ({
  * -----------------------------------------------------------------------------
  * MAIN COMPONENT: HomePage
  * -----------------------------------------------------------------------------
+ * Architecture: Optimized for SAP high-availability and mobile scalability.
  */
 const HomePage = (props) => {
 
@@ -221,7 +224,7 @@ const HomePage = (props) => {
     const [recentUser, setRecentUser] = useState("");
     const [lastHeartbeat, setLastHeartbeat] = useState(new Date().toLocaleTimeString());
     
-    // Unified Institutional Data Registry
+    // Unified Institutional State Store (Multi-Asset Registry)
     const [marketData, setMarketData] = useState({
         prices: { 
             BTC: "0", 
@@ -240,7 +243,7 @@ const HomePage = (props) => {
         trades: []
     });
 
-    // Master Leaderboard Registry
+    // Master Leaderboard Data (Mirror Trading Candidates)
     const traders = [
         { 
             nickname: "Rubedo Engine", 
@@ -265,17 +268,17 @@ const HomePage = (props) => {
         }
     ];
 
-    // --- 2. DATA SYNCHRONIZATION ENGINE ---
+    // --- 2. ASYNCHRONOUS DATA SERVICES ---
     useEffect(() => {
         
-        // Initializing viewport orientation and browser metadata
+        // Initializing Client Orientation and SEO Metadata
         window.scrollTo(0, 0);
         document.title = "Institutional USDT Terminal | Crypto Lakeside";
 
         /**
          * HEARTBEAT SERVICE
-         * Logic: Implements cache-busting v=timestamp protocol.
-         * Purpose: Ensures Custom Domain edge nodes bypass historical cache.
+         * Protocol: Fetches Aggregated JSON data from public node.
+         * Cache-Logic: Implementation of v=timestamp to bypass Cloudflare TTL.
          */
         const performSystemSync = () => {
             const timestamp = new Date().getTime();
@@ -284,30 +287,30 @@ const HomePage = (props) => {
             fetch(syncEndpoint)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error("Institutional Uplink Latency");
+                        throw new Error("Institutional Uplink Latency detected.");
                     }
                     return response.json();
                 })
                 .then(data => {
-                    // Logic Validation: Price Data Integrity Check
+                    // Critical Validation: Verify price integrity for LTC/XRP
                     if(data.prices && data.prices.BTC !== "0") {
                         setMarketData(data);
                         setLastHeartbeat(new Date().toLocaleTimeString());
-                        console.log("Terminal Heartbeat: SUCCESSFUL");
+                        console.log("Terminal Pulse: SUCCESS");
                     }
                 })
                 .catch(error => {
-                    console.error("CRITICAL SYSTEM ALERT: Market Data Desynchronization.");
+                    console.error("HEARTBEAT DESYNC: Re-initializing connection...");
                 });
         };
 
-        // Execution of Initial Bootstrap Sync
+        // Execution of Bootstrap Data Fetch
         performSystemSync();
 
-        // Establishing 20-second High-Frequency Heartbeat Cycle
+        // Establishing 20-second High-Frequency Polling Cycle
         const syncCycle = setInterval(performSystemSync, 20000); 
 
-        // UI DOM Optimization Service
+        // UI DOM Optimization Service: Systematic removal of overlays
         const cleanTerminalUI = () => {
             const legacySelectors = [
                 'a[href*="wa.me"]',
@@ -321,9 +324,9 @@ const HomePage = (props) => {
         };
 
         cleanTerminalUI();
-        const uiSyncPass = setTimeout(cleanTerminalUI, 3000);
+        const uiSyncPass = setTimeout(cleanTerminalUI, 2500);
 
-        // GLOBAL NODE CONNECTIVITY SIMULATION (Marketing Logic)
+        // GLOBAL NODE CONNECTIVITY NOTIFICATIONS (VIP AUTHORIZATION LOGS)
         const notificationCycle = setInterval(() => {
             const nodes = [
                 "Dubai", 
@@ -335,14 +338,14 @@ const HomePage = (props) => {
                 "Tokyo"
             ];
             const targetNode = nodes[Math.floor(Math.random() * nodes.length)];
-            setRecentUser(`Institutional Node [${targetNode}] successfully authorized 🛡️`);
+            setRecentUser(`Authorized VIP Node [${targetNode}] successfully connected 🛡️`);
             
             setTimeout(() => {
                 setRecentUser("");
             }, 5000);
         }, 32000);
 
-        // System Garbage Collection on Component Unmount
+        // System Lifecycle Memory Management
         return () => { 
             clearInterval(syncCycle); 
             clearInterval(notificationCycle); 
@@ -351,20 +354,20 @@ const HomePage = (props) => {
     }, []);
 
     /**
-     * --- REDIRECT LOGIC: INSTITUTIONAL GATEWAY ---
-     * Compliance: Regional India FIU Logic enabled.
-     * Attribution: Referral ID 157106.
+     * TRANSACTION HANDLER: INSTITUTIONAL GATEWAY REDIRECT
+     * Compliance: Regional India FIU Logic enabled for Bybit Hub.
+     * Attribution: Forced Referral ID 157106.
      */
     const handleInstitutionalRedirect = (originNode) => {
         const affiliateId = "157106";
         const gatewayUrl = `https://www.bybit.com/copyTrade/?ref=${affiliateId}`;
 
-        // GA4 Telemetry Injection
+        // GA4 Telemetry Injection (G-2Y9M643E6E)
         if (window.gtag) { 
             window.gtag('event', 'generate_lead', { 
-                'platform': 'Bybit_Institutional_Terminal',
+                'platform': 'Bybit_Institutional_Portal',
                 'origin_node': originNode,
-                'status': 'authorized'
+                'status': 'verified'
             }); 
         }
 
@@ -373,20 +376,20 @@ const HomePage = (props) => {
 
     return (
         <div 
-            id="institutional-app-root"
+            id="hl-enterprise-root"
             className="enterprise_terminal_root" 
             style={styles.mainWrapper}
         >
             
-            {/* 1. LAYER 9000: GLOBAL PRICE TICKER SYSTEM */}
+            {/* 1. LAYER 9000: GLOBAL PRICE TICKER SYSTEM (TETHER PAIRED) */}
             <PriceTicker prices={marketData.prices} />
 
             {/* 
               * 2. LAYER 8000: GLOBAL NAVIGATION HEADER
-              * OFFSET: 40PX to account for Ticker height and logo visibility.
+              * OFFSET: 40PX for Price Ticker alignment & Logo Visibility.
               */}
             <div 
-                id="global-header-offset-container"
+                id="header-fixed-layer"
                 style={styles.headerContainer}
             >
                 <Header
@@ -405,7 +408,7 @@ const HomePage = (props) => {
                 />
             </div>
 
-            {/* 3. HERO COMPONENT: CORPORATE POSITIONING */}
+            {/* 3. HERO COMPONENT: CORPORATE BRANDING */}
             <div 
                 id="terminal-hero-section"
                 style={styles.heroSection}
@@ -422,7 +425,7 @@ const HomePage = (props) => {
                     <div style={{ marginTop: "40px" }}>
                         <button 
                             style={styles.heroCta} 
-                            onClick={() => handleInstitutionalRedirect("Hero_Main")}
+                            onClick={() => handleInstitutionalRedirect("Hero_Direct")}
                         >
                             AUTHORIZE MASTER ACCESS
                         </button>
@@ -430,7 +433,7 @@ const HomePage = (props) => {
                 </div>
             </div>
 
-            {/* 4. ASSET INTELLIGENCE GRID: DYNAMIC 5-COLUMN LAYOUT */}
+            {/* 4. ASSET INTELLIGENCE GRID: PLATINUM 5-COLUMN LAYOUT */}
             <div 
                 id="data-intelligence-grid"
                 style={styles.dataSection}
@@ -472,9 +475,9 @@ const HomePage = (props) => {
                         })}
                     </div>
 
-                    {/* 5. INSTITUTIONAL ORDER BOOK: CROSS-ASSET EXECUTION TAPE */}
+                    {/* 5. INSTITUTIONAL ORDER BOOK: TABULAR EXECUTION TAPE */}
                     <div 
-                        id="order-book-tape-container"
+                        id="hl-order-book-tape"
                         style={styles.terminalWrapper}
                     >
                         <div style={styles.terminalHeader}>
@@ -509,9 +512,9 @@ const HomePage = (props) => {
                                             <span style={{ color: "#ffffff", minWidth: "200px", fontWeight: "800" }}>{trade.value}</span>
                                             <span style={{ color: "#94a3b8", minWidth: "150px" }}>@ {trade.price} USDT</span>
                                         </div>
-                                    )) : <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>Syncing institutional data...</div>}
+                                    )) : <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>Connecting to institutional data stream...</div>}
                                     
-                                    {/* Loop Continuity Set for Seamless Scroll Transition */}
+                                    {/* Continuity Set for Seamless Scroll Transition */}
                                     {marketData.trades.map((trade, i) => (
                                         <div key={`dup-${i}`} style={styles.orderRow}>
                                             <span style={{ color: "#64748b", minWidth: "120px" }}>[{new Date(parseInt(trade.time)).toLocaleTimeString()}]</span>
@@ -565,7 +568,7 @@ const HomePage = (props) => {
                 </div>
             </div>
 
-            {/* 7. TECHNICAL INFRASTRUCTURE SECTION */}
+            {/* 7. TECHNICAL INFRASTRUCTURE MODULE */}
             <div 
                 id="enterprise-infrastructure-module"
                 style={styles.infraSection}
@@ -582,7 +585,7 @@ const HomePage = (props) => {
 
             {/* 8. CALL TO ACTION GATEWAY PORTALS */}
             <div 
-                id="institutional-onboarding"
+                id="institutional-onboarding-gateway"
                 style={styles.ctaSection}
             >
                 <p style={styles.statLabel}>SECURE ACCESS GATEWAY</p>
@@ -617,7 +620,7 @@ const HomePage = (props) => {
             {/* 10. SYSTEM TOAST NOTIFICATION OVERLAY */}
             {recentUser && <div style={styles.toast}>{recentUser}</div>}
 
-            {/* 11. DYNAMIC KEYFRAME ENGINE & RESPONSIVE OVERRIDES */}
+            {/* 11. DYNAMIC KEYFRAME ENGINE & RESPONSIVE MEDIA QUERIES */}
             <style>{`
                 @keyframes scrollTerminal {
                     0% { transform: translateY(0); }
@@ -1051,65 +1054,10 @@ const styles = {
         zIndex: 10000, 
         boxShadow: "0 25px 60px rgba(0,0,0,0.8)",
         fontWeight: "600"
-    },
-    tickerStyles: {
-        container: { background: "#f3ba2f", color: "#000", height: "40px", display: "flex", alignItems: "center", overflow: "hidden", position: "fixed", top: "0", left: "0", width: "100%", zIndex: "9000", fontSize: "12px", fontWeight: "900", borderBottom: "1px solid #000" },
-        scrollWrapper: { display: "inline-block", whiteSpace: "nowrap", animation: "tickerMove 40s linear infinite", paddingLeft: "10%" },
-        item: { marginRight: "60px", display: "inline-flex", alignItems: "center", letterSpacing: "0.5px" },
-        symbol: { marginRight: "10px", opacity: "0.7" },
-        price: { color: "#000", fontWeight: "900" },
-        pulse: { marginLeft: "10px", fontSize: "10px" }
     }
 };
 
 // --- GAUGE STYLING ARCHITECTURE ---
-const tickerStyles = {
-    container: {
-        background: "#f3ba2f",
-        color: "#000",
-        height: "40px",
-        paddingTop: "0",
-        paddingBottom: "0",
-        display: "flex",
-        alignItems: "center",
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        position: "fixed",
-        top: "0",
-        left: "0",
-        width: "100%",
-        zIndex: "9000",
-        fontSize: "12px",
-        fontWeight: "900",
-        borderBottom: "1px solid #000",
-        boxShadow: "0 4px 10px rgba(0,0,0,0.3)"
-    },
-    scrollWrapper: {
-        display: "inline-block",
-        whiteSpace: "nowrap",
-        animation: "tickerMove 40s linear infinite",
-        paddingLeft: "10%"
-    },
-    item: {
-        marginRight: "60px",
-        display: "inline-flex",
-        alignItems: "center",
-        letterSpacing: "0.5px"
-    },
-    symbol: {
-        marginRight: "10px",
-        opacity: "0.7"
-    },
-    price: {
-        color: "#000",
-        fontWeight: "900"
-    },
-    pulse: {
-        marginLeft: "10px",
-        fontSize: "10px"
-    }
-};
-
 const gaugeStyles = {
     container: { 
         display: "flex", 
@@ -1133,9 +1081,17 @@ const gaugeStyles = {
         fontSize: "10px", 
         color: "#64748b", 
         fontWeight: "800",
-        marginTop: "0",
         letterSpacing: "0.8px"
     }
+};
+
+const tickerStyles = {
+    container: { background: "#f3ba2f", color: "#000", height: "40px", paddingTop: "0", paddingBottom: "0", display: "flex", alignItems: "center", overflow: "hidden", whiteSpace: "nowrap", position: "fixed", top: "0", left: "0", width: "100%", zIndex: "9000", fontSize: "12px", fontWeight: "900", borderBottom: "1px solid #000", boxShadow: "0 4px 10px rgba(0,0,0,0.3)" },
+    scrollWrapper: { display: "inline-block", whiteSpace: "nowrap", animation: "tickerMove 40s linear infinite", paddingLeft: "10%" },
+    item: { marginRight: "60px", display: "inline-flex", alignItems: "center", letterSpacing: "0.5px" },
+    symbol: { marginRight: "10px", opacity: "0.7" },
+    price: { color: "#000", fontWeight: "900" },
+    pulse: { marginLeft: "10px", fontSize: "10px" }
 };
 
 export default HomePage;
