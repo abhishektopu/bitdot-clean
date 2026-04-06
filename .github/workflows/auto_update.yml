@@ -1,0 +1,30 @@
+name: Hourly Whale Update
+on:
+  schedule:
+    - cron: '0 * * * *' # This runs the script every 60 minutes
+  workflow_dispatch: # This adds a button so you can run it manually on GitHub
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: pip install requests
+        
+      - name: Run Whale Tracker
+        run: python whale_tracker.py
+        
+      - name: Commit and Push Data
+        run: |
+          git config --global user.name 'WhaleBot'
+          git config --global user.email 'bot@cryptolakeside.co.in'
+          git add public/whales.json
+          git commit -m "Automated Data Update" || exit 0
+          git push
