@@ -5,5 +5,48 @@
         "timestamp": "1775433600"
     },
     "prices": {},
-    "trades": []
+    "trades": [
+        {
+            "symbol": "ETH",
+            "time": "1775466844850",
+            "side": "Buy",
+            "value": "$2,505.76",
+            "price": "$2,147.40"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775466833981",
+            "side": "Sell",
+            "value": "$4,999.86",
+            "price": "$69,516.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775466833970",
+            "side": "Sell",
+            "value": "$4,999.93",
+            "price": "$69,517.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775466833964",
+            "side": "Sell",
+            "value": "$4,881.81",
+            "price": "$69,518.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775466828420",
+            "side": "Buy",
+            "value": "$2,267.09",
+            "price": "$69,530.00"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775466753369",
+            "side": "Buy",
+            "value": "$1,224.41",
+            "price": "$82.37"
+        }
+    ]
 }
