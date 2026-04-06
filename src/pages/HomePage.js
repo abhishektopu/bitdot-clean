@@ -2,21 +2,25 @@
  * =============================================================================
  * PROJECT:        Crypto Lakeside Institutional Terminal
  * MODULE:         Core.View.HomePage
- * VERSION:        5.7.0 (Platinum Mobile Enterprise Build)
+ * VERSION:        6.5.0 (Platinum Enterprise Gold Build)
  * DEVELOPER:      Abhishek Topu (SAP Certified)
- * ARCHITECTURE:   React 18.x / USDT Liquid Aggregate / Responsive UI
+ * ARCHITECTURE:   React 18.x / USDT Liquid Aggregate / Multi-Node Relay
  * 
- * SYSTEM REQUIREMENTS:
- * - Backend: whale_tracker.py (v5.2+)
- * - Data: public/whales.json
- * - Tracking: G-2Y9M643E6E
+ * -----------------------------------------------------------------------------
+ * TECHNICAL SPECIFICATIONS:
+ * -----------------------------------------------------------------------------
+ * 1. DATA KERNEL:      whale_tracker.py v5.2 (High-Frequency Scraper)
+ * 2. SYNC PROTOCOL:    Asynchronous JSON Heartbeat / Cache-Buster v=Date.now()
+ * 3. COMPLIANCE:       India FIU / Bybit Affiliate Protocol (Ref: 157106)
+ * 4. TELEMETRY:        Google Analytics 4 / Measurement ID: G-2Y9M643E6E
+ * 5. UI ENGINE:        CSS Grid 2.0 / SVG Vector Interpolation / Marquee 4.0
  * 
- * CHANGE LOG:
- * - Migrated to 5-Column Responsive CSS Grid
- * - Implemented Asset-Specific SVG Sentiment Gauges
- * - Fixed LTC/XRP Zero-Price Sync Errors
- * - Added Mobile Horizontal Execution Tape Swiping
- * - Integrated Regional India FIU Referral Logic
+ * -----------------------------------------------------------------------------
+ * RESPONSIVE BREAKPOINTS:
+ * -----------------------------------------------------------------------------
+ * - Ultra-Wide:       5-Column Institutional Intelligence Grid
+ * - Desktop/Tablet:   Responsive Wrapping / Swipable Order Book Tape
+ * - Mobile:           Vertical Asset Stacking / Compact Sentiment Gauges
  * =============================================================================
  */
 
@@ -25,36 +29,99 @@ import React, {
     useState 
 } from "react";
 
-// Institutional Layout Architecture
+// Institutional Component Registry
 import Header from "../components/Header/Header.js";
 import HeaderLinks from "../components/Header/HeaderLinks.js";
 
 /**
  * -----------------------------------------------------------------------------
+ * SUB-COMPONENT: PriceTicker
+ * -----------------------------------------------------------------------------
+ * Purpose: Provides high-level institutional authority via real-time data.
+ * Function: Continuous horizontal scroll of USDT-paired index prices.
+ */
+const PriceTicker = ({ 
+    prices 
+}) => {
+    const assets = [
+        'BTC', 
+        'ETH', 
+        'SOL', 
+        'LTC', 
+        'XRP'
+    ];
+    
+    return (
+        <div style={tickerStyles.container}>
+            <div style={tickerStyles.scrollWrapper}>
+                {assets.map(asset => (
+                    <span 
+                        key={asset} 
+                        style={tickerStyles.item}
+                    >
+                        <span style={tickerStyles.symbol}>
+                            {asset}/USDT
+                        </span>
+                        <span style={tickerStyles.price}>
+                            ${parseFloat(prices[asset] || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </span>
+                        <span style={tickerStyles.pulse}>
+                            ⚡
+                        </span>
+                    </span>
+                ))}
+                {/* Continuity Set for Seamless Marquee Loop */}
+                {assets.map(asset => (
+                    <span 
+                        key={`loop-${asset}`} 
+                        style={tickerStyles.item}
+                    >
+                        <span style={tickerStyles.symbol}>
+                            {asset}/USDT
+                        </span>
+                        <span style={tickerStyles.price}>
+                            ${parseFloat(prices[asset] || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </span>
+                        <span style={tickerStyles.pulse}>
+                            ⚡
+                        </span>
+                    </span>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+/**
+ * -----------------------------------------------------------------------------
  * SUB-COMPONENT: SentimentGauge
  * -----------------------------------------------------------------------------
- * Logic: Maps a 0-100 sentiment index to a -90/+90 degree needle rotation.
- * Performance: Uses optimized SVG paths for mobile GPU rendering.
+ * Purpose: Visual representation of asset-specific momentum.
+ * Logic: Interpolates 0-100 value into SVG path offsets and needle rotation.
  */
 const SentimentGauge = ({ 
     value, 
     classification 
 }) => {
     const numericValue = parseInt(value) || 50;
+    
+    // Rotation Mapping: 0% = -90deg, 100% = +90deg
     const needleRotation = (numericValue / 100) * 180 - 90;
     
-    // Institutional Grade Color Scale Mapping
+    /**
+     * Color Logic for Institutional Classification
+     */
     const getSentimentColor = (val) => {
         if (val <= 25) {
-            return "#ef4444"; // Extreme Fear (Red)
+            return "#ef4444"; // Extreme Fear
         }
         if (val <= 45) {
-            return "#f97316"; // Fear (Orange)
+            return "#f97316"; // Fear
         }
         if (val <= 75) {
-            return "#eab308"; // Greed (Yellow)
+            return "#eab308"; // Greed
         }
-        return "#22c55e"; // Extreme Greed (Green)
+        return "#22c55e"; // Extreme Greed
     };
 
     const activeColor = getSentimentColor(numericValue);
@@ -66,7 +133,7 @@ const SentimentGauge = ({
                 height="80" 
                 viewBox="0 0 140 80"
             >
-                {/* Static Background Arc Path */}
+                {/* Gauge Background Arc */}
                 <path 
                     d="M20,70 A50,50 0 0,1 120,70" 
                     fill="none" 
@@ -74,7 +141,7 @@ const SentimentGauge = ({
                     strokeWidth="12" 
                     strokeLinecap="round" 
                 />
-                {/* Dynamic Progress Arc Path */}
+                {/* Gauge Active Progress Path */}
                 <path 
                     d="M20,70 A50,50 0 0,1 120,70" 
                     fill="none" 
@@ -84,10 +151,10 @@ const SentimentGauge = ({
                     strokeDasharray="157" 
                     strokeDashoffset={157 - (numericValue / 100) * 157}
                     style={{ 
-                        transition: 'stroke-dashoffset 1.2s ease-in-out, stroke 1.2s' 
+                        transition: 'stroke-dashoffset 1.5s ease-in-out, stroke 1s' 
                     }}
                 />
-                {/* Needle Vector Line */}
+                {/* Gauge Needle Line */}
                 <line 
                     x1="70" 
                     y1="70" 
@@ -98,10 +165,10 @@ const SentimentGauge = ({
                     strokeLinecap="round" 
                     transform={`rotate(${needleRotation} 70 70)`}
                     style={{ 
-                        transition: 'transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)' 
+                        transition: 'transform 1.8s cubic-bezier(0.34, 1.56, 0.64, 1)' 
                     }}
                 />
-                {/* Axis Pivot Circle */}
+                {/* Needle Pivot Circle */}
                 <circle 
                     cx="70" 
                     cy="70" 
@@ -117,7 +184,7 @@ const SentimentGauge = ({
                     {classification.toUpperCase()}
                 </p>
                 <p style={gaugeStyles.indexValue}>
-                    S-INDEX: {numericValue}
+                    USDT INDEX: {numericValue}
                 </p>
             </div>
         </div>
@@ -136,7 +203,7 @@ const HomePage = (props) => {
     const [recentUser, setRecentUser] = useState("");
     const [lastHeartbeat, setLastHeartbeat] = useState(new Date().toLocaleTimeString());
     
-    // Unified Multi-Asset Data Hub
+    // Consolidated Multi-Asset Intelligence Registry
     const [marketData, setMarketData] = useState({
         prices: { 
             BTC: "0", 
@@ -155,7 +222,7 @@ const HomePage = (props) => {
         trades: []
     });
 
-    // Institutional Leaderboard Data Store
+    // Institutional Leaderboard Data (Static Reference)
     const traders = [
         { 
             nickname: "Rubedo Engine", 
@@ -180,17 +247,17 @@ const HomePage = (props) => {
         }
     ];
 
-    // --- 2. DATA SYNCHRONIZATION SERVICE ---
+    // --- 2. DATA SYNCHRONIZATION ENGINE ---
     useEffect(() => {
         
-        // Initializing viewport and metadata
+        // Initializing viewport orientation and metadata
         window.scrollTo(0, 0);
         document.title = "Institutional USDT Terminal | Crypto Lakeside";
 
         /**
-         * HEARTBEAT SERVICE
-         * Implementation of Cache-Busting via timestamped query parameters.
-         * Ensures Cloudflare edge nodes serve fresh data to the Custom Domain.
+         * TRANSACTION SYNCHRONIZATION SERVICE
+         * Execution: Fetches high-density tape data via public/whales.json.
+         * Optimization: Cache-busting parameter enforced for cloud relay.
          */
         const performSystemSync = () => {
             const timestamp = new Date().getTime();
@@ -199,12 +266,12 @@ const HomePage = (props) => {
             fetch(syncEndpoint)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error("Terminal Link Latency Detected");
+                        throw new Error("Terminal Link Desync detected.");
                     }
                     return response.json();
                 })
                 .then(data => {
-                    // Logic Validation: Ensure price data is non-zero
+                    // Verification Logic: Ensure index prices are non-zero
                     if(data.prices && data.prices.BTC !== "0") {
                         setMarketData(data);
                         setLastHeartbeat(new Date().toLocaleTimeString());
@@ -212,17 +279,17 @@ const HomePage = (props) => {
                     }
                 })
                 .catch(error => {
-                    console.error("SYSTEM ERROR: Market Data Desync Detected.");
+                    console.error("CRITICAL: Market Data Heartbeat Failure.");
                 });
         };
 
-        // Execution of Initial Heartbeat
+        // Execution of Bootstrap Sync
         performSystemSync();
 
-        // Establishing 20-second High-Frequency Refresh Cycle
+        // Establishing 20-second High-Frequency Polling Cycle
         const syncCycle = setInterval(performSystemSync, 20000); 
 
-        // UI DOM Optimization: Suppression of legacy third-party overlays
+        // UI DOM Refinement: Systematic suppression of extraneous third-party elements
         const cleanTerminalUI = () => {
             const legacySelectors = [
                 'a[href*="wa.me"]',
@@ -238,7 +305,7 @@ const HomePage = (props) => {
         cleanTerminalUI();
         const uiSyncPass = setTimeout(cleanTerminalUI, 3000);
 
-        // GLOBAL NODE CONNECTIVITY NOTIFICATIONS
+        // GLOBAL NODE CONNECTIVITY NOTIFICATIONS (Simulation)
         const notificationCycle = setInterval(() => {
             const nodes = [
                 "Dubai", 
@@ -250,14 +317,14 @@ const HomePage = (props) => {
                 "Tokyo"
             ];
             const targetNode = nodes[Math.floor(Math.random() * nodes.length)];
-            setRecentUser(`Authorized VIP Node [${targetNode}] successfully connected 🛡️`);
+            setRecentUser(`VIP Node [${targetNode}] terminal successfully authorized 🛡️`);
             
             setTimeout(() => {
                 setRecentUser("");
             }, 5000);
         }, 32000);
 
-        // Component Lifecycle Cleanup
+        // Memory Cleanup on Unmount
         return () => { 
             clearInterval(syncCycle); 
             clearInterval(notificationCycle); 
@@ -266,14 +333,15 @@ const HomePage = (props) => {
     }, []);
 
     /**
-     * --- REDIRECT LOGIC: INSTITUTIONAL GATEWAY ---
-     * Optimized for regional compliance (India FIU) and secure affiliate tracking.
+     * --- TRANSACTION HANDLER: INSTITUTIONAL REDIRECT ---
+     * Compliance: Optimized for regional India FIU standards.
+     * Attribution: Enforces Ref ID 157106.
      */
     const handleInstitutionalRedirect = (originNode) => {
         const affiliateId = "157106";
         const gatewayUrl = `https://www.bybit.com/copyTrade/?ref=${affiliateId}`;
 
-        // GA4 Telemetry Injection (G-2Y9M643E6E)
+        // GA4 Event Trigger (G-2Y9M643E6E)
         if (window.gtag) { 
             window.gtag('event', 'generate_lead', { 
                 'platform': 'Bybit_Institutional_Terminal',
@@ -288,7 +356,10 @@ const HomePage = (props) => {
     return (
         <div className="enterprise_terminal_root" style={styles.mainWrapper}>
             
-            {/* GLOBAL HEADER SYSTEM */}
+            {/* 1. TOP SCROLLING PRICE TICKER (FIXED) */}
+            <PriceTicker prices={marketData.prices} />
+
+            {/* 2. GLOBAL ENTERPRISE HEADER */}
             <Header
                 color="white"
                 brand={
@@ -304,7 +375,7 @@ const HomePage = (props) => {
                 {...props}
             />
 
-            {/* HERO MODULE: INSTITUTIONAL POSITIONING */}
+            {/* 3. HERO MODULE: INSTITUTIONAL POSITIONING */}
             <div style={styles.heroSection}>
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
                     <h1 style={styles.mainTitle}>Institutional Trading Terminal</h1>
@@ -318,7 +389,7 @@ const HomePage = (props) => {
                     <div style={{ marginTop: "40px" }}>
                         <button 
                             style={styles.heroCta} 
-                            onClick={() => handleInstitutionalRedirect("Hero_Direct")}
+                            onClick={() => handleInstitutionalRedirect("Hero_Main")}
                         >
                             AUTHORIZE MASTER ACCESS
                         </button>
@@ -326,7 +397,7 @@ const HomePage = (props) => {
                 </div>
             </div>
 
-            {/* --- ASSET INTELLIGENCE GRID (RESPONSIVE 5-COL) --- */}
+            {/* 4. ASSET INTELLIGENCE GRID (USDT NATIVE) */}
             <div style={styles.dataSection}>
                 <div 
                     className="container-fluid" 
@@ -341,13 +412,15 @@ const HomePage = (props) => {
                             const sentiment = marketData.sentiment[coin] || { value: "50", classification: "Neutral" };
                             return (
                                 <div key={coin} style={styles.dashboardCard}>
-                                    <p style={styles.statLabel}>{coin} / USDT INDEX</p>
+                                    <p style={styles.statLabel}>
+                                        {coin} / USDT INDEX
+                                    </p>
                                     
                                     <h2 style={styles.priceHeading}>
                                         ${parseFloat(marketData.prices[coin] || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                     </h2>
 
-                                    {/* INTEGRATED GAUGE SUB-COMPONENT */}
+                                    {/* ASSET SPECIFIC GAUGE SUB-COMPONENT */}
                                     <div style={styles.sentimentBox}>
                                         <SentimentGauge 
                                             value={sentiment.value} 
@@ -355,21 +428,27 @@ const HomePage = (props) => {
                                         />
                                     </div>
                                     
-                                    <span style={styles.feedTag}>USDT FEED AUTHORIZED</span>
+                                    <span style={styles.feedTag}>
+                                        USDT FEED AUTHORIZED
+                                    </span>
                                 </div>
                             );
                         })}
                     </div>
 
-                    {/* --- INSTITUTIONAL ORDER BOOK (MOBILE OPTIMIZED) --- */}
+                    {/* 5. INSTITUTIONAL ORDER BOOK (MOBILE OPTIMIZED) */}
                     <div style={styles.terminalWrapper}>
                         <div style={styles.terminalHeader}>
                             <div style={styles.terminalDot}></div> 
-                            <span style={styles.terminalTitle}>ORDER BOOK EXECUTION FLOW (CROSS-ASSET USDT TAPE)</span>
-                            <span style={styles.syncTag}>HEARTBEAT: {lastHeartbeat}</span>
+                            <span style={styles.terminalTitle}>
+                                ORDER BOOK EXECUTION FLOW (CROSS-ASSET USDT TAPE)
+                            </span>
+                            <span style={styles.syncTag}>
+                                HEARTBEAT: {lastHeartbeat}
+                            </span>
                         </div>
 
-                        {/* TABLE CONTAINER: SCROLLABLE ON MOBILE */}
+                        {/* TABLE CONTAINER: SCROLLABLE ON SMALL SCREENS */}
                         <div style={styles.tableScrollArea}>
                             <div style={styles.orderBookHeader}>
                                 <span style={{ minWidth: "120px" }}>TIMESTAMP</span>
@@ -393,7 +472,7 @@ const HomePage = (props) => {
                                         </div>
                                     )) : <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>Syncing institutional data stream...</div>}
                                     
-                                    {/* Loop Continuity Set for Infinite Scroll Effect */}
+                                    {/* Continuity Set for Seamless Scroll Transition */}
                                     {marketData.trades.map((trade, i) => (
                                         <div key={`dup-${i}`} style={styles.orderRow}>
                                             <span style={{ color: "#64748b", minWidth: "120px" }}>[{new Date(parseInt(trade.time)).toLocaleTimeString()}]</span>
@@ -411,7 +490,7 @@ const HomePage = (props) => {
                 </div>
             </div>
 
-            {/* --- PERFORMANCE LEADERBOARD MODULE --- */}
+            {/* 6. PERFORMANCE LEADERBOARD SECTION */}
             <div style={styles.leaderboardSection}>
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
                     <h3 style={styles.sectionTitle}>Institutional Performance Leaderboard</h3>
@@ -444,10 +523,10 @@ const HomePage = (props) => {
                 </div>
             </div>
 
-            {/* --- TECHNICAL SPECIFICATIONS --- */}
+            {/* 7. TECHNICAL INFRASTRUCTURE SPECS */}
             <div style={styles.infraSection}>
                 <div className="container">
-                    <h3 style={{ color: "#f3ba2f", fontWeight: "900", marginBottom: "40px" }}>Technical Infrastructure</h3>
+                    <h3 style={{ color: "#f3ba2f", fontWeight: "900", marginBottom: "40px" }}>Technical Specifications</h3>
                     <div style={{ display: "flex", justifyContent: "center", gap: "25px", flexWrap: "wrap" }}>
                         <div style={styles.techSpec}>⚡ &lt; 5ms Latency Response</div>
                         <div style={styles.techSpec}>🛡️ Multi-Sig Cold Storage</div>
@@ -456,7 +535,7 @@ const HomePage = (props) => {
                 </div>
             </div>
 
-            {/* --- CALL TO ACTION: GATEWAY PORTALS --- */}
+            {/* 8. CALL TO ACTION GATEWAY (BINANCE + TELEGRAM) */}
             <div style={styles.ctaSection}>
                 <p style={styles.statLabel}>SECURE ACCESS GATEWAY</p>
                 <h2 style={{ fontWeight: "900", color: "#fff", marginBottom: "35px" }}>Institutional Onboarding Portal</h2>
@@ -476,7 +555,7 @@ const HomePage = (props) => {
                 </div>
             </div>
 
-            {/* FOOTER & COMPLIANCE ARCHITECTURE */}
+            {/* 9. FOOTER ARCHITECTURE */}
             <footer style={styles.footer}>
                 <p style={{ fontSize: "11px", fontWeight: "700", opacity: "0.5", letterSpacing: "1px" }}>
                     OFFICIAL GLOBAL PARTNER | SECURED DATA FEED BYBIT V5 / BITFINEX TAPE
@@ -487,14 +566,21 @@ const HomePage = (props) => {
                 </p>
             </footer>
 
-            {/* ENTERPRISE SYSTEM TOAST NOTIFICATION */}
+            {/* 10. SYSTEM TOAST NOTIFICATION */}
             {recentUser && <div style={styles.toast}>{recentUser}</div>}
 
-            {/* DYNAMIC ANIMATION ENGINE & RESPONSIVE OVERRIDES */}
+            {/* 11. DYNAMIC KEYFRAME ENGINE & RESPONSIVE OVERRIDES */}
             <style>{`
                 @keyframes scrollTerminal {
                     0% { transform: translateY(0); }
                     100% { transform: translateY(-50%); }
+                }
+                @keyframes tickerMove {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                }
+                @media (max-width: 1200px) {
+                    .dashboardGrid { grid-template-columns: repeat(3, 1fr) !important; }
                 }
                 @media (max-width: 992px) {
                     .dashboardGrid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -511,7 +597,6 @@ const HomePage = (props) => {
 };
 
 // --- ENTERPRISE STYLING ARCHITECTURE (SAP UI STANDARDS) ---
-// Note: Properties are defined line-by-line for granular documentation
 const styles = {
     mainWrapper: { 
         backgroundColor: "#020617", 
@@ -541,7 +626,7 @@ const styles = {
         gap: "6px" 
     },
     heroSection: { 
-        paddingTop: "140px",
+        paddingTop: "200px",
         paddingBottom: "80px",
         paddingLeft: "20px",
         paddingRight: "20px", 
@@ -598,7 +683,8 @@ const styles = {
         fontWeight: "900", 
         borderRadius: "6px", 
         border: "none", 
-        cursor: "pointer"
+        cursor: "pointer",
+        transition: "transform 0.2s"
     },
     primaryBtn: { 
         background: "#f3ba2f", 
@@ -868,7 +954,8 @@ const styles = {
         border: "none", 
         fontWeight: "900", 
         cursor: "pointer", 
-        fontSize: "17px"
+        fontSize: "17px", 
+        marginRight: "20px" 
     },
     telegramBtn: { 
         background: "transparent", 
@@ -909,12 +996,58 @@ const styles = {
     }
 };
 
-// --- GAUGE STYLING ARCHITECTURE ---
+// --- TICKER & GAUGE GRANULAR STYLING ---
+const tickerStyles = {
+    container: {
+        background: "#f3ba2f",
+        color: "#000",
+        paddingTop: "12px",
+        paddingBottom: "12px",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        position: "fixed",
+        top: "0",
+        left: "0",
+        width: "100%",
+        zIndex: "7000",
+        fontSize: "12px",
+        fontWeight: "900",
+        borderBottom: "1px solid #000",
+        boxShadow: "0 4px 10px rgba(0,0,0,0.3)"
+    },
+    scrollWrapper: {
+        display: "inline-block",
+        whiteSpace: "nowrap",
+        animation: "tickerMove 40s linear infinite",
+        paddingLeft: "10%"
+    },
+    item: {
+        marginRight: "60px",
+        display: "inline-flex",
+        alignItems: "center",
+        letterSpacing: "0.5px"
+    },
+    symbol: {
+        marginRight: "10px",
+        opacity: "0.7"
+    },
+    price: {
+        color: "#000",
+        fontWeight: "900"
+    },
+    pulse: {
+        marginLeft: "10px",
+        fontSize: "10px"
+    }
+};
+
 const gaugeStyles = {
     container: { 
         display: "flex", 
         flexDirection: "column", 
-        alignItems: "center" 
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: "10px"
     },
     labelContainer: { 
         marginTop: "-15px",
@@ -923,6 +1056,7 @@ const gaugeStyles = {
     statusText: { 
         fontSize: "15px", 
         fontWeight: "900", 
+        marginTop: "0",
         marginBottom: "2px",
         letterSpacing: "0.5px"
     },
@@ -930,6 +1064,7 @@ const gaugeStyles = {
         fontSize: "10px", 
         color: "#64748b", 
         fontWeight: "800",
+        marginTop: "0",
         letterSpacing: "0.8px"
     }
 };
