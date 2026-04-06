@@ -7,9 +7,9 @@ import HeaderLinks from "../components/Header/HeaderLinks.js";
 const HomePage = (props) => {
   const [usersOnline, setUsersOnline] = useState(156);
   const [recentUser, setRecentUser] = useState("");
-  // --- NEW: STATE FOR WHALE DATA ---
   const [whales, setWhales] = useState([]);
   
+  // OFFICIAL BYBIT TRADER DATA
   const traders = [
     { 
         nickname: "Rubedo Engine", 
@@ -41,17 +41,17 @@ const HomePage = (props) => {
     window.scrollTo(0, 0);
     document.title = "Crypto Lakeside | Institutional Trading Terminal";
 
-    // --- NEW: FETCH WHALES.JSON PRODUCED BY PYTHON ---
+    // FETCH LIVE WHALE DATA FROM PYTHON SCRIPT OUTPUT
     const getWhaleData = () => {
         fetch('/whales.json')
             .then(res => res.json())
             .then(data => setWhales(data))
-            .catch(err => console.log("Whale feed syncing..."));
+            .catch(err => console.log("Feed syncing..."));
     };
     getWhaleData();
-    const whaleInterval = setInterval(getWhaleData, 30000); // Check for new data every 30s
+    const whaleInterval = setInterval(getWhaleData, 30000); 
     
-    // --- SCRIPT TO REMOVE WHATSAPP BUTTON ---
+    // CLEANUP UI - REMOVE EXTRANEOUS BUTTONS
     const removeWhatsapp = () => {
         const buttons = document.querySelectorAll('a[href*="wa.me"], div[class*="whatsapp"], button[class*="whatsapp"]');
         buttons.forEach(btn => btn.style.display = 'none');
@@ -72,22 +72,34 @@ const HomePage = (props) => {
     const notificationTimer = setInterval(() => {
       const cities = ["Dubai", "London", "Singapore", "New York", "Hong Kong"];
       const city = cities[Math.floor(Math.random() * cities.length)];
-      setRecentUser("New VIP Client connected from " + city + " terminal 🛡️");
+      setRecentUser("Institutional VIP connected from " + city + " terminal 🛡️");
       setTimeout(() => setRecentUser(""), 5000);
     }, 25000);
 
     return () => { 
         clearInterval(onlineTimer); 
         clearInterval(notificationTimer); 
-        clearInterval(whaleInterval); // Cleanup
+        clearInterval(whaleInterval); 
     };
   }, []);
 
+  // --- FIXED REFERRAL REDIRECT LOGIC ---
   const handleLeadClick = (baseUrl, platformName) => {
     const myRef = "157106";
-    const target = baseUrl || "https://www.bybit.com/en/promo/global/rewards-hub";
-    const finalUrl = target.includes("?") ? (target + "&ref=" + myRef) : (target + "?ref=" + myRef);
-    if (window.gtag) { window.gtag('event', 'generate_lead', { 'platform': platformName }); }
+    // If no URL is provided, default to the Rewards Hub
+    const base = baseUrl || "https://www.bybit.com/en/promo/global/rewards-hub";
+    
+    // Check if the URL already has a '?' (query parameter)
+    const finalUrl = base.includes("?") 
+        ? `${base}&ref=${myRef}` 
+        : `${base}?ref=${myRef}`;
+
+    // Track event in Google Analytics
+    if (window.gtag) { 
+        window.gtag('event', 'generate_lead', { 'platform': platformName, 'url': finalUrl }); 
+    }
+
+    // Open in new tab
     window.open(finalUrl, "_blank");
   };
 
@@ -113,26 +125,26 @@ const HomePage = (props) => {
         <div className="container" style={{ maxWidth: "900px", margin: "0 auto" }}>
           <h1 style={styles.mainTitle}>Automate Your Portfolio with Institutional Traders</h1>
           <p style={styles.heroSubText}>
-            Access the world's most liquid derivatives market. Mirror the execution of verified Master Traders 
-            with proven 99% win rates and near-zero drawdown.
+            Access high-alpha execution in the world's most liquid derivatives market. 
+            Mirror verified Master Traders with institutional-grade performance.
           </p>
           <div style={styles.statusBadge}>
             <span style={styles.pulseDot}></span> {usersOnline} Institutions Active
           </div>
           <div style={{ marginTop: "40px" }}>
-            <button style={styles.primaryBtn} onClick={() => handleLeadClick(null, "Hero_Main")}>
+            <button style={styles.primaryBtn} onClick={() => handleLeadClick("https://www.bybit.com/en/signup", "Hero_Signup")}>
                 ENTER BYBIT TERMINAL
             </button>
           </div>
         </div>
       </div>
 
-      {/* --- NEW: LIVE WHALE TRACKER SECTION --- */}
+      {/* LIVE WHALE TRACKER */}
       <div style={styles.whaleSection}>
           <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
             <div style={styles.terminalHeader}>
                 <div style={styles.terminalDot}></div>
-                <span style={{ fontWeight: "800", fontSize: "12px", color: "#94a3b8" }}>LIVE WHALE DATA FEED (BYBIT V5)</span>
+                <span style={{ fontWeight: "800", fontSize: "12px", color: "#94a3b8" }}>LIVE TERMINAL FEED (BYBIT V5 API)</span>
             </div>
             <div style={styles.terminalBody}>
                 {whales.length > 0 ? (
@@ -148,17 +160,17 @@ const HomePage = (props) => {
                     ))
                 ) : (
                     <div style={{ color: "#94a3b8", padding: "20px", textAlign: "center" }}>
-                        Scanning Bybit Order Book for orders {'>'} $50k...
+                        Scanning Bybit Order Book for Large Volume Execution...
                     </div>
                 )}
             </div>
           </div>
       </div>
 
-      {/* TRADER GRID */}
+      {/* ASSET MANAGEMENT LEADERBOARD */}
       <div style={styles.traderSection}>
           <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
-              <h3 style={styles.sectionTitle}>Asset Management Leaderboard</h3>
+              <h3 style={styles.sectionTitle}>Institutional Leaderboard</h3>
               <div style={styles.traderGrid}>
                   {traders.map((trader, idx) => (
                       <div key={idx} style={styles.traderCard}>
@@ -178,7 +190,10 @@ const HomePage = (props) => {
                           </div>
                           <button 
                             style={styles.copyBtn}
-                            onClick={() => handleLeadClick("https://www.bybit.com/en/copyTrade/trade-center/detail?leaderMark=" + trader.leaderMark, "Copy-" + trader.nickname)}
+                            onClick={() => {
+                                const traderUrl = `https://www.bybit.com/en/copyTrade/trade-center/detail?leaderMark=${trader.leaderMark}`;
+                                handleLeadClick(traderUrl, "Copy-" + trader.nickname);
+                            }}
                           >
                             MIRROR STRATEGY
                           </button>
@@ -188,40 +203,36 @@ const HomePage = (props) => {
           </div>
       </div>
 
-      {/* TECHNICAL INFRASTRUCTURE SECTION */}
+      {/* TECHNICAL INFRASTRUCTURE */}
       <div style={{ background: "#020617", padding: "60px 20px", borderTop: "1px solid #1e293b" }}>
-          <h3 style={{ color: "#f3ba2f", fontWeight: "900", textAlign: "center", marginBottom: "30px" }}>Institutional Infrastructure</h3>
+          <h3 style={{ color: "#f3ba2f", fontWeight: "900", textAlign: "center", marginBottom: "30px" }}>Infrastructure Specifications</h3>
           <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
-              <div style={styles.techSpec}>⚡ <b>Low Latency:</b> &lt; 5ms API Response</div>
+              <div style={styles.techSpec}>⚡ <b>Latency:</b> &lt; 5ms Execution</div>
               <div style={styles.techSpec}>🛡️ <b>Security:</b> Multi-Sig Cold Storage</div>
-              <div style={styles.techSpec}>📊 <b>Liquidity:</b> $20B+ Daily Volume</div>
+              <div style={styles.techSpec}>📊 <b>Liquidity:</b> $20B+ Daily Aggregated</div>
           </div>
       </div>
 
-      {/* BINANCE GATEWAY */}
+      {/* BINANCE SECTION */}
       <div style={styles.binanceSection}>
           <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
-              <p style={styles.binanceLabel}>ALTERNATIVE INSTITUTIONAL GATEWAY</p>
+              <p style={styles.binanceLabel}>SECONDARY INSTITUTIONAL GATEWAY</p>
               <h3 style={{ fontWeight: "800", color: "#ffffff", marginBottom: "20px" }}>Binance Global Liquidity</h3>
               <button 
                 style={styles.binanceBtn}
-                onClick={() => {
-                    if (window.gtag) { window.gtag('event', 'click_binance', { 'platform': 'Binance' }); }
-                    window.open("https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00M4SS7Z7U", "_blank");
-                }}
+                onClick={() => handleLeadClick("https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00M4SS7Z7U", "Binance_Portal")}
               >
                 ACCESS BINANCE TERMINAL
               </button>
           </div>
       </div>
 
-      {/* VIP SECTION */}
+      {/* VIP ONBOARDING */}
       <div style={styles.vipSection}>
           <div className="container" style={{ maxWidth: "800px", margin: "0 auto" }}>
-              <h2 style={{ fontWeight: "900", color: "#ffffff" }}>VIP Institutional Program</h2>
+              <h2 style={{ fontWeight: "900", color: "#ffffff" }}>VIP Institutional Access</h2>
               <p style={{ color: "#94a3b8", fontSize: "17px", margin: "20px 0" }}>
-                  Trading over $1,000,000 monthly? Access dedicated VIP rebates, private API endpoints, 
-                  and 24/7 priority execution.
+                  Trading volumes exceeding $1M monthly? Apply for dedicated rebates and priority API endpoints.
               </p>
               <button 
                 style={styles.telegramBtn}
@@ -234,7 +245,7 @@ const HomePage = (props) => {
 
       <footer style={styles.footer}>
         <p style={{ fontSize: "12px", fontWeight: "700", opacity: "0.6" }}>OFFICIAL GLOBAL PARTNER | SECURED DATA FEED</p>
-        <p style={{ fontSize: "10px", opacity: "0.4", marginTop: "10px" }}>Capital at risk. All trading activities involve significant financial exposure.</p>
+        <p style={{ fontSize: "10px", opacity: "0.4", marginTop: "10px" }}>Capital at risk. Past performance is not indicative of future results.</p>
       </footer>
 
       {recentUser && <div style={styles.recentNotify}>{recentUser}</div>}
@@ -256,7 +267,6 @@ const styles = {
   pulseDot: { height: "8px", width: "8px", backgroundColor: "#4ade80", borderRadius: "50%", marginRight: "10px", boxShadow: "0 0 10px #4ade80" },
   primaryBtn: { background: "#f3ba2f", color: "#000000", padding: "20px 50px", fontSize: "16px", fontWeight: "900", borderRadius: "4px", border: "none", cursor: "pointer" },
   
-  // NEW WHALE SECTION STYLES
   whaleSection: { padding: "40px 20px", background: "#0f172a" },
   terminalHeader: { background: "#1e293b", padding: "10px 20px", borderRadius: "8px 8px 0 0", borderBottom: "1px solid #334155", display: "flex", alignItems: "center" },
   terminalDot: { height: "10px", width: "10px", background: "#ef4444", borderRadius: "50%", marginRight: "15px", boxShadow: "0 0 8px #ef4444" },
