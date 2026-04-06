@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="theme-color" content="#000000" />
     
-    <title>Crypto Lakeside - Official Trading Rewards</title>
+    <title>Crypto Lakeside - Institutional Trading Terminal</title>
 
     <!-- 1. Google Analytics (GA4) Tracking -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2Y9M643E6E"></script>
@@ -14,26 +14,26 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      // Basic configuration
+      // Configuration for your specific ID
       gtag('config', 'G-2Y9M643E6E', {
         'send_page_view': true,
         'anonymize_ip': true
       });
 
       /**
-       * 2. CUSTOM CONVERSION TRACKER
-       * This automatically tracks every time someone clicks your Bybit Affiliate link.
+       * 2. CUSTOM CONVERSION TRACKER (FIXED)
+       * This tracks every time a user clicks a Bybit link with your Ref ID.
        */
       document.addEventListener('click', function(e) {
         var target = e.target.closest('a');
-        if (target && target.href.includes('partner.bybit.com')) {
-          gtag('event', 'affiliate_conversion', {
-            'event_category': 'Bybit_Sign_Up',
-            'event_label': target.href,
-            'value': 1.0,
-            'currency': 'USD'
+        // Fixed: Now checks for your actual referral ID 157106
+        if (target && target.href.includes('bybit.com') && target.href.includes('157106')) {
+          gtag('event', 'generate_lead', {
+            'event_category': 'Affiliate_Click',
+            'event_label': 'Bybit_Terminal_Redirect',
+            'value': 1.0
           });
-          console.log('Tracking Conversion: Bybit Affiliate Link Clicked');
+          console.log('Conversion Captured: Bybit Referral Clicked');
         }
       });
     </script>
@@ -50,12 +50,19 @@
     <link href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    
+    <style>
+      /* Smooth loading transition */
+      body.loading #root { opacity: 0; }
+      body.loaded #root { opacity: 1; transition: opacity 0.5s ease-in; }
+    </style>
   </head>
 
   <body class="loading">
     <noscript>
-      <iframe src="https://www.googletagmanager.com/ns.html?id=G-2Y9M643E6E" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-      You need to enable JavaScript to run this app.
+      <div style="padding: 20px; text-align: center; background: #000; color: #fff;">
+        Please enable JavaScript to access the Crypto Lakeside Institutional Terminal.
+      </div>
     </noscript>
     
     <div id="root"></div>
