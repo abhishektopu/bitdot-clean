@@ -4,7 +4,8 @@ import os
 import time
 
 def fetch_market_data():
-    print("--- 🚀 Institutional Market Intelligence: Invincible Engine ---")
+    print("--- 🚀 Institutional Market Intelligence: Bitfinex Engine ---")
+    # Mapping for Bitfinex symbols
     symbols = ["BTC", "ETH", "SOL"]
     
     session = requests.Session()
@@ -25,32 +26,34 @@ def fetch_market_data():
     except:
         print("⚠️ Sentiment API throttle")
 
-    # 2. FETCH PRICES (Using CoinCap - Very stable for Cloud)
+    # 2. FETCH PRICES & TRADES (Unified Bitfinex Engine)
     prices = {}
-    try:
-        p_res = session.get("https://api.coincap.io/v2/assets", timeout=10).json()
-        for asset in p_res['data']:
-            if asset['symbol'] in symbols:
-                prices[asset['symbol']] = asset['priceUsd']
-                print(f"✅ Price {asset['symbol']}: ${float(asset['priceUsd']):,.2f}")
-    except Exception as e:
-        print(f"❌ Price Fetch Error: {e}")
-
-    # 3. FETCH TRADES (Using Bitfinex - Whale Favorite)
     whale_list = []
+
+    # Get Tickers for all prices in one go
+    try:
+        ticker_url = "https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD,tETHUSD,tSOLUSD"
+        tickers = session.get(ticker_url, timeout=10).json()
+        for t in tickers:
+            sym = t[0].replace("t", "").replace("USD", "")
+            last_price = t[7]
+            prices[sym] = str(last_price)
+            print(f"✅ Price {sym}: ${last_price:,.2f}")
+    except Exception as e:
+        print(f"❌ Ticker Error: {e}")
+
+    # Get Trades for each symbol
     for sym in symbols:
         try:
-            # Bitfinex uses 'tBTCUSD' format
-            t_url = f"https://api-pub.bitfinex.com/v2/trades/t{sym}USD/hist?limit=20"
+            t_url = f"https://api-pub.bitfinex.com/v2/trades/t{sym}USD/hist?limit=30"
             trades = session.get(t_url, timeout=10).json()
             
-            # Bitfinex trade format: [ID, MTS, AMOUNT, PRICE]
             for t in trades:
                 amount = abs(float(t[2]))
                 price = float(t[3])
                 val = amount * price
                 
-                if val > 1000: # Lowered threshold to ensure a busy terminal
+                if val > 1000: # Institutional threshold
                     whale_list.append({
                         "symbol": sym,
                         "time": str(t[1]),
@@ -62,7 +65,7 @@ def fetch_market_data():
         except:
             print(f"⚠️ Skipping {sym} trades")
 
-    # 4. CONSOLIDATE & SAVE
+    # 3. CONSOLIDATE & SAVE
     whale_list.sort(key=lambda x: int(x['time']), reverse=True)
     
     final_output = {
