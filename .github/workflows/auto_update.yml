@@ -7,14 +7,15 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-    # Added permissions block to double-ensure access
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4 # Updated to v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for a clean merge
       
       - name: Set up Python
-        uses: actions/setup-python@v5 # Updated to v5
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           
@@ -24,10 +25,12 @@ jobs:
       - name: Run Whale Tracker
         run: python whale_tracker.py
         
-      - name: Commit and Push Data
+      - name: Sync and Push Data
         run: |
           git config --global user.name 'WhaleBot'
           git config --global user.email 'bot@cryptolakeside.co.in'
           git add public/whales.json
+          # Pull latest changes from you to prevent the "rejected" error
+          git pull --rebase origin main
           git commit -m "Automated Data Update" || exit 0
-          git push
+          git push origin main
