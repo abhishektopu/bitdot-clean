@@ -5,7 +5,7 @@ import os
 def fetch_whale_trades():
     print("Searching for Whales on Bybit...")
     # Bybit V5 API endpoint
-    url = "https://api.bybit.com/v5/market/recent-trade?category=spot&symbol=BTCUSDT&limit=50"
+    url = "https://api.bybit.com/v5/market/recent-trade?category=spot&symbol=BTCUSDT&limit=200"
     
     try:
         response = requests.get(url)
@@ -21,7 +21,7 @@ def fetch_whale_trades():
             value = price * size
             
             # If trade is over $50,000
-            if value > 5000:
+            if value > 1000:
                 whale_list.append({
                     "time": t['time'],
                     "side": t['side'],
