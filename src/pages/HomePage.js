@@ -9,7 +9,7 @@ const HomePage = (props) => {
   const [recentUser, setRecentUser] = useState("");
   const [whales, setWhales] = useState([]);
   
-  // TRADER DATA - Using raw IDs
+  // TRADER DATA - Fixed IDs to match Bybit's exact internal requirements
   const traders = [
     { 
         nickname: "Rubedo Engine", 
@@ -17,7 +17,7 @@ const HomePage = (props) => {
         maxDrawdown: "0.23", 
         aum: "$1.2M",
         color: "#f3ba2f", 
-        leaderMark: "AbWEdoxJjic3JRWCtxUL1w==" 
+        leaderMark: "AbWEdoxJjic3JRWCtxUL1w%3D%3D" 
     },
     { 
         nickname: "caleon8", 
@@ -25,7 +25,7 @@ const HomePage = (props) => {
         maxDrawdown: "0.00", 
         aum: "$850K",
         color: "#000000", 
-        leaderMark: "zuhkoRlHodkzaCgGiSSdQw==" 
+        leaderMark: "zuhkoRlHodkzaCgGiSSdQw%3D%3D" 
     },
     { 
         nickname: "Liafe", 
@@ -81,18 +81,14 @@ const HomePage = (props) => {
     };
   }, []);
 
-  // MASTER REFERRAL FUNCTION - PREPENDING REF TO PREVENT "INVALID PARAMETER"
-  const handleLeadClick = (baseUrl, platformName, isCopyTrade = false, leaderMark = "") => {
+  // MASTER REFERRAL FUNCTION - SECURED FOR AFFILIATE TRACKING
+  const handleLeadClick = (targetUrl, platformName) => {
     const myRef = "157106";
-    let finalUrl;
-
-    if (isCopyTrade) {
-        // Putting the referral FIRST fixes the "Invalid Parameter" error on Bybit
-        finalUrl = `https://www.bybit.com/copyTrade/trade-center/detail?ref=${myRef}&leaderMark=${encodeURIComponent(leaderMark)}`;
-    } else {
-        const base = baseUrl || "https://www.bybit.com/en/promo/global/rewards-hub";
-        finalUrl = base.includes("?") ? `${base}&ref=${myRef}` : `${base}?ref=${myRef}`;
-    }
+    
+    // Logic to correctly append ref without breaking the path
+    const finalUrl = targetUrl.includes("?") 
+        ? `${targetUrl}&ref=${myRef}` 
+        : `${targetUrl}?ref=${myRef}`;
 
     if (window.gtag) { 
         window.gtag('event', 'generate_lead', { 'platform': platformName }); 
@@ -188,7 +184,11 @@ const HomePage = (props) => {
                           </div>
                           <button 
                             style={styles.copyBtn}
-                            onClick={() => handleLeadClick("", "Copy-" + trader.nickname, true, trader.leaderMark)}
+                            onClick={() => {
+                                // Bybit Deep Link Path (Note: No /en/ here)
+                                const traderUrl = `https://www.bybit.com/copyTrade/trade-center/detail?leaderMark=${trader.leaderMark}`;
+                                handleLeadClick(traderUrl, "Copy-" + trader.nickname);
+                            }}
                           >
                             MIRROR STRATEGY
                           </button>
