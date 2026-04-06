@@ -1,8 +1,9 @@
-[
-    {
-        "time": "1775458816810",
-        "side": "Sell",
-        "value": "$1,544.87",
-        "price": "$68,967.50"
-    }
-]
+{
+    "sentiment": {
+        "value": "13",
+        "classification": "Extreme Fear",
+        "timestamp": "1775433600"
+    },
+    "prices": {},
+    "trades": []
+}
