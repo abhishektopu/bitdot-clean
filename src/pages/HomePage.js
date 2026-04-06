@@ -9,32 +9,11 @@ const HomePage = (props) => {
   const [recentUser, setRecentUser] = useState("");
   const [whales, setWhales] = useState([]);
   
-  // TRADER DATA - Fixed IDs to match Bybit's exact internal requirements
+  // TRADER DATA (Kept for UI display only)
   const traders = [
-    { 
-        nickname: "Rubedo Engine", 
-        roi: "81.28", 
-        maxDrawdown: "0.23", 
-        aum: "$1.2M",
-        color: "#f3ba2f", 
-        leaderMark: "AbWEdoxJjic3JRWCtxUL1w%3D%3D" 
-    },
-    { 
-        nickname: "caleon8", 
-        roi: "52.08", 
-        maxDrawdown: "0.00", 
-        aum: "$850K",
-        color: "#000000", 
-        leaderMark: "zuhkoRlHodkzaCgGiSSdQw%3D%3D" 
-    },
-    { 
-        nickname: "Liafe", 
-        roi: "48.57", 
-        maxDrawdown: "4.32", 
-        aum: "$500K",
-        color: "#0088cc", 
-        leaderMark: "MzA1NDM4OTI3NDkzNzIzMTM2" 
-    }
+    { nickname: "Rubedo Engine", roi: "81.28", maxDrawdown: "0.23", aum: "$1.2M", color: "#f3ba2f" },
+    { nickname: "caleon8", roi: "52.08", maxDrawdown: "0.00", aum: "$850K", color: "#000000" },
+    { nickname: "Liafe", roi: "48.57", maxDrawdown: "4.32", aum: "$500K", color: "#0088cc" }
   ];
 
   useEffect(() => {
@@ -53,12 +32,6 @@ const HomePage = (props) => {
     const removeWhatsapp = () => {
         const buttons = document.querySelectorAll('a[href*="wa.me"], div[class*="whatsapp"], button[class*="whatsapp"]');
         buttons.forEach(btn => btn.style.display = 'none');
-        const allElements = document.getElementsByTagName('button');
-        for (let i = 0; i < allElements.length; i++) {
-            if (allElements[i].textContent.includes('Start Earning Now')) {
-                allElements[i].style.display = 'none';
-            }
-        }
     };
     removeWhatsapp();
     setTimeout(removeWhatsapp, 2000);
@@ -81,14 +54,12 @@ const HomePage = (props) => {
     };
   }, []);
 
-  // MASTER REFERRAL FUNCTION - SECURED FOR AFFILIATE TRACKING
-  const handleLeadClick = (targetUrl, platformName) => {
+  // --- FAILSAFE REDIRECT FUNCTION ---
+  const handleLeadClick = (platformName) => {
     const myRef = "157106";
-    
-    // Logic to correctly append ref without breaking the path
-    const finalUrl = targetUrl.includes("?") 
-        ? `${targetUrl}&ref=${myRef}` 
-        : `${targetUrl}?ref=${myRef}`;
+    // We point directly to the main Copy Trading Hub. 
+    // This is the most stable URL for Indian users.
+    const finalUrl = `https://www.bybit.com/copyTrade/?ref=${myRef}`;
 
     if (window.gtag) { 
         window.gtag('event', 'generate_lead', { 'platform': platformName }); 
@@ -126,7 +97,7 @@ const HomePage = (props) => {
             <span style={styles.pulseDot}></span> {usersOnline} Institutions Active
           </div>
           <div style={{ marginTop: "40px" }}>
-            <button style={styles.primaryBtn} onClick={() => handleLeadClick("https://www.bybit.com/en/signup", "Hero_Signup")}>
+            <button style={styles.primaryBtn} onClick={() => handleLeadClick("Hero_Signup")}>
                 ENTER BYBIT TERMINAL
             </button>
           </div>
@@ -184,11 +155,7 @@ const HomePage = (props) => {
                           </div>
                           <button 
                             style={styles.copyBtn}
-                            onClick={() => {
-                                // Bybit Deep Link Path (Note: No /en/ here)
-                                const traderUrl = `https://www.bybit.com/copyTrade/trade-center/detail?leaderMark=${trader.leaderMark}`;
-                                handleLeadClick(traderUrl, "Copy-" + trader.nickname);
-                            }}
+                            onClick={() => handleLeadClick("Copy-" + trader.nickname)}
                           >
                             MIRROR STRATEGY
                           </button>
@@ -215,7 +182,7 @@ const HomePage = (props) => {
               <h3 style={{ fontWeight: "800", color: "#ffffff", marginBottom: "20px" }}>Binance Global Liquidity</h3>
               <button 
                 style={styles.binanceBtn}
-                onClick={() => handleLeadClick("https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00M4SS7Z7U", "Binance_Portal")}
+                onClick={() => window.open("https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00M4SS7Z7U", "_blank")}
               >
                 ACCESS BINANCE TERMINAL
               </button>
