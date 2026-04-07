@@ -34,7 +34,7 @@ import React, {
 
 // Institutional Component Registry
 import Header from "../components/Header/Header.js";
-import HeaderLinks from "../components/Header/HeaderLinks.js";
+
 
 /**
  * -----------------------------------------------------------------------------
@@ -394,6 +394,7 @@ const HomePage = (props) => {
             >
                 <Header
                     color="white"
+                    links={null}
                     brand={
                         <div style={styles.brandLink}>
                             <div style={styles.logoCircle}>CL</div>
