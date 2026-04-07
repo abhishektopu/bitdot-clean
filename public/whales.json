@@ -1,834 +1,843 @@
 {
     "sentiment": {
         "BTC": {
-            "value": "35",
-            "classification": "Fear"
+            "value": "48",
+            "classification": "Greed"
         },
         "ETH": {
-            "value": "33",
+            "value": "43",
             "classification": "Fear"
         },
         "SOL": {
-            "value": "41",
-            "classification": "Fear"
+            "value": "48",
+            "classification": "Greed"
         },
         "LTC": {
-            "value": "44",
-            "classification": "Fear"
+            "value": "50",
+            "classification": "Greed"
         },
         "XRP": {
-            "value": "32",
+            "value": "38",
             "classification": "Fear"
         }
     },
     "prices": {
-        "BTC": "68466.59",
-        "ETH": "2091.05",
-        "SOL": "80.52",
-        "LTC": "53.41",
-        "XRP": "1.31"
+        "BTC": "69402.18",
+        "ETH": "2120.74",
+        "SOL": "81.94",
+        "LTC": "53.85",
+        "XRP": "1.32"
     },
     "trades": [
         {
-            "symbol": "SOL",
-            "time": "1775590721993",
-            "side": "BUY",
-            "amount": "8.3549",
-            "value": "$676.49",
-            "price": "80.97"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590716394",
+            "symbol": "XRP",
+            "time": "1775592498186",
             "side": "SELL",
-            "amount": "0.1357",
-            "value": "$9,295.14",
-            "price": "68,506.00"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590710356",
-            "side": "BUY",
-            "amount": "10.3105",
-            "value": "$834.61",
-            "price": "80.95"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590710267",
-            "side": "SELL",
-            "amount": "0.0730",
-            "value": "$5,000.75",
-            "price": "68,497.00"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590710267",
-            "side": "SELL",
-            "amount": "0.0730",
-            "value": "$5,001.74",
-            "price": "68,496.00"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590705324",
-            "side": "BUY",
-            "amount": "12.3599",
-            "value": "$1,000.15",
-            "price": "80.92"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590705311",
-            "side": "BUY",
-            "amount": "5.8568",
-            "value": "$473.81",
-            "price": "80.90"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590704135",
-            "side": "BUY",
-            "amount": "12.6071",
-            "value": "$1,019.66",
-            "price": "80.88"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590704133",
-            "side": "BUY",
-            "amount": "8.1938",
-            "value": "$662.70",
-            "price": "80.88"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590692889",
-            "side": "BUY",
-            "amount": "12.6071",
-            "value": "$1,019.54",
-            "price": "80.87"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590686865",
-            "side": "SELL",
-            "amount": "0.0022",
-            "value": "$151.33",
-            "price": "68,499.00"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590685670",
-            "side": "BUY",
-            "amount": "8.0658",
-            "value": "$652.41",
-            "price": "80.89"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590682130",
-            "side": "BUY",
-            "amount": "12.6071",
-            "value": "$1,019.79",
-            "price": "80.89"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590682129",
-            "side": "BUY",
-            "amount": "12.3645",
-            "value": "$1,000.15",
-            "price": "80.89"
+            "amount": "277.6684",
+            "value": "$366.91",
+            "price": "1.32"
         },
         {
             "symbol": "XRP",
-            "time": "1775590673277",
+            "time": "1775592488114",
+            "side": "BUY",
+            "amount": "283.6620",
+            "value": "$374.69",
+            "price": "1.32"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592486726",
+            "side": "SELL",
+            "amount": "0.4736",
+            "value": "$32,931.49",
+            "price": "69,530.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592486513",
+            "side": "SELL",
+            "amount": "0.9646",
+            "value": "$67,068.50",
+            "price": "69,530.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592482585",
+            "side": "BUY",
+            "amount": "0.2000",
+            "value": "$13,905.20",
+            "price": "69,526.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592477301",
+            "side": "SELL",
+            "amount": "0.0079",
+            "value": "$549.63",
+            "price": "69,500.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592477301",
+            "side": "SELL",
+            "amount": "0.0720",
+            "value": "$5,000.75",
+            "price": "69,502.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592477300",
+            "side": "SELL",
+            "amount": "0.0015",
+            "value": "$105.65",
+            "price": "69,504.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592477300",
+            "side": "SELL",
+            "amount": "0.0719",
+            "value": "$5,000.71",
+            "price": "69,503.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592477192",
+            "side": "SELL",
+            "amount": "0.0260",
+            "value": "$1,806.92",
+            "price": "69,510.00"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592476583",
+            "side": "SELL",
+            "amount": "2.4520",
+            "value": "$5,207.07",
+            "price": "2,123.60"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592476491",
+            "side": "SELL",
+            "amount": "0.0256",
+            "value": "$1,778.60",
+            "price": "69,525.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592476460",
+            "side": "SELL",
+            "amount": "0.0015",
+            "value": "$105.68",
+            "price": "69,526.00"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592469476",
+            "side": "SELL",
+            "amount": "1.9300",
+            "value": "$158.52",
+            "price": "82.14"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592451420",
+            "side": "SELL",
+            "amount": "0.0088",
+            "value": "$612.83",
+            "price": "69,523.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592451415",
+            "side": "SELL",
+            "amount": "0.1398",
+            "value": "$9,721.62",
+            "price": "69,527.00"
+        },
+        {
+            "symbol": "XRP",
+            "time": "1775592447549",
+            "side": "SELL",
+            "amount": "283.6620",
+            "value": "$374.58",
+            "price": "1.32"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592441584",
+            "side": "SELL",
+            "amount": "0.0067",
+            "value": "$468.24",
+            "price": "69,508.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592427179",
+            "side": "SELL",
+            "amount": "0.0256",
+            "value": "$1,780.26",
+            "price": "69,514.00"
+        },
+        {
+            "symbol": "XRP",
+            "time": "1775592426325",
             "side": "BUY",
             "amount": "100.0000",
-            "value": "$130.59",
-            "price": "1.31"
+            "value": "$132.13",
+            "price": "1.32"
         },
         {
-            "symbol": "SOL",
-            "time": "1775590672045",
-            "side": "SELL",
-            "amount": "10.4105",
-            "value": "$841.58",
-            "price": "80.84"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590671002",
-            "side": "SELL",
-            "amount": "12.6071",
-            "value": "$1,019.28",
-            "price": "80.85"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590666910",
-            "side": "SELL",
-            "amount": "7.9250",
-            "value": "$640.42",
-            "price": "80.81"
-        },
-        {
-            "symbol": "LTC",
-            "time": "1775590663181",
+            "symbol": "XRP",
+            "time": "1775592426299",
             "side": "BUY",
-            "amount": "3.3862",
-            "value": "$180.95",
-            "price": "53.44"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590662944",
-            "side": "SELL",
-            "amount": "4.7382",
-            "value": "$382.52",
-            "price": "80.73"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590662763",
-            "side": "SELL",
-            "amount": "4.7382",
-            "value": "$382.42",
-            "price": "80.71"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590662508",
-            "side": "BUY",
-            "amount": "4.4348",
-            "value": "$357.87",
-            "price": "80.70"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590662507",
-            "side": "BUY",
-            "amount": "7.8804",
-            "value": "$635.93",
-            "price": "80.70"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590662505",
-            "side": "BUY",
-            "amount": "7.9022",
-            "value": "$637.68",
-            "price": "80.70"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590662505",
-            "side": "BUY",
-            "amount": "7.9022",
-            "value": "$637.68",
-            "price": "80.70"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590662467",
-            "side": "BUY",
-            "amount": "7.9022",
-            "value": "$637.68",
-            "price": "80.70"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590662447",
-            "side": "BUY",
-            "amount": "1.9914",
-            "value": "$160.56",
-            "price": "80.63"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590662440",
-            "side": "BUY",
-            "amount": "5.1651",
-            "value": "$416.46",
-            "price": "80.63"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590662377",
-            "side": "BUY",
-            "amount": "7.8268",
-            "value": "$630.86",
-            "price": "80.60"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590662302",
-            "side": "BUY",
-            "amount": "4.7382",
-            "value": "$381.85",
-            "price": "80.59"
+            "amount": "100.0000",
+            "value": "$132.13",
+            "price": "1.32"
         },
         {
             "symbol": "BTC",
-            "time": "1775590643275",
-            "side": "SELL",
-            "amount": "0.0065",
-            "value": "$443.66",
-            "price": "68,484.00"
+            "time": "1775592425368",
+            "side": "BUY",
+            "amount": "0.2000",
+            "value": "$13,906.20",
+            "price": "69,531.00"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592420146",
+            "side": "BUY",
+            "amount": "12.2065",
+            "value": "$1,002.52",
+            "price": "82.13"
         },
         {
             "symbol": "BTC",
-            "time": "1775590642819",
+            "time": "1775592419021",
             "side": "SELL",
-            "amount": "0.0065",
-            "value": "$443.71",
-            "price": "68,492.00"
+            "amount": "0.0026",
+            "value": "$179.52",
+            "price": "69,505.00"
         },
         {
             "symbol": "BTC",
-            "time": "1775590639733",
+            "time": "1775592419020",
             "side": "SELL",
-            "amount": "0.0175",
-            "value": "$1,195.43",
-            "price": "68,499.00"
+            "amount": "0.0719",
+            "value": "$5,000.68",
+            "price": "69,506.00"
         },
         {
             "symbol": "BTC",
-            "time": "1775590639524",
+            "time": "1775592419020",
             "side": "SELL",
-            "amount": "0.0172",
-            "value": "$1,179.51",
-            "price": "68,498.00"
+            "amount": "0.0262",
+            "value": "$1,823.65",
+            "price": "69,505.00"
         },
         {
             "symbol": "BTC",
-            "time": "1775590625015",
+            "time": "1775592419019",
+            "side": "SELL",
+            "amount": "0.0015",
+            "value": "$105.65",
+            "price": "69,506.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592419018",
+            "side": "SELL",
+            "amount": "0.0719",
+            "value": "$5,000.68",
+            "price": "69,507.00"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592415209",
+            "side": "BUY",
+            "amount": "7.5821",
+            "value": "$622.54",
+            "price": "82.11"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592415174",
+            "side": "BUY",
+            "amount": "0.0176",
+            "value": "$1,220.16",
+            "price": "69,520.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592415164",
+            "side": "BUY",
+            "amount": "0.0306",
+            "value": "$2,124.84",
+            "price": "69,518.00"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592415081",
+            "side": "BUY",
+            "amount": "4.5657",
+            "value": "$374.76",
+            "price": "82.08"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592408113",
+            "side": "BUY",
+            "amount": "0.0015",
+            "value": "$105.62",
+            "price": "69,485.00"
+        },
+        {
+            "symbol": "XRP",
+            "time": "1775592401431",
+            "side": "BUY",
+            "amount": "100.0000",
+            "value": "$132.01",
+            "price": "1.32"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592397804",
+            "side": "SELL",
+            "amount": "0.0476",
+            "value": "$3,305.49",
+            "price": "69,448.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592397803",
             "side": "SELL",
             "amount": "0.0258",
-            "value": "$1,769.98",
-            "price": "68,500.00"
+            "value": "$1,788.62",
+            "price": "69,457.00"
         },
         {
-            "symbol": "ETH",
-            "time": "1775590621300",
-            "side": "BUY",
-            "amount": "0.3274",
-            "value": "$685.21",
-            "price": "2,093.00"
+            "symbol": "BTC",
+            "time": "1775592397803",
+            "side": "SELL",
+            "amount": "0.0720",
+            "value": "$5,000.71",
+            "price": "69,457.00"
         },
         {
             "symbol": "SOL",
-            "time": "1775590621259",
+            "time": "1775592389368",
             "side": "BUY",
-            "amount": "7.7939",
-            "value": "$627.98",
-            "price": "80.57"
+            "amount": "1.9300",
+            "value": "$158.45",
+            "price": "82.10"
         },
         {
             "symbol": "BTC",
-            "time": "1775590621240",
+            "time": "1775592378482",
             "side": "BUY",
-            "amount": "0.0123",
-            "value": "$839.75",
-            "price": "68,500.00"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590621210",
-            "side": "BUY",
-            "amount": "0.3614",
-            "value": "$756.17",
-            "price": "2,092.50"
-        },
-        {
-            "symbol": "XRP",
-            "time": "1775590621146",
-            "side": "BUY",
-            "amount": "303.3904",
-            "value": "$395.95",
-            "price": "1.31"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590614519",
-            "side": "BUY",
-            "amount": "5.1160",
-            "value": "$412.12",
-            "price": "80.55"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590614512",
-            "side": "BUY",
-            "amount": "7.8283",
-            "value": "$630.60",
-            "price": "80.55"
+            "amount": "0.0230",
+            "value": "$1,597.41",
+            "price": "69,536.00"
         },
         {
             "symbol": "BTC",
-            "time": "1775590599039",
+            "time": "1775592378481",
+            "side": "BUY",
+            "amount": "0.0075",
+            "value": "$522.39",
+            "price": "69,535.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592378480",
+            "side": "BUY",
+            "amount": "0.0109",
+            "value": "$754.54",
+            "price": "69,533.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592378477",
+            "side": "BUY",
+            "amount": "0.0432",
+            "value": "$3,003.33",
+            "price": "69,524.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592378469",
+            "side": "BUY",
+            "amount": "0.0500",
+            "value": "$3,475.55",
+            "price": "69,511.00"
+        },
+        {
+            "symbol": "BTC",
+            "time": "1775592377381",
             "side": "SELL",
-            "amount": "0.1647",
-            "value": "$11,280.41",
-            "price": "68,476.00"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590595968",
-            "side": "BUY",
-            "amount": "10.3459",
-            "value": "$833.17",
-            "price": "80.53"
-        },
-        {
-            "symbol": "SOL",
-            "time": "1775590595958",
-            "side": "BUY",
-            "amount": "7.0245",
-            "value": "$565.70",
-            "price": "80.53"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590581400",
-            "side": "BUY",
-            "amount": "0.0015",
-            "value": "$104.09",
-            "price": "68,477.00"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590581382",
-            "side": "SELL",
-            "amount": "0.0112",
-            "value": "$765.44",
-            "price": "68,457.00"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590581381",
-            "side": "SELL",
-            "amount": "0.0188",
-            "value": "$1,288.08",
-            "price": "68,457.00"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590581306",
-            "side": "BUY",
-            "amount": "0.3634",
-            "value": "$759.90",
-            "price": "2,091.20"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590581292",
-            "side": "BUY",
-            "amount": "2.6230",
-            "value": "$5,484.96",
-            "price": "2,091.10"
-        },
-        {
-            "symbol": "XRP",
-            "time": "1775590574450",
-            "side": "SELL",
-            "amount": "106.7775",
-            "value": "$139.29",
-            "price": "1.30"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590571862",
-            "side": "SELL",
-            "amount": "0.1582",
-            "value": "$10,826.20",
-            "price": "68,450.00"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590564468",
-            "side": "BUY",
             "amount": "0.0016",
-            "value": "$111.73",
-            "price": "68,472.00"
+            "value": "$111.16",
+            "price": "69,473.00"
         },
         {
-            "symbol": "BTC",
-            "time": "1775590560754",
-            "side": "SELL",
-            "amount": "0.0030",
-            "value": "$203.06",
-            "price": "68,456.00"
-        },
-        {
-            "symbol": "XRP",
-            "time": "1775590539595",
+            "symbol": "SOL",
+            "time": "1775592375005",
             "side": "BUY",
-            "amount": "106.7775",
-            "value": "$139.33",
-            "price": "1.30"
+            "amount": "2.4777",
+            "value": "$203.36",
+            "price": "82.08"
         },
         {
-            "symbol": "XRP",
-            "time": "1775590539588",
+            "symbol": "SOL",
+            "time": "1775592374314",
             "side": "BUY",
-            "amount": "100.0000",
-            "value": "$130.49",
-            "price": "1.30"
+            "amount": "7.6020",
+            "value": "$623.82",
+            "price": "82.06"
         },
         {
-            "symbol": "BTC",
-            "time": "1775590527241",
+            "symbol": "SOL",
+            "time": "1775592372144",
             "side": "BUY",
-            "amount": "0.0058",
-            "value": "$399.86",
-            "price": "68,470.00"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590517498",
-            "side": "BUY",
-            "amount": "0.0015",
-            "value": "$104.08",
-            "price": "68,475.00"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590503698",
-            "side": "SELL",
-            "amount": "0.0876",
-            "value": "$5,999.96",
-            "price": "68,481.00"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590472948",
-            "side": "SELL",
-            "amount": "0.2000",
-            "value": "$13,696.40",
-            "price": "68,482.00"
+            "amount": "4.5657",
+            "value": "$374.57",
+            "price": "82.04"
         },
         {
             "symbol": "ETH",
-            "time": "1775590459541",
+            "time": "1775592364672",
             "side": "SELL",
-            "amount": "2.9650",
-            "value": "$6,201.59",
-            "price": "2,091.60"
+            "amount": "2.4630",
+            "value": "$5,221.81",
+            "price": "2,120.10"
         },
         {
-            "symbol": "BTC",
-            "time": "1775590457321",
+            "symbol": "SOL",
+            "time": "1775592351414",
             "side": "BUY",
-            "amount": "0.0160",
-            "value": "$1,097.12",
-            "price": "68,517.00"
+            "amount": "5.5600",
+            "value": "$456.15",
+            "price": "82.04"
         },
         {
-            "symbol": "BTC",
-            "time": "1775590454737",
-            "side": "SELL",
-            "amount": "0.1193",
-            "value": "$8,173.16",
-            "price": "68,491.00"
+            "symbol": "SOL",
+            "time": "1775592347626",
+            "side": "BUY",
+            "amount": "2.5090",
+            "value": "$205.76",
+            "price": "82.01"
         },
         {
-            "symbol": "BTC",
-            "time": "1775590454736",
+            "symbol": "XRP",
+            "time": "1775592347263",
+            "side": "BUY",
+            "amount": "100.0000",
+            "value": "$131.87",
+            "price": "1.32"
+        },
+        {
+            "symbol": "XRP",
+            "time": "1775592347152",
+            "side": "BUY",
+            "amount": "100.0000",
+            "value": "$131.87",
+            "price": "1.32"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592304571",
+            "side": "BUY",
+            "amount": "4.5777",
+            "value": "$375.14",
+            "price": "81.95"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592300139",
+            "side": "BUY",
+            "amount": "12.2568",
+            "value": "$1,004.32",
+            "price": "81.94"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592291825",
+            "side": "BUY",
+            "amount": "12.2222",
+            "value": "$1,001.85",
+            "price": "81.97"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592286860",
+            "side": "BUY",
+            "amount": "0.2200",
+            "value": "$466.49",
+            "price": "2,120.40"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592286786",
+            "side": "BUY",
+            "amount": "0.9873",
+            "value": "$2,093.14",
+            "price": "2,120.10"
+        },
+        {
+            "symbol": "XRP",
+            "time": "1775592286210",
+            "side": "BUY",
+            "amount": "335.9451",
+            "value": "$442.71",
+            "price": "1.32"
+        },
+        {
+            "symbol": "XRP",
+            "time": "1775592286193",
+            "side": "BUY",
+            "amount": "100.0000",
+            "value": "$131.78",
+            "price": "1.32"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592273815",
             "side": "SELL",
-            "amount": "0.0015",
+            "amount": "1.8375",
+            "value": "$3,894.06",
+            "price": "2,119.20"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592273800",
+            "side": "SELL",
+            "amount": "5.0510",
+            "value": "$413.88",
+            "price": "81.94"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592273799",
+            "side": "SELL",
+            "amount": "7.1548",
+            "value": "$586.27",
+            "price": "81.94"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592270574",
+            "side": "BUY",
+            "amount": "12.2222",
+            "value": "$1,001.73",
+            "price": "81.96"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592261258",
+            "side": "BUY",
+            "amount": "12.2222",
+            "value": "$1,002.34",
+            "price": "82.01"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592261148",
+            "side": "BUY",
+            "amount": "12.2222",
+            "value": "$1,002.22",
+            "price": "82.00"
+        },
+        {
+            "symbol": "XRP",
+            "time": "1775592258449",
+            "side": "SELL",
+            "amount": "100.0000",
+            "value": "$131.73",
+            "price": "1.32"
+        },
+        {
+            "symbol": "XRP",
+            "time": "1775592258350",
+            "side": "SELL",
+            "amount": "100.0000",
+            "value": "$131.73",
+            "price": "1.32"
+        },
+        {
+            "symbol": "XRP",
+            "time": "1775592258284",
+            "side": "SELL",
+            "amount": "100.0000",
+            "value": "$131.73",
+            "price": "1.32"
+        },
+        {
+            "symbol": "XRP",
+            "time": "1775592258194",
+            "side": "SELL",
+            "amount": "100.0000",
+            "value": "$131.73",
+            "price": "1.32"
+        },
+        {
+            "symbol": "XRP",
+            "time": "1775592258090",
+            "side": "SELL",
+            "amount": "100.0000",
+            "value": "$131.73",
+            "price": "1.32"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592244794",
+            "side": "SELL",
+            "amount": "12.1958",
+            "value": "$1,000.15",
+            "price": "82.01"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592229877",
+            "side": "BUY",
+            "amount": "12.2255",
+            "value": "$1,002.73",
+            "price": "82.02"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592188248",
+            "side": "SELL",
+            "amount": "2.6755",
+            "value": "$5,678.83",
+            "price": "2,122.50"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592188227",
+            "side": "SELL",
+            "amount": "0.7202",
+            "value": "$1,528.53",
+            "price": "2,122.50"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592188226",
+            "side": "SELL",
+            "amount": "0.9832",
+            "value": "$2,086.87",
+            "price": "2,122.50"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592188224",
+            "side": "SELL",
+            "amount": "0.0471",
             "value": "$100.02",
-            "price": "68,492.00"
+            "price": "2,122.70"
         },
         {
             "symbol": "ETH",
-            "time": "1775590449611",
-            "side": "BUY",
-            "amount": "0.1187",
-            "value": "$248.27",
-            "price": "2,092.40"
+            "time": "1775592188205",
+            "side": "SELL",
+            "amount": "0.3330",
+            "value": "$706.79",
+            "price": "2,122.50"
         },
         {
             "symbol": "ETH",
-            "time": "1775590431235",
-            "side": "BUY",
-            "amount": "1.7148",
-            "value": "$3,587.25",
-            "price": "2,091.90"
+            "time": "1775592188191",
+            "side": "SELL",
+            "amount": "0.9832",
+            "value": "$2,086.97",
+            "price": "2,122.60"
         },
         {
             "symbol": "ETH",
-            "time": "1775590431172",
-            "side": "BUY",
-            "amount": "1.1452",
-            "value": "$2,395.66",
-            "price": "2,091.90"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590428601",
+            "time": "1775592188191",
             "side": "SELL",
-            "amount": "0.0555",
-            "value": "$3,801.88",
-            "price": "68,486.00"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590428600",
-            "side": "SELL",
-            "amount": "0.0730",
-            "value": "$5,000.73",
-            "price": "68,488.00"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590408432",
-            "side": "SELL",
-            "amount": "0.1655",
-            "value": "$11,338.93",
-            "price": "68,493.00"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590402803",
-            "side": "SELL",
-            "amount": "0.1285",
-            "value": "$8,800.93",
-            "price": "68,513.00"
-        },
-        {
-            "symbol": "BTC",
-            "time": "1775590402802",
-            "side": "SELL",
-            "amount": "0.0069",
-            "value": "$472.62",
-            "price": "68,513.00"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590402758",
-            "side": "SELL",
-            "amount": "7.6696",
-            "value": "$16,045.52",
-            "price": "2,092.10"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400973",
-            "side": "SELL",
-            "amount": "1.0738",
-            "value": "$2,246.87",
-            "price": "2,092.50"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400972",
-            "side": "SELL",
-            "amount": "0.8447",
-            "value": "$1,767.60",
-            "price": "2,092.50"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400666",
-            "side": "SELL",
-            "amount": "4.2400",
-            "value": "$8,874.85",
-            "price": "2,093.10"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400666",
-            "side": "SELL",
-            "amount": "0.9556",
-            "value": "$2,000.19",
-            "price": "2,093.10"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400665",
-            "side": "SELL",
-            "amount": "4.7772",
-            "value": "$9,999.59",
-            "price": "2,093.20"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400663",
-            "side": "SELL",
-            "amount": "3.3914",
-            "value": "$7,099.28",
-            "price": "2,093.30"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400662",
-            "side": "SELL",
-            "amount": "4.2781",
-            "value": "$8,955.44",
-            "price": "2,093.30"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400660",
-            "side": "SELL",
-            "amount": "0.4997",
-            "value": "$1,046.02",
-            "price": "2,093.30"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400659",
-            "side": "SELL",
-            "amount": "4.2997",
-            "value": "$9,000.92",
-            "price": "2,093.40"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400647",
-            "side": "SELL",
-            "amount": "0.4775",
-            "value": "$999.62",
-            "price": "2,093.40"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400625",
-            "side": "SELL",
-            "amount": "4.7773",
-            "value": "$10,001.36",
-            "price": "2,093.50"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400625",
-            "side": "SELL",
-            "amount": "2.9200",
-            "value": "$6,112.95",
-            "price": "2,093.50"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400624",
-            "side": "SELL",
-            "amount": "0.3617",
-            "value": "$757.34",
-            "price": "2,093.60"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590400623",
-            "side": "SELL",
-            "amount": "1.1943",
-            "value": "$2,500.37",
-            "price": "2,093.60"
+            "amount": "0.1947",
+            "value": "$413.34",
+            "price": "2,122.60"
         },
         {
             "symbol": "XRP",
-            "time": "1775590397872",
+            "time": "1775592183904",
+            "side": "BUY",
+            "amount": "244.5824",
+            "value": "$322.51",
+            "price": "1.32"
+        },
+        {
+            "symbol": "XRP",
+            "time": "1775592178071",
+            "side": "BUY",
+            "amount": "482.3319",
+            "value": "$635.81",
+            "price": "1.32"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592170186",
+            "side": "BUY",
+            "amount": "7.5651",
+            "value": "$620.91",
+            "price": "82.08"
+        },
+        {
+            "symbol": "SOL",
+            "time": "1775592170122",
+            "side": "BUY",
+            "amount": "12.2685",
+            "value": "$1,006.26",
+            "price": "82.02"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592167991",
+            "side": "BUY",
+            "amount": "0.5966",
+            "value": "$1,265.77",
+            "price": "2,121.60"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592167975",
+            "side": "BUY",
+            "amount": "0.5005",
+            "value": "$1,061.80",
+            "price": "2,121.60"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592167871",
+            "side": "BUY",
+            "amount": "0.2461",
+            "value": "$521.91",
+            "price": "2,120.40"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592167870",
+            "side": "BUY",
+            "amount": "0.7056",
+            "value": "$1,496.00",
+            "price": "2,120.30"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592167868",
+            "side": "BUY",
+            "amount": "0.9517",
+            "value": "$2,017.89",
+            "price": "2,120.30"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592167866",
+            "side": "BUY",
+            "amount": "0.9553",
+            "value": "$2,025.55",
+            "price": "2,120.30"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592160096",
             "side": "SELL",
-            "amount": "289.0305",
-            "value": "$377.68",
-            "price": "1.31"
+            "amount": "0.2419",
+            "value": "$512.74",
+            "price": "2,119.30"
         },
         {
             "symbol": "ETH",
-            "time": "1775590372894",
-            "side": "BUY",
-            "amount": "0.3538",
-            "value": "$741.11",
-            "price": "2,094.50"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590348350",
-            "side": "BUY",
-            "amount": "0.6129",
-            "value": "$1,283.65",
-            "price": "2,094.40"
-        },
-        {
-            "symbol": "XRP",
-            "time": "1775590348350",
-            "side": "BUY",
-            "amount": "289.0305",
-            "value": "$377.68",
-            "price": "1.31"
-        },
-        {
-            "symbol": "XRP",
-            "time": "1775590348340",
-            "side": "BUY",
-            "amount": "100.0000",
-            "value": "$130.67",
-            "price": "1.31"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590347806",
-            "side": "BUY",
-            "amount": "0.3651",
-            "value": "$764.59",
-            "price": "2,094.10"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590337261",
-            "side": "BUY",
-            "amount": "0.7542",
-            "value": "$1,579.16",
-            "price": "2,093.70"
-        },
-        {
-            "symbol": "XRP",
-            "time": "1775590301312",
-            "side": "BUY",
-            "amount": "255.9755",
-            "value": "$334.56",
-            "price": "1.31"
-        },
-        {
-            "symbol": "ETH",
-            "time": "1775590270021",
+            "time": "1775592160095",
             "side": "SELL",
-            "amount": "0.3779",
-            "value": "$790.99",
-            "price": "2,093.40"
+            "amount": "0.1786",
+            "value": "$378.54",
+            "price": "2,119.30"
         },
         {
             "symbol": "ETH",
-            "time": "1775590262239",
+            "time": "1775592160094",
             "side": "SELL",
-            "amount": "1.3700",
-            "value": "$2,869.05",
-            "price": "2,094.20"
+            "amount": "0.1398",
+            "value": "$296.20",
+            "price": "2,119.30"
         },
         {
-            "symbol": "XRP",
-            "time": "1775590249837",
+            "symbol": "ETH",
+            "time": "1775592160094",
             "side": "SELL",
-            "amount": "247.3999",
-            "value": "$323.50",
-            "price": "1.31"
+            "amount": "0.4956",
+            "value": "$1,050.38",
+            "price": "2,119.30"
         },
         {
-            "symbol": "XRP",
-            "time": "1775590247108",
-            "side": "BUY",
-            "amount": "470.3672",
-            "value": "$615.05",
-            "price": "1.31"
+            "symbol": "ETH",
+            "time": "1775592160092",
+            "side": "SELL",
+            "amount": "0.7237",
+            "value": "$1,533.80",
+            "price": "2,119.30"
         },
         {
-            "symbol": "XRP",
-            "time": "1775590247107",
-            "side": "BUY",
-            "amount": "100.0000",
-            "value": "$130.76",
-            "price": "1.31"
+            "symbol": "ETH",
+            "time": "1775592160090",
+            "side": "SELL",
+            "amount": "2.2051",
+            "value": "$4,673.32",
+            "price": "2,119.30"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592160089",
+            "side": "SELL",
+            "amount": "0.2419",
+            "value": "$512.74",
+            "price": "2,119.30"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592160055",
+            "side": "SELL",
+            "amount": "0.1620",
+            "value": "$343.43",
+            "price": "2,119.30"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592160052",
+            "side": "SELL",
+            "amount": "0.6644",
+            "value": "$1,408.06",
+            "price": "2,119.30"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592160051",
+            "side": "SELL",
+            "amount": "0.7394",
+            "value": "$1,567.01",
+            "price": "2,119.30"
+        },
+        {
+            "symbol": "ETH",
+            "time": "1775592160049",
+            "side": "SELL",
+            "amount": "0.3260",
+            "value": "$690.81",
+            "price": "2,119.30"
         }
     ],
-    "whale_alerts": []
+    "whale_alerts": [
+        {
+            "symbol": "BTC",
+            "time": "1775592486513",
+            "side": "SELL",
+            "amount": "0.9646",
+            "value": "$67,068.50",
+            "price": "69,530.00"
+        }
+    ]
 }
