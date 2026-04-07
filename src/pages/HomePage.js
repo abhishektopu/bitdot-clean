@@ -692,8 +692,8 @@ const handleInstitutionalRedirect = (originNode) => {
                 @keyframes tickerMove {
                     0% { transform: translateX(0); }
                     100% { transform: translateX(-50%); }
-                } 
-/* HANDSHAKE OVERLAY ANIMATIONS */
+                }
+                /* ADDED: HANDSHAKE OVERLAY ANIMATIONS */
                 @keyframes pulse {
                     0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(243, 186, 47, 0.7); }
                     70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(243, 186, 47, 0); }
@@ -703,7 +703,7 @@ const handleInstitutionalRedirect = (originNode) => {
                     from { opacity: 0; transform: translateY(10px); }
                     to { opacity: 1; transform: translateY(0); }
                 }
-                
+                /* RESPONSIVE MEDIA QUERIES */
                 @media (max-width: 1200px) {
                     .dashboardGrid { grid-template-columns: repeat(3, 1fr) !important; }
                 }
