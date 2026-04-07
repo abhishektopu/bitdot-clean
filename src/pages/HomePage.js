@@ -490,44 +490,44 @@ const HomePage = (props) => {
                             </span>
                         </div>
 
-                        {/* TABLE CONTAINER: SCROLLABLE ON MOBILE ORIENTATION */}
-                        <div style={styles.tableScrollArea}>
-                            <div style={styles.orderBookHeader}>
-                                <span style={{ minWidth: "120px" }}>TIMESTAMP</span>
-                                <span style={{ minWidth: "100px" }}>ASSET</span>
-                                <span style={{ minWidth: "80px" }}>SIDE</span>
-                                <span style={{ minWidth: "180px" }}>SIZE</span>
-                                <span style={{ minWidth: "200px" }}>TOTAL VOLUME (USDT)</span>
-                                <span style={{ minWidth: "150px" }}>EXECUTION PRICE</span>
-                            </div>
+           {/* TABLE CONTAINER: SCROLLABLE ON MOBILE ORIENTATION */}
+            <div style={styles.tableScrollArea}>
+                <div style={styles.orderBookHeader}>
+                    <span style={{ minWidth: "120px", flexShrink: 0 }}>TIMESTAMP</span>
+                    <span style={{ minWidth: "100px", flexShrink: 0 }}>ASSET</span>
+                    <span style={{ minWidth: "80px", flexShrink: 0 }}>SIDE</span>
+                    <span style={{ minWidth: "180px", flexShrink: 0 }}>SIZE</span>
+                    <span style={{ minWidth: "200px", flexShrink: 0 }}>TOTAL VOLUME (USDT)</span>
+                    <span style={{ minWidth: "150px", flexShrink: 0 }}>EXECUTION PRICE</span>
+                </div>
 
-                            <div style={styles.terminalBody}>
-                                <div style={styles.scrollingContent}>
-                                    {marketData.trades.length > 0 ? marketData.trades.map((trade, i) => (
-                                        <div key={i} style={styles.orderRow}>
-                                            <span style={{ color: "#64748b", minWidth: "120px" }}>[{new Date(parseInt(trade.time)).toLocaleTimeString()}]</span>
-                                            <span style={{ color: "#f3ba2f", fontWeight: "900", minWidth: "100px" }}>{trade.symbol}</span>
-                                            <span style={{ color: trade.side === "BUY" ? "#4ade80" : "#ef4444", fontWeight: "bold", minWidth: "80px" }}>{trade.side}</span>
-                                            <span style={{ color: "#ffffff", minWidth: "180px" }}>{trade.amount}</span>
-                                            <span style={{ color: "#ffffff", minWidth: "200px", fontWeight: "800" }}>{trade.value}</span>
-                                            <span style={{ color: "#94a3b8", minWidth: "150px" }}>@ {trade.price} USDT</span>
-                                        </div>
-                                    )) : <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>Connecting to institutional data stream...</div>}
-                                    
-                                    {/* Continuity Set for Seamless Scroll Transition */}
-                                    {marketData.trades.map((trade, i) => (
-                                        <div key={`dup-${i}`} style={styles.orderRow}>
-                                            <span style={{ color: "#64748b", minWidth: "120px" }}>[{new Date(parseInt(trade.time)).toLocaleTimeString()}]</span>
-                                            <span style={{ color: "#f3ba2f", fontWeight: "900", minWidth: "100px" }}>{trade.symbol}</span>
-                                            <span style={{ color: trade.side === "BUY" ? "#4ade80" : "#ef4444", fontWeight: "bold", minWidth: "80px" }}>{trade.side}</span>
-                                            <span style={{ color: "#ffffff", minWidth: "180px" }}>{trade.amount}</span>
-                                            <span style={{ color: "#ffffff", minWidth: "200px", fontWeight: "800" }}>{trade.value}</span>
-                                            <span style={{ color: "#94a3b8", minWidth: "150px" }}>@ {trade.price} USDT</span>
-                                        </div>
-                                    ))}
-                                </div>
+                <div style={styles.terminalBody}>
+                    <div style={styles.scrollingContent}>
+                        {marketData.trades.length > 0 ? marketData.trades.map((trade, i) => (
+                            <div key={i} style={styles.orderRow}>
+                                <span style={{ color: "#64748b", minWidth: "120px", flexShrink: 0 }}>[{new Date(parseInt(trade.time)).toLocaleTimeString()}]</span>
+                                <span style={{ color: "#f3ba2f", fontWeight: "900", minWidth: "100px", flexShrink: 0 }}>{trade.symbol}</span>
+                                <span style={{ color: trade.side === "BUY" ? "#4ade80" : "#ef4444", fontWeight: "bold", minWidth: "80px", flexShrink: 0 }}>{trade.side}</span>
+                                <span style={{ color: "#ffffff", minWidth: "180px", flexShrink: 0 }}>{trade.amount}</span>
+                                <span style={{ color: "#ffffff", minWidth: "200px", fontWeight: "800", flexShrink: 0 }}>{trade.value}</span>
+                                <span style={{ color: "#94a3b8", minWidth: "150px", flexShrink: 0 }}>@ {trade.price} USDT</span>
                             </div>
-                        </div>
+                        )) : <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>Connecting to institutional data stream...</div>}
+                        
+                        {/* Continuity Set for Seamless Scroll Transition */}
+                        {marketData.trades.map((trade, i) => (
+                            <div key={`dup-${i}`} style={styles.orderRow}>
+                                <span style={{ color: "#64748b", minWidth: "120px", flexShrink: 0 }}>[{new Date(parseInt(trade.time)).toLocaleTimeString()}]</span>
+                                <span style={{ color: "#f3ba2f", fontWeight: "900", minWidth: "100px", flexShrink: 0 }}>{trade.symbol}</span>
+                                <span style={{ color: trade.side === "BUY" ? "#4ade80" : "#ef4444", fontWeight: "bold", minWidth: "80px", flexShrink: 0 }}>{trade.side}</span>
+                                <span style={{ color: "#ffffff", minWidth: "180px", flexShrink: 0 }}>{trade.amount}</span>
+                                <span style={{ color: "#ffffff", minWidth: "200px", fontWeight: "800", flexShrink: 0 }}>{trade.value}</span>
+                                <span style={{ color: "#94a3b8", minWidth: "150px", flexShrink: 0 }}>@ {trade.price} USDT</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
                     </div>
                 </div>
             </div>
@@ -859,6 +859,7 @@ const styles = {
     },
     orderBookHeader: { 
         display: "flex", 
+        minWidth: "850px",
         paddingTop: "15px",
         paddingBottom: "15px",
         paddingLeft: "30px",
@@ -885,6 +886,7 @@ const styles = {
     },
     orderRow: { 
         display: "flex", 
+        minWidth: "850px",
         paddingTop: "15px",
         paddingBottom: "15px", 
         borderBottom: "1px solid #0f172a", 
