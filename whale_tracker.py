@@ -1,4 +1,5 @@
 import requests, json, os, time
+import random
 
 def fetch_market_data():
     print("--- 🚀 Institutional High-Density Engine v6.5 (Sticky Sync) ---")
@@ -27,11 +28,26 @@ def fetch_market_data():
     except: 
         print("⚠️ API Latency Detected. Using Sticky Sentiment (Last Known Good).")
 
-    # 3. MAP SENTIMENT TO ASSETS (The Critical React Fix)
-    # This ensures marketData.sentiment['BTC'] is valid on the website
+    # 3. VOLATILITY ENGINE: DYNAMIC ASSET MAPPING
+    # Logic: Adds a -4 to +4 offset to simulate coin-specific sentiment
+    def get_classification(val):
+        if val <= 25: return "Extreme Fear"
+        if val <= 45: return "Fear"
+        if val <= 75: return "Greed"
+        return "Extreme Greed"
+
     mapped_sentiment = {}
+    base_value = int(fng_data['value'])
+
     for sym in symbols:
-        mapped_sentiment[sym] = fng_data
+        # Add unique 'tweak' to each coin's index
+        coin_index = max(0, min(100, base_value + random.randint(-4, 4)))
+        mapped_sentiment[sym] = {
+            "value": str(coin_index),
+            "classification": get_classification(coin_index)
+        }
+    
+    print(f"🎯 Volatility Synced: {', '.join([f'{k}:{v['value']}' for k,v in mapped_sentiment.items()])}")
 
     # 4. INDIVIDUAL ASSET USDT PRICE ENGINE
     prices = {}
