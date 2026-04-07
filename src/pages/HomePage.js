@@ -223,6 +223,7 @@ const HomePage = (props) => {
     const [usersOnline, setUsersOnline] = useState(157);
     const [isSyncing, setIsSyncing] = useState(false);
     const [syncStep, setSyncStep] = useState(0);
+    const [targetPlatform, setTargetPlatform] = useState("Bybit");
     const [recentUser, setRecentUser] = useState("");
     const [lastHeartbeat, setLastHeartbeat] = useState(new Date().toLocaleTimeString());
     
@@ -365,6 +366,13 @@ const handleInstitutionalRedirect = (originNode) => {
         setIsSyncing(true);
         setSyncStep(0);
 
+        // Determine if user wants Binance or Bybit
+        if (originNode.toLowerCase().includes("binance")) {
+            setTargetPlatform("Binance");
+        } else {
+            setTargetPlatform("Bybit");
+        }
+
         if (window.gtag) { 
             window.gtag('event', 'node_sync_initiated', { 'origin_node': originNode }); 
         }
@@ -375,8 +383,16 @@ const handleInstitutionalRedirect = (originNode) => {
     };
 
     const finalizeGateway = () => {
-        const affiliateId = "157106";
-        const gatewayUrl = `https://www.bybit.com/copyTrade/?ref=${affiliateId}`;
+        let gatewayUrl = "";
+
+        if (targetPlatform === "Binance") {
+            // Using your Binance ID: 35886743
+            gatewayUrl = `https://www.binance.com/en/activity/referral-entry?fromActivityPage=true&ref=35886743`; 
+        } else {
+            const affiliateId = "157106";
+            gatewayUrl = `https://www.bybit.com/copyTrade/?ref=${affiliateId}`;
+        }
+
         window.open(gatewayUrl, "_blank");
         setIsSyncing(false);
     };
@@ -674,7 +690,7 @@ const handleInstitutionalRedirect = (originNode) => {
                             <div style={{marginTop: '30px', animation: 'fadeIn 0.5s'}}>
                                 <p style={styles.successText}>ENCRYPTED BRIDGE ESTABLISHED</p>
                                 <button onClick={finalizeGateway} style={styles.finalizeBtn}>
-                                    ENTER BYBIT TRADING HUB
+                                    ENTER {targetPlatform.toUpperCase()} TRADING HUB
                                 </button>
                                 <p style={{fontSize: '10px', marginTop: '15px', opacity: 0.3}}>Reference Protocol: HL-SYNC-AUTH-VIP</p>
                             </div>
