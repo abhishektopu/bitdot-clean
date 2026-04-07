@@ -1,28 +1,48 @@
 import requests, json, os, time
 
 def fetch_market_data():
-    print("--- 🚀 Institutional High-Density Engine v6.0 ---")
+    print("--- 🚀 Institutional High-Density Engine v6.5 (Sticky Sync) ---")
     symbols = ["BTC", "ETH", "SOL", "LTC", "XRP"] 
     session = requests.Session()
     session.headers.update({"User-Agent": "Mozilla/5.0"})
 
-    # 1. Sentiment Engine
-    fng_data = {"value": "13", "classification": "Extreme Fear"}
+    # 1. LOAD PERSISTENT DATA (Read existing file first to prevent '50' fallback)
+    fng_data = {"value": "34", "classification": "Fear"} # Hard fallback
     try:
-        res = session.get("https://api.alternative.me/fng/", timeout=15).json()
-        fng_data = {"value": res['data'][0]['value'], "classification": res['data'][0]['value_classification']}
+        if os.path.exists('public/whales.json'):
+            with open('public/whales.json', 'r') as f:
+                old_data = json.load(f)
+                # Take the first coin's sentiment as the baseline
+                fng_data = old_data['sentiment']['BTC']
     except: pass
 
-    # 2. Individual Asset USDT Price Engine
+    # 2. SENTIMENT ENGINE (Attempt API Fetch)
+    try:
+        res = session.get("https://api.alternative.me/fng/", timeout=15).json()
+        fng_data = {
+            "value": str(res['data'][0]['value']), 
+            "classification": res['data'][0]['value_classification']
+        }
+        print(f"📊 Live Sentiment Captured: {fng_data['value']}")
+    except: 
+        print("⚠️ API Latency Detected. Using Sticky Sentiment (Last Known Good).")
+
+    # 3. MAP SENTIMENT TO ASSETS (The Critical React Fix)
+    # This ensures marketData.sentiment['BTC'] is valid on the website
+    mapped_sentiment = {}
+    for sym in symbols:
+        mapped_sentiment[sym] = fng_data
+
+    # 4. INDIVIDUAL ASSET USDT PRICE ENGINE
     prices = {}
     for sym in symbols:
         try:
             p_res = session.get(f"https://api-pub.bitfinex.com/v2/ticker/t{sym}UST", timeout=15).json()
             prices[sym] = str(p_res[6])
-            time.sleep(0.5) 
+            time.sleep(0.3) 
         except: prices[sym] = "0"
 
-    # 3. Aggregated Order Book Tape (Dust Filter Applied)
+    # 5. AGGREGATED ORDER BOOK TAPE (Dust Filter: $100 Minimum)
     trade_tape = []
     for sym in symbols:
         try:
@@ -32,8 +52,7 @@ def fetch_market_data():
                 price = float(t[3])
                 value = amount * price
                 
-                # SAP-STANDARD FILTER: Remove trades under $100 to prevent '0' size display
-                if value >= 100:
+                if value >= 100: # SAP-STANDARD FILTER: Prevents '0' size display
                     trade_tape.append({
                         "symbol": sym,
                         "time": str(t[1]),
@@ -47,15 +66,15 @@ def fetch_market_data():
     trade_tape.sort(key=lambda x: int(x['time']), reverse=True)
     
     final_output = {
-        "sentiment": fng_data,
+        "sentiment": mapped_sentiment, # Now a mapped dictionary
         "prices": prices,
-        "trades": trade_tape[:150] # High-density for infinite scroll
+        "trades": trade_tape[:150] 
     }
 
     os.makedirs('public', exist_ok=True)
     with open('public/whales.json', 'w') as f:
         json.dump(final_output, f, indent=4)
-    print(f"✅ Tape Aggregated. Filtered Dust. {len(trade_tape)} trades live.")
+    print(f"✅ Tape Aggregated. {len(trade_tape)} Institutional trades live.")
 
 if __name__ == "__main__":
     fetch_market_data()
