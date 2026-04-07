@@ -1,7 +1,7 @@
 name: Hourly Whale Update
 on:
   schedule:
-    - cron: '0 * * * *' 
+    - cron: '*/5 * * * *'  # This runs every 5 minutes
   workflow_dispatch: 
 
 jobs:
