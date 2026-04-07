@@ -78,19 +78,7 @@ export default function Header(props) {
           ) : (
             brandComponent
           )}
-          <Hidden smDown>
-            <div className="home_page_menu home_page_menu_left">
-              <List className={classes.list + " menu_main_navbar"}>
-                {/* <ListItem className={classes.listItem}>
-                  <Link to="#" color="transparent" className="nav-link">Market</Link>
-                </ListItem>                 */}
-                <ListItem className={classes.listItem}>
-                  <Link to={routeMatch.path === "/spot/:tikerRoot?" ? routeMatch.url : "/spot"} color="transparent" className="nav-link">Spot</Link>
-                </ListItem>
-              </List>            
-              {/* <Link to="/derivative"><button className="btn btn-outline">Derivative</button></Link> */}
-            </div>
-          </Hidden>
+          
         </div>
         <Hidden smDown implementation="css">
           {rightLinks}
