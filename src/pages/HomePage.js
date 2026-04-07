@@ -221,6 +221,8 @@ const HomePage = (props) => {
 
     // --- 1. CORE SYSTEM STATE INITIALIZATION ---
     const [usersOnline, setUsersOnline] = useState(157);
+    const [isSyncing, setIsSyncing] = useState(false);
+    const [syncStep, setSyncStep] = useState(0);
     const [recentUser, setRecentUser] = useState("");
     const [lastHeartbeat, setLastHeartbeat] = useState(new Date().toLocaleTimeString());
     
@@ -358,22 +360,27 @@ const HomePage = (props) => {
      * Compliance: Regional India FIU Logic enabled for Bybit Hub.
      * Attribution: Forced Referral ID 157106.
      */
-    const handleInstitutionalRedirect = (originNode) => {
-        const affiliateId = "157106";
-        const gatewayUrl = `https://www.bybit.com/copyTrade/?ref=${affiliateId}`;
+   
+const handleInstitutionalRedirect = (originNode) => {
+        setIsSyncing(true);
+        setSyncStep(0);
 
-        // GA4 Telemetry Injection (G-2Y9M643E6E)
         if (window.gtag) { 
-            window.gtag('event', 'generate_lead', { 
-                'platform': 'Bybit_Institutional_Portal',
-                'origin_node': originNode,
-                'status': 'verified'
-            }); 
+            window.gtag('event', 'node_sync_initiated', { 'origin_node': originNode }); 
         }
 
-        window.open(gatewayUrl, "_blank");
+        setTimeout(() => setSyncStep(1), 1000); 
+        setTimeout(() => setSyncStep(2), 2500); 
+        setTimeout(() => setSyncStep(3), 4000); 
     };
 
+    const finalizeGateway = () => {
+        const affiliateId = "157106";
+        const gatewayUrl = `https://www.bybit.com/copyTrade/?ref=${affiliateId}`;
+        window.open(gatewayUrl, "_blank");
+        setIsSyncing(false);
+    };
+    
     return (
         <div 
             id="hl-enterprise-root"
@@ -646,6 +653,36 @@ const HomePage = (props) => {
             {/* 10. SYSTEM TOAST NOTIFICATION OVERLAY */}
             {recentUser && <div style={styles.toast}>{recentUser}</div>}
 
+                    {/* --- INSTITUTIONAL HANDSHAKE OVERLAY --- */}
+            {isSyncing && (
+                <div style={styles.syncOverlay}>
+                    <div style={styles.syncBox}>
+                        <div style={styles.pulseDotLarge}></div>
+                        <h2 style={{color: '#f3ba2f', fontWeight: '900', marginBottom: '10px', fontSize: '24px'}}>NODE SYNCHRONIZATION</h2>
+                        
+                        <div style={styles.syncStatusList}>
+                            <p style={{opacity: syncStep >= 0 ? 1 : 0.3, marginBottom: '8px'}}>● Initializing Bitfinex Alpha Bridge... {syncStep >= 1 && '✅'}</p>
+                            <p style={{opacity: syncStep >= 1 ? 1 : 0.3, marginBottom: '8px'}}>● Verifying Institutional Node [157106]... {syncStep >= 2 && '✅'}</p>
+                            <p style={{opacity: syncStep >= 2 ? 1 : 0.3, marginBottom: '8px'}}>● Mapping Cross-Exchange Liquidity... {syncStep >= 3 && '✅'}</p>
+                        </div>
+
+                        {syncStep < 3 ? (
+                            <div style={styles.progressBar}>
+                                <div style={{...styles.progressFill, width: `${(syncStep + 1) * 33}%`}}></div>
+                            </div>
+                        ) : (
+                            <div style={{marginTop: '30px', animation: 'fadeIn 0.5s'}}>
+                                <p style={styles.successText}>ENCRYPTED BRIDGE ESTABLISHED</p>
+                                <button onClick={finalizeGateway} style={styles.finalizeBtn}>
+                                    ENTER BYBIT TRADING HUB
+                                </button>
+                                <p style={{fontSize: '10px', marginTop: '15px', opacity: 0.3}}>Reference Protocol: HL-SYNC-AUTH-VIP</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+
             {/* 11. DYNAMIC KEYFRAME ENGINE & RESPONSIVE MEDIA QUERIES */}
             <style>{`
                 @keyframes scrollTerminal {
@@ -681,7 +718,35 @@ const styles = {
         color: "#f8fafc", 
         fontFamily: "'Barlow', sans-serif",
         minHeight: "100vh"
+    }, 
+syncOverlay: {
+        position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
+        backgroundColor: "rgba(2, 6, 23, 0.98)", zIndex: 20000,
+        display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(15px)"
     },
+    syncBox: {
+        background: "#0f172a", padding: "50px", borderRadius: "20px",
+        border: "1px solid #1e293b", textAlign: "center", maxWidth: "450px", width: "90%",
+        boxShadow: "0 0 50px rgba(0,0,0,0.5)"
+    },
+    syncStatusList: {
+        textAlign: "left", margin: "30px auto", maxWidth: "320px", 
+        fontSize: "12px", color: "#94a3b8", fontFamily: "monospace"
+    },
+    progressBar: { width: "100%", height: "3px", background: "#1e293b", borderRadius: "2px", overflow: "hidden" },
+    progressFill: { height: "100%", background: "#f3ba2f", transition: "width 0.6s ease" },
+    finalizeBtn: {
+        background: "#f3ba2f", color: "#000", padding: "18px", 
+        borderRadius: "8px", fontWeight: "900", border: "none", cursor: "pointer", width: "100%",
+        fontSize: "15px", boxShadow: "0 10px 20px rgba(243, 186, 47, 0.2)"
+    },
+    pulseDotLarge: {
+        height: "15px", width: "15px", backgroundColor: "#f3ba2f", 
+        borderRadius: "50%", margin: "0 auto 25px", boxShadow: "0 0 15px #f3ba2f",
+        animation: "pulse 2s infinite"
+    },
+    successText: { color: "#4ade80", fontWeight: "900", fontSize: "12px", marginBottom: "20px", letterSpacing: "1px" },
+    
     headerContainer: {
         position: "fixed",
         top: "40px",
