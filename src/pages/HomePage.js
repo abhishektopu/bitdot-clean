@@ -395,15 +395,30 @@ const HomePage = (props) => {
                 <Header
                     color="white"
                     brand={
-                        <a href="/" style={styles.brandLink}>
+                        <div style={styles.brandLink}>
                             <div style={styles.logoCircle}>CL</div>
                             <div style={styles.brandText}>
                                 <span style={{ color: "#000", fontWeight: "900" }}>CRYPTO</span>
                                 <span style={{ color: "#f3ba2f", fontWeight: "900" }}>LAKESIDE</span>
                             </div>
-                        </a>
+                        </div>
                     }
-                    rightLinks={<HeaderLinks />}
+                    rightLinks={
+                        <div style={{ display: 'flex', gap: '15px', alignItems: 'center', paddingRight: '20px' }}>
+                            <button 
+                                onClick={() => handleInstitutionalRedirect("Header_Login")}
+                                style={styles.navBtnOutline}
+                            >
+                                TERMINAL LOGIN
+                            </button>
+                            <button 
+                                onClick={() => handleInstitutionalRedirect("Header_Auth")}
+                                style={styles.navBtnSolid}
+                            >
+                                AUTHORIZE NODE
+                            </button>
+                        </div>
+                    }
                     {...props}
                 />
             </div>
@@ -608,12 +623,21 @@ const HomePage = (props) => {
 
             {/* 9. FOOTER & COMPLIANCE ARCHITECTURE */}
             <footer style={styles.footer}>
+                <div style={{ marginBottom: "20px" }}>
+                    <button 
+                        onClick={() => window.open("https://telegram.me/bitcoinblockchain501", "_blank")}
+                        style={{ color: "#f3ba2f", background: "transparent", border: "none", cursor: "pointer", fontSize: "12px", fontWeight: "900", letterSpacing: "1px" }}
+                    >
+                        TECHNICAL SUPPORT (TELEGRAM)
+                    </button>
+                </div>
                 <p style={{ fontSize: "11px", fontWeight: "700", opacity: "0.5", letterSpacing: "1px" }}>
                     OFFICIAL GLOBAL PARTNER | SECURED DATA FEED BYBIT V5 / BITFINEX TAPE
                 </p>
                 <p style={{ fontSize: "10px", opacity: "0.25", marginTop: "15px", maxWidth: "800px", margin: "15px auto", lineHeight: "1.6" }}>
                     Trading involves significant financial exposure. Capital at risk. 
                     The indices provided are for informational purposes only. Past performance does not guarantee future results. 
+                    © 2024 Crypto Lakeside Institutional. All Rights Reserved.
                 </p>
             </footer>
 
@@ -1058,7 +1082,29 @@ const styles = {
         zIndex: 10000, 
         boxShadow: "0 25px 60px rgba(0,0,0,0.8)",
         fontWeight: "600"
-    }
+    }, 
+    navBtnOutline: {
+        background: "transparent",
+        color: "#000",
+        border: "2px solid #000",
+        padding: "8px 16px",
+        borderRadius: "6px",
+        fontWeight: "900",
+        fontSize: "12px",
+        cursor: "pointer",
+        transition: "0.3s"
+    },
+    navBtnSolid: {
+        background: "#000",
+        color: "#f3ba2f",
+        border: "none",
+        padding: "10px 18px",
+        borderRadius: "6px",
+        fontWeight: "900",
+        fontSize: "12px",
+        cursor: "pointer",
+        boxShadow: "0 4px 10px rgba(0,0,0,0.2)"
+    },
 };
 
 // --- GAUGE STYLING ARCHITECTURE ---
