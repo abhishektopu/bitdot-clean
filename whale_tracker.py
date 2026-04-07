@@ -35,7 +35,7 @@ def fetch_market_data():
 
         for sym in symbols:
             coin_info = data_cmc[sym]['quote']['USD']
-            prices[sym] = f"{coin_info['price']:,.2f}"
+            prices[sym] = f"{coin_info['price']:.2f}"
             
             # Real-Time Sentiment (Price Change Correlation)
             change = coin_info['percent_change_24h']
