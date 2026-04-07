@@ -377,9 +377,9 @@ const handleInstitutionalRedirect = (originNode) => {
             window.gtag('event', 'node_sync_initiated', { 'origin_node': originNode }); 
         }
 
-        setTimeout(() => setSyncStep(1), 1000); 
-        setTimeout(() => setSyncStep(2), 2500); 
-        setTimeout(() => setSyncStep(3), 4000); 
+        setTimeout(() => setSyncStep(1), 600); 
+        setTimeout(() => setSyncStep(2), 1500); 
+        setTimeout(() => setSyncStep(3), 2500); 
     };
 
     const finalizeGateway = () => {
