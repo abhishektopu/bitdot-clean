@@ -6,11 +6,17 @@ module.exports = function override(config) {
     "vm": false,
     "process": require.resolve("process/browser"),
     "stream": require.resolve("stream-browserify"),
-    "buffer": require.resolve("buffer")
+    "buffer": require.resolve("buffer"),
+    "crypto": require.resolve("crypto-browserify"),
+    "assert": require.resolve("assert"),
+    "http": require.resolve("stream-http"),
+    "https": require.resolve("https-browserify"),
+    "os": require.resolve("os-browserify"),
+    "url": require.resolve("url"),
+    "path": require.resolve("path-browserify"),
   });
   config.resolve.fallback = fallback;
 
-  // Add alias to fix ESM "fully specified" issue with canvg
   config.resolve.alias = {
     ...config.resolve.alias,
     "process/browser": require.resolve("process/browser.js"),
@@ -23,16 +29,6 @@ module.exports = function override(config) {
     })
   ]);
 
-  // Allow importing without extensions in ESM modules
-  config.module = config.module || {};
-  config.module.rules = (config.module.rules || []).map(rule => {
-    if (rule.resolve) {
-      rule.resolve.fullySpecified = false;
-    }
-    return rule;
-  });
-
-  // Disable fullySpecified for all JS/MJS files
   config.module.rules.push({
     test: /\.m?js/,
     resolve: {
