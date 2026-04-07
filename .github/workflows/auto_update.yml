@@ -23,6 +23,8 @@ jobs:
         run: pip install requests
         
       - name: Run Whale Tracker
+        env:
+          CMC_API_KEY: ${{ secrets.CMC_API_KEY }}
         run: python whale_tracker.py
         
       - name: Sync and Push Data
