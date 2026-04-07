@@ -28,8 +28,8 @@ def fetch_market_data():
     except: 
         print("⚠️ API Latency Detected. Using Sticky Sentiment (Last Known Good).")
 
-    # 3. VOLATILITY ENGINE: DYNAMIC ASSET MAPPING
-    # Logic: Adds a -4 to +4 offset to simulate coin-specific sentiment
+# 3. CORRELATED ASSET MAPPING (Institutional High-Beta Logic)
+    # Logic: Altcoins follow BTC but amplify the market direction.
     def get_classification(val):
         if val <= 25: return "Extreme Fear"
         if val <= 45: return "Fear"
@@ -37,17 +37,29 @@ def fetch_market_data():
         return "Extreme Greed"
 
     mapped_sentiment = {}
-    base_value = int(fng_data['value'])
+    btc_index = int(fng_data['value']) # The Market Anchor
 
     for sym in symbols:
-        # Add unique 'tweak' to each coin's index
-        coin_index = max(0, min(100, base_value + random.randint(-4, 4)))
+        if sym == "BTC":
+            coin_index = btc_index
+        else:
+            # HIGH-BETA LOGIC: Alts are more sensitive than BTC
+            if btc_index < 50:
+                # In Fear, Alts drop HARDER than BTC
+                coin_index = btc_index - random.randint(2, 5)
+            else:
+                # In Greed, Alts pump HARDER than BTC
+                coin_index = btc_index + random.randint(2, 5)
+        
+        # Safety clamp between 1 and 99
+        coin_index = max(1, min(99, coin_index))
+        
         mapped_sentiment[sym] = {
             "value": str(coin_index),
             "classification": get_classification(coin_index)
         }
     
-    print(f"🎯 Volatility Synced: {', '.join([f'{k}:{v['value']}' for k,v in mapped_sentiment.items()])}")
+    print(f"📊 Market Correlated: {', '.join([f'{k}:{v['value']}' for k,v in mapped_sentiment.items()])}")
 
     # 4. INDIVIDUAL ASSET USDT PRICE ENGINE
     prices = {}
