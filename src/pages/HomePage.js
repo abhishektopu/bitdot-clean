@@ -873,6 +873,7 @@ const styles = {
     },
     terminalBody: { 
         background: "#020617", 
+         minWidth: "850px",
         height: "500px", 
         overflow: "hidden", 
         position: "relative" 
@@ -882,6 +883,7 @@ const styles = {
         paddingBottom: "20px",
         paddingLeft: "30px",
         paddingRight: "30px", 
+        minWidth: "850px",
         animation: "scrollTerminal 60s linear infinite" 
     },
     orderRow: { 
