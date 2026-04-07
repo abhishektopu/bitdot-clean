@@ -393,8 +393,9 @@ const HomePage = (props) => {
                 style={styles.headerContainer}
             >
                 <Header
+                    {...props}
                     color="white"
-                    links={null}
+                    links={[]}
                     brand={
                         <div style={styles.brandLink}>
                             <div style={styles.logoCircle}>CL</div>
@@ -420,7 +421,7 @@ const HomePage = (props) => {
                             </button>
                         </div>
                     }
-                    {...props}
+                    
                 />
             </div>
 
