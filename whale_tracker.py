@@ -1,68 +1,82 @@
 import requests, json, os, time, random
 
 # --- SECURE CONFIGURATION ---
-# This pulls your hidden key from GitHub Settings -> Secrets
 CMC_API_KEY = os.environ.get("CMC_API_KEY")
 
 def fetch_market_data():
-    print("--- 💎 Institutional Intelligence Engine v10.0 (Hybrid Sync) ---")
+    print("--- 💎 Institutional Intelligence Engine v11.0 (CMC Live Sync) ---")
     
     if not CMC_API_KEY:
         print("❌ SECURITY ERROR: CMC_API_KEY is missing from Secrets.")
         return
 
     session = requests.Session()
-    session.headers.update({"User-Agent": "InstitutionalWhaleBot/1.0"})
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': CMC_API_KEY,
+        'User-Agent': 'InstitutionalWhaleBot/1.1'
+    }
     
+    # 1. FETCH ACTUAL GLOBAL FEAR & GREED INDEX FROM CMC
+    try:
+        # Note: CMC v3 endpoint for Fear & Greed
+        fg_url = "https://pro-api.coinmarketcap.com/v3/fear-and-greed/latest"
+        res_fg = session.get(fg_url, headers=headers).json()
+        global_fng_value = int(res_fg['data']['value'])
+        print(f"✅ CMC Global Fear & Greed Synced: {global_fng_value}")
+    except Exception as e:
+        print(f"⚠️ F&G API Latency: {e}. Using 50 (Neutral) as fallback.")
+        global_fng_value = 50
+
+    # 2. FETCH GLOBAL MARKET PRICES
     symbols = ["BTC", "ETH", "SOL", "LTC", "XRP"]
     url_cmc = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest"
     
-    # 1. FETCH GLOBAL MARKET INTEL (CoinMarketCap)
     prices = {}
     mapped_sentiment = {}
     
     try:
         parameters = {'symbol': ",".join(symbols), 'convert': 'USD'}
-        headers = {'Accepts': 'application/json', 'X-CMC_PRO_API_KEY': CMC_API_KEY}
-        
         res_cmc = session.get(url_cmc, headers=headers, params=parameters).json()
         data_cmc = res_cmc['data']
 
         def get_classification(val):
             if val <= 25: return "Extreme Fear"
             if val <= 45: return "Fear"
+            if val <= 55: return "Neutral"
             if val <= 75: return "Greed"
             return "Extreme Greed"
 
         for sym in symbols:
             coin_info = data_cmc[sym]['quote']['USD']
-            
-            # Save clean price for JS ParseFloat (No Commas)
             prices[sym] = f"{coin_info['price']:.2f}"
             
-            # Dynamic Sentiment Logic (Based on 24h Volatility)
-            change = coin_info['percent_change_24h']
-            index = int(50 + (change * 7) + random.randint(-2, 2))
-            final_idx = max(5, min(95, index))
+            # LOGIC: Use the Official Global Index, but tilt it +/- 5 pts 
+            # based on how this specific coin is performing vs the market.
+            change_24h = coin_info['percent_change_24h']
+            coin_specific_sentiment = int(global_fng_value + (change_24h * 1.5))
+            
+            # Clamp value between 5 and 95
+            final_idx = max(5, min(95, coin_specific_sentiment))
 
             mapped_sentiment[sym] = {
                 "value": str(final_idx),
                 "classification": get_classification(final_idx)
             }
-        print("✅ Global Prices & Sentiment Synced.")
+        print("✅ Live CMC Sentiment & Prices Synced.")
     except Exception as e:
-        print(f"⚠️ CMC Sync Failed: {e}")
+        print(f"⚠️ CMC Data Sync Failed: {e}")
         return
 
-    # 2. FETCH LIVE WHALE TAPE & RADAR (Bitfinex)
+    # 3. FETCH LIVE WHALE TAPE & RADAR (Bitfinex)
     trade_tape = []
-    whale_alerts = [] # Special list for trades > $50,000
+    whale_alerts = [] # Filtered for Institutional Entries
 
     print("📡 Scanning Bitfinex Institutional Liquidity Nodes...")
     
     for sym in symbols:
         try:
-            # Endpoint for historical trade execution
+            # Depth: 200 trades per coin
             trades = session.get(f"https://api-pub.bitfinex.com/v2/trades/t{sym}UST/hist?limit=200", timeout=10).json()
             for t in trades:
                 amount = abs(float(t[2]))
@@ -78,30 +92,28 @@ def fetch_market_data():
                     "price": f"{price:,.2f}"
                 }
 
-                # RADAR LOGIC: If trade is massive, add to special alert list
+                # RADAR THRESHOLD: $10,000
                 if value >= 10000:
                     whale_alerts.append(trade_data)
                 
-                # STANDARD TAPE: Minimum $100 filter
                 if value >= 100:
                     trade_tape.append(trade_data)
                     
-            time.sleep(0.4) # Rate limit protection
+            time.sleep(0.5) # Rate limit protection
         except: continue
 
-    # Sort both lists by Newest First
+    # Sort by Timestamp
     trade_tape.sort(key=lambda x: int(x['time']), reverse=True)
     whale_alerts.sort(key=lambda x: int(x['time']), reverse=True)
     
-    # 3. FINAL AGGREGATION & PUBLISH
+    # 4. FINAL AGGREGATION & PUBLISH
     final_output = {
         "sentiment": mapped_sentiment,
         "prices": prices,
         "trades": trade_tape[:100],
-        "whale_alerts": whale_alerts[:15] # Top 15 massive executions for the UI
+        "whale_alerts": whale_alerts[:20] 
     }
 
-    # Ensure public folder exists and write data
     os.makedirs('public', exist_ok=True)
     with open('public/whales.json', 'w') as f:
         json.dump(final_output, f, indent=4)
