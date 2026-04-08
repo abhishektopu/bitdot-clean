@@ -521,7 +521,7 @@ const handleInstitutionalRedirect = (originNode) => {
                         <div style={{...styles.terminalHeader, background: '#7c2d12'}}>
                             <div style={{...styles.terminalDot, background: '#fbbf24', boxShadow: '0 0 15px #fbbf24'}}></div> 
                             <span style={{...styles.terminalTitle, color: '#fff'}}>
-                                WHALE EXECUTION RADAR: REAL-TIME BIG MONEY ENTRIES (>$25,000)
+                                WHALE EXECUTION RADAR: REAL-TIME BIG MONEY ENTRIES (>$10,000)
                             </span>
                         </div>
                         {/* Increased height to 600px and added a min-height so the box stays large */}
