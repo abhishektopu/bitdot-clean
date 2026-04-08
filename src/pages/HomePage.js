@@ -467,7 +467,7 @@ brand={
                         synchronized across global liquidity nodes via Bitfinex Tape.
                     </p>
                     <div style={styles.statusBadge}>
-    <span style={styles.pulseDot}></span> {usersOnline} NODES ACTIVE | REFRESH RATE: 600s
+    <span style={styles.pulseDot}></span> {usersOnline} GLOBAL NODES ACTIVE | LIVE INSTITUTIONAL FEED
 </div>
                     <div style={{ marginTop: "40px" }}>
                         <button 
@@ -553,8 +553,8 @@ brand={
                             <span style={styles.terminalTitle}>
                                 ORDER BOOK EXECUTION FLOW (CROSS-ASSET USDT TAPE)
                             </span>
-                            <span style={styles.syncTag}>
-    SYNC INTERVAL: 10 MIN | HEARTBEAT: {lastHeartbeat}
+      <span style={styles.syncTag}>
+    RELAY: ACTIVE | HEARTBEAT: {lastHeartbeat}
 </span>
                         </div>
 
@@ -644,7 +644,7 @@ brand={
                 <div className="container">
                     <h3 style={{ color: "#f3ba2f", fontWeight: "900", marginBottom: "40px" }}>Technical Infrastructure</h3>
                     <div style={{ display: "flex", justifyContent: "center", gap: "25px", flexWrap: "wrap" }}>
-                        <div style={styles.techSpec}>⚡ &lt; 5ms Latency Response</div>
+                        <div style={styles.techSpec}>🌍 Cloudflare Edge Deployment</div>
                         <div style={styles.techSpec}>🛡️ Multi-Sig Cold Storage</div>
                         <div style={styles.techSpec}>📊 $20B Daily Liquid Aggregation</div>
                        <div style={styles.techSpec}>🔄 10-Minute Institutional Sync</div>
