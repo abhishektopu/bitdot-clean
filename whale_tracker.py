@@ -63,7 +63,7 @@ def fetch_market_data():
     for sym in symbols:
         try:
             # Endpoint for historical trade execution
-            trades = session.get(f"https://api-pub.bitfinex.com/v2/trades/t{sym}UST/hist?limit=50", timeout=10).json()
+            trades = session.get(f"https://api-pub.bitfinex.com/v2/trades/t{sym}UST/hist?limit=200", timeout=10).json()
             for t in trades:
                 amount = abs(float(t[2]))
                 price = float(t[3])
@@ -79,7 +79,7 @@ def fetch_market_data():
                 }
 
                 # RADAR LOGIC: If trade is massive, add to special alert list
-                if value >= 25000:
+                if value >= 10000:
                     whale_alerts.append(trade_data)
                 
                 # STANDARD TAPE: Minimum $100 filter
