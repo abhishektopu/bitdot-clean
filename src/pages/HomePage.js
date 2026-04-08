@@ -516,18 +516,18 @@ const handleInstitutionalRedirect = (originNode) => {
                         })}
                     </div>
 
-{/* --- INSTITUTIONAL WHALE RADAR: BIG MONEY ENTRIES (>$50K) --- */}
+{/* --- INSTITUTIONAL WHALE RADAR: BIG MONEY ENTRIES (>$25K) --- */}
                     <div id="institutional-whale-radar" style={{...styles.terminalWrapper, marginBottom: '20px', border: '1px solid #fbbf24'}}>
                         <div style={{...styles.terminalHeader, background: '#7c2d12'}}>
                             <div style={{...styles.terminalDot, background: '#fbbf24', boxShadow: '0 0 15px #fbbf24'}}></div> 
                             <span style={{...styles.terminalTitle, color: '#fff'}}>
-                                WHALE EXECUTION RADAR: REAL-TIME BIG MONEY ENTRIES (>$50,000)
+                                WHALE EXECUTION RADAR: REAL-TIME BIG MONEY ENTRIES (>$25,000)
                             </span>
                         </div>
                         {/* Increased height to 600px and added a min-height so the box stays large */}
 <div style={{...styles.terminalBody, height: 'auto', minHeight: '400px', maxHeight: '600px', overflowY: 'auto'}}>
                             {marketData.whale_alerts && marketData.whale_alerts.length > 0 ? marketData.whale_alerts.map((alert, i) => (
-                                <div key={i} style={{...styles.orderRow, borderLeft: alert.side === 'BUY' ? '4px solid #4ade80' : '4px solid #ef4444', paddingLeft: '15px'}}>
+                                <div key={i} style={{...styles.orderRow, borderLeft: alert.side === 'BUY' ? '4px solid #4ade80' : '4px solid #ef4444', padding: '10px 15px', marginBottom: '5px'}}>
                                     <span style={{color: "#64748b", minWidth: "100px"}}>[{new Date(parseInt(alert.time)).toLocaleTimeString()}]</span>
                                     <span style={{color: "#f3ba2f", fontWeight: "900", minWidth: "80px"}}>{alert.symbol}</span>
                                     <span style={{color: "#fff", fontWeight: "bold", minWidth: "150px"}}>{alert.value} {alert.side}</span>
