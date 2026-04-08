@@ -467,7 +467,7 @@ brand={
                         synchronized across global liquidity nodes via Bitfinex Tape.
                     </p>
                     <div style={styles.statusBadge}>
-    <span style={styles.pulseDot}></span> {usersOnline} GLOBAL NODES ACTIVE | LIVE INSTITUTIONAL FEED
+    <span style={styles.pulseDot}></span> {usersOnline} NODES ACTIVE | LIVE EDGE DATA STREAM
 </div>
                     <div style={{ marginTop: "40px" }}>
                         <button 
@@ -553,8 +553,8 @@ brand={
                             <span style={styles.terminalTitle}>
                                 ORDER BOOK EXECUTION FLOW (CROSS-ASSET USDT TAPE)
                             </span>
-      <span style={styles.syncTag}>
-    RELAY: ACTIVE | HEARTBEAT: {lastHeartbeat}
+<span style={styles.syncTag}>
+    LATENCY: &lt;100MS | HEARTBEAT: {lastHeartbeat}
 </span>
                         </div>
 
@@ -644,10 +644,10 @@ brand={
                 <div className="container">
                     <h3 style={{ color: "#f3ba2f", fontWeight: "900", marginBottom: "40px" }}>Technical Infrastructure</h3>
                     <div style={{ display: "flex", justifyContent: "center", gap: "25px", flexWrap: "wrap" }}>
-                        <div style={styles.techSpec}>🌍 Cloudflare Edge Deployment</div>
-                        <div style={styles.techSpec}>🛡️ Multi-Sig Cold Storage</div>
-                        <div style={styles.techSpec}>📊 $20B Daily Liquid Aggregation</div>
-                       <div style={styles.techSpec}>🔄 10-Minute Institutional Sync</div>
+                        <div style={styles.techSpec}>⚡ &lt; 100ms API Latency</div>
+<div style={styles.techSpec}>🛡️ Multi-Sig Cold Storage</div>
+<div style={styles.techSpec}>📊 $20B Daily Liquid Aggregation</div>
+<div style={styles.techSpec}>🌍 Cloudflare Edge Data Relay</div>
                     </div>
                 </div>
             </div>
@@ -730,6 +730,23 @@ brand={
 
             {/* 11. DYNAMIC KEYFRAME ENGINE & RESPONSIVE MEDIA QUERIES */}
             <style>{`
+            /* HIDE MOBILE HAMBURGER & FORCE BUTTONS */
+                .navbar-toggler, 
+                button[class*="navbar-toggler"],
+                .header-mobile-menu-icon,
+                button[aria-label="open drawer"] {
+                    display: none !important;
+                }
+
+                @media (max-width: 768px) {
+                    header div[style*="display: flex"] {
+                        display: flex !important;
+                    }
+                    /* Scale down header text slightly for small phones */
+                    #header-fixed-layer span {
+                        font-size: 14px !important;
+                    }
+                }
                 @keyframes scrollTerminal {
                     0% { transform: translateY(0); }
                     100% { transform: translateY(-50%); }
