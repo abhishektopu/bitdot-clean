@@ -420,16 +420,17 @@ const handleInstitutionalRedirect = (originNode) => {
                     {...props}
                     color="white"
                     links={[]}
-                    brand={
+
+brand={
     <div style={styles.brandLink}>
-        {/* The new Gold Coin Logo */}
+        {/* The coin you just uploaded to GitHub */}
         <img 
             src="/gold-logo.png" 
-            alt="CL Logo" 
-            style={{ width: '38px', height: '38px', marginRight: '10px' }} 
+            alt="CL" 
+            style={{ width: '40px', height: '40px', marginRight: '10px', borderRadius: '50%' }} 
         />
         <div style={styles.brandText}>
-            <span style={{ color: "#fff", fontWeight: "900" }}>CRYPTO</span>
+            <span style={{ color: "#000", fontWeight: "900" }}>CRYPTO</span>
             <span style={{ color: "#f3ba2f", fontWeight: "900" }}>LAKESIDE</span>
         </div>
     </div>
