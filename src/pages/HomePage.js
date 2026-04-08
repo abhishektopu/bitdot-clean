@@ -524,7 +524,8 @@ const handleInstitutionalRedirect = (originNode) => {
                                 WHALE EXECUTION RADAR: REAL-TIME BIG MONEY ENTRIES (>$50,000)
                             </span>
                         </div>
-                        <div style={{...styles.terminalBody, height: 'auto', maxHeight: '320px', overflowY: 'auto'}}>
+                        {/* Increased height to 600px and added a min-height so the box stays large */}
+<div style={{...styles.terminalBody, height: 'auto', minHeight: '400px', maxHeight: '600px', overflowY: 'auto'}}>
                             {marketData.whale_alerts && marketData.whale_alerts.length > 0 ? marketData.whale_alerts.map((alert, i) => (
                                 <div key={i} style={{...styles.orderRow, borderLeft: alert.side === 'BUY' ? '4px solid #4ade80' : '4px solid #ef4444', paddingLeft: '15px'}}>
                                     <span style={{color: "#64748b", minWidth: "100px"}}>[{new Date(parseInt(alert.time)).toLocaleTimeString()}]</span>
