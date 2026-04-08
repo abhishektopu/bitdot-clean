@@ -1,32 +1,3 @@
-/**
- * =============================================================================
- * PROJECT:        Crypto Lakeside Institutional Terminal
- * MODULE:         Core.View.HomePage.Master.Platinum
- * VERSION:        8.5.0 (Enterprise Responsive Master Build)
- * DEVELOPER:      Abhishek Topu (SAP Certified)
- * ARCHITECTURE:   React 18.x / Multi-Asset Data Relay / Z-Index Layering
- * 
- * -----------------------------------------------------------------------------
- * TECHNICAL SPECIFICATIONS (SAP-STANDARD DOCUMENTATION):
- * -----------------------------------------------------------------------------
- * 1. COMPONENT ID:     HL-MASTER-PRO-FINAL-1072
- * 2. DATA SOURCE:      /whales.json (Aggregated High-Frequency Tape)
- * 3. SYNC FREQUENCY:   20,000ms (Real-Time Node Heartbeat)
- * 4. COMPLIANCE:       India FIU Standards / Bybit Affiliate ID: 157106
- * 5. TRACKING:         Google Analytics 4 (Measurement ID: G-2Y9M643E6E)
- * 6. UI ENGINE:        CSS Grid 2.0 / SVG Dynamic Vector Gauges
- * 7. CACHE LOGIC:      Forced Cache-Buster v=timestamp for Custom Domains
- * 8. Z-INDEX SYSTEM:   Ticker(9000) > Header(8000) > Toast(10000) > Base(1)
- * 
- * -----------------------------------------------------------------------------
- * MOBILE RESPONSIVE LOGIC (PLATINUM ADAPTIVE):
- * -----------------------------------------------------------------------------
- * - Mobile (Default): Stacks Asset Cards 1-Column. Enables X-Axis Swipe for Tape.
- * - Tablet (>768px):  2-Column Intelligent Dashboard Layout.
- * - Desktop (>1200px): Fixed 5-Column Institutional Layout (No stretching).
- * =============================================================================
- */
-
 import React, { 
     useEffect, 
     useState 
@@ -620,7 +591,6 @@ brand={
                                         <p style={{ color: "#4ade80", fontWeight: "900", fontSize: "26px" }}>+{trader.roi}%</p>
                                     </div>
                                     <div style={styles.statItem}>
-                                        <p style={styles.labelTiny}>DRAWDOWN</p>
                                         <p style={{ color: "#fff", fontWeight: "900", fontSize: "26px" }}>{trader.maxDrawdown}%</p>
                                     </div>
                                 </div>
@@ -643,12 +613,12 @@ brand={
             >
                 <div className="container">
                     <h3 style={{ color: "#f3ba2f", fontWeight: "900", marginBottom: "40px" }}>Technical Infrastructure</h3>
-                    <div style={{ display: "flex", justifyContent: "center", gap: "25px", flexWrap: "wrap" }}>
+                    {/* Applying a grid for better alignment on desktop */}
+                    <div className="tech-specs-grid"> {/* Added a new class for specific styling */}
                         <div style={styles.techSpec}>⚡ &lt; 100ms API Latency</div>
-<div style={styles.techSpec}>🛡️ Multi-Sig Cold Storage</div>
-<div style={styles.techSpec}>📊 $20B Daily Liquid Aggregation</div>
-{/* Adjusted alignment for Cloudflare Edge Data Relay */}
-<div style={{...styles.techSpec, textAlign: "center"}}>🌍 Cloudflare Edge Data Relay</div>
+                        <div style={styles.techSpec}>🛡️ Multi-Sig Cold Storage</div>
+                        <div style={styles.techSpec}>📊 $20B Daily Liquid Aggregation</div>
+                        <div style={styles.techSpec}>🌍 Cloudflare Edge Data Relay</div>
                     </div>
                 </div>
             </div>
@@ -769,24 +739,47 @@ brand={
                 /* RESPONSIVE MEDIA QUERIES */
                 @media (max-width: 1200px) {
                     .dashboardGrid { grid-template-columns: repeat(3, 1fr) !important; }
+                    .tech-specs-grid {
+                        grid-template-columns: repeat(2, 1fr) !important;
+                    }
                 }
                 @media (max-width: 992px) {
                     .dashboardGrid { grid-template-columns: repeat(2, 1fr) !important; }
+                    .tech-specs-grid {
+                        grid-template-columns: 1fr !important; /* Stack on smaller tablets */
+                    }
+                }
+                @media (min-width: 1201px) { /* Desktop specific styles */
+                    .tech-specs-grid {
+                        display: grid !important;
+                        grid-template-columns: repeat(3, auto) !important; /* Allow content to define width, but align */
+                        gap: 25px !important;
+                        justify-content: center !important; /* Center the grid container */
+                        grid-auto-rows: auto;
+                    }
+                    .tech-specs-grid > div:last-child { /* Target Cloudflare Edge Data Relay specifically */
+                        grid-column: 2 / span 1 !important; /* Place it in the second column */
+                        margin-top: -15px; /* Adjust vertical alignment if needed */
+                        margin-bottom: 15px; /* Keep some spacing if it was removed */
+                    }
                 }
                 @media (max-width: 768px) {
-                    .dashboardGrid { 
-                        grid-template-columns: 1fr !important; 
-                        /* Ensure tech specs are centered on mobile */
-                        & + div { /* This targets the technical infrastructure section */
-                            & > div {
-                                justify-content: center !important;
-                            }
-                        }
-                    }
+                    .dashboardGrid { grid-template-columns: 1fr !important; }
                     .mainTitle { font-size: 32px !important; }
                     .heroSubText { font-size: 16px !important; }
                     .primaryBtn { padding: 15px 40px !important; }
                     .enterprise_terminal_root { padding-top: 100px; }
+                    .tech-specs-grid {
+                        display: flex !important;
+                        flex-direction: column !important;
+                        align-items: center !important;
+                        gap: 25px !important;
+                    }
+                    .tech-specs-grid > div:last-child {
+                        grid-column: auto !important; /* Reset for mobile */
+                        margin-top: 0 !important;
+                        margin-bottom: 0 !important;
+                    }
                 }
             `}</style>
         </div>
