@@ -647,7 +647,8 @@ brand={
                         <div style={styles.techSpec}>⚡ &lt; 100ms API Latency</div>
 <div style={styles.techSpec}>🛡️ Multi-Sig Cold Storage</div>
 <div style={styles.techSpec}>📊 $20B Daily Liquid Aggregation</div>
-<div style={styles.techSpec}>🌍 Cloudflare Edge Data Relay</div>
+{/* Adjusted alignment for Cloudflare Edge Data Relay */}
+<div style={{...styles.techSpec, textAlign: "center"}}>🌍 Cloudflare Edge Data Relay</div>
                     </div>
                 </div>
             </div>
@@ -773,7 +774,15 @@ brand={
                     .dashboardGrid { grid-template-columns: repeat(2, 1fr) !important; }
                 }
                 @media (max-width: 768px) {
-                    .dashboardGrid { grid-template-columns: 1fr !important; }
+                    .dashboardGrid { 
+                        grid-template-columns: 1fr !important; 
+                        /* Ensure tech specs are centered on mobile */
+                        & + div { /* This targets the technical infrastructure section */
+                            & > div {
+                                justify-content: center !important;
+                            }
+                        }
+                    }
                     .mainTitle { font-size: 32px !important; }
                     .heroSubText { font-size: 16px !important; }
                     .primaryBtn { padding: 15px 40px !important; }
