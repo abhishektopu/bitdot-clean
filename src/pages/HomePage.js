@@ -461,8 +461,8 @@ const handleInstitutionalRedirect = (originNode) => {
                         synchronized across global liquidity nodes via Bitfinex Tape.
                     </p>
                     <div style={styles.statusBadge}>
-                        <span style={styles.pulseDot}></span> {usersOnline} GLOBAL NODES ACTIVE
-                    </div>
+    <span style={styles.pulseDot}></span> {usersOnline} NODES ACTIVE | REFRESH RATE: 600s
+</div>
                     <div style={{ marginTop: "40px" }}>
                         <button 
                             style={styles.heroCta} 
@@ -548,8 +548,8 @@ const handleInstitutionalRedirect = (originNode) => {
                                 ORDER BOOK EXECUTION FLOW (CROSS-ASSET USDT TAPE)
                             </span>
                             <span style={styles.syncTag}>
-                                HEARTBEAT: {lastHeartbeat}
-                            </span>
+    SYNC INTERVAL: 10 MIN | HEARTBEAT: {lastHeartbeat}
+</span>
                         </div>
 
            {/* TABLE CONTAINER: SCROLLABLE ON MOBILE ORIENTATION */}
@@ -641,6 +641,7 @@ const handleInstitutionalRedirect = (originNode) => {
                         <div style={styles.techSpec}>⚡ &lt; 5ms Latency Response</div>
                         <div style={styles.techSpec}>🛡️ Multi-Sig Cold Storage</div>
                         <div style={styles.techSpec}>📊 $20B Daily Liquid Aggregation</div>
+                       <div style={styles.techSpec}>🔄 10-Minute Institutional Sync</div>
                     </div>
                 </div>
             </div>
