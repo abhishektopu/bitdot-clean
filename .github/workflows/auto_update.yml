@@ -1,9 +1,10 @@
 name: Hourly Whale Update
 
 on:
+   on:
   schedule:
-    - cron: '*/5 * * * *'
-  workflow_dispatch: 
+    - cron: '*/10 * * * *'  # This means "Run every 10 minutes, 24/7"
+  workflow_dispatch:      # This allows you to also run it manually
 
 jobs:
   update:
