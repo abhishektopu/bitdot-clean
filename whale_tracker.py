@@ -79,7 +79,7 @@ def fetch_market_data():
                 }
 
                 # RADAR LOGIC: If trade is massive, add to special alert list
-                if value >= 50000:
+                if value >= 25000:
                     whale_alerts.append(trade_data)
                 
                 # STANDARD TAPE: Minimum $100 filter
