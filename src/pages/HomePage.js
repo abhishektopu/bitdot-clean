@@ -502,6 +502,7 @@ brand={
                             </span>
                         </div>
                         {/* Increased height to 600px and added a min-height so the box stays large */}
+<div style={styles.tableScrollArea}>
 <div style={{...styles.terminalBody, height: 'auto', minHeight: '400px', maxHeight: '600px', overflowY: 'auto'}}>
                             {marketData.whale_alerts && marketData.whale_alerts.length > 0 ? marketData.whale_alerts.map((alert, i) => (
                                 <div key={i} style={{...styles.orderRow, borderLeft: alert.side === 'BUY' ? '4px solid #4ade80' : '4px solid #ef4444', padding: '10px 15px', marginBottom: '5px'}}>
@@ -512,6 +513,7 @@ brand={
                                 </div>
                             )) : <div style={{padding: '30px', textAlign: 'center', color: '#64748b'}}>Scanning global liquidity nodes for high-density whale orders...</div>}
                         </div>
+                                </div>
                     </div>
 
                     {/* 5. INSTITUTIONAL ORDER BOOK: TABULAR EXECUTION TAPE */}
@@ -933,8 +935,8 @@ syncOverlay: {
         maxWidth: "1650px", 
         marginLeft: "auto",
         marginRight: "auto", 
-        paddingLeft: "20px",
-        paddingRight: "20px" 
+        paddingLeft: "10px",
+        paddingRight: "10px" 
     },
     dashboardGrid: { 
         display: "grid", 
@@ -988,6 +990,7 @@ syncOverlay: {
         border: "1px solid #1e293b", 
         overflow: "hidden",
         marginTop: "20px"
+        width: "100%"
     },
     terminalHeader: { 
         background: "#1e293b", 
