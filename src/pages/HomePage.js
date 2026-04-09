@@ -990,7 +990,7 @@ syncOverlay: {
         border: "1px solid #1e293b", 
         overflow: "hidden",
         marginTop: "20px"
-        width: "100%"
+        width: "100%",
     },
     terminalHeader: { 
         background: "#1e293b", 
