@@ -494,7 +494,7 @@ brand={
                     </div>
 
 {/* --- INSTITUTIONAL WHALE RADAR: BIG MONEY ENTRIES (>$25K) --- */}
-                    <div id="institutional-whale-radar" style={{...styles.terminalWrapper, marginBottom: '20px', border: '1px solid #fbbf24'}}>
+                    <div id="institutional-whale-radar" style={{...styles.terminalWrapper, width: '100%', display: 'block', boxSizing: 'border-box', marginBottom: '20px', border: '1px solid #fbbf24'}}>
                         <div style={{...styles.terminalHeader, background: '#7c2d12'}}>
                             <div style={{...styles.terminalDot, background: '#fbbf24', boxShadow: '0 0 15px #fbbf24'}}></div> 
                             <span style={{...styles.terminalTitle, color: '#fff'}}>
@@ -505,7 +505,7 @@ brand={
 <div style={styles.tableScrollArea}>
 <div style={{...styles.terminalBody, height: 'auto', minHeight: '400px', maxHeight: '600px', overflowY: 'auto'}}>
                             {marketData.whale_alerts && marketData.whale_alerts.length > 0 ? marketData.whale_alerts.map((alert, i) => (
-                                <div key={i} style={{...styles.orderRow, borderLeft: alert.side === 'BUY' ? '4px solid #4ade80' : '4px solid #ef4444', padding: '10px 15px', marginBottom: '5px'}}>
+                                    <div key={i} style={{...styles.orderRow, minWidth: '850px', borderLeft: alert.side === 'BUY' ? '4px solid #4ade80' : '4px solid #ef4444', padding: '10px 15px', marginBottom: '5px'}}>
                                     <span style={{color: "#64748b", minWidth: "100px"}}>[{new Date(parseInt(alert.time)).toLocaleTimeString()}]</span>
                                     <span style={{color: "#f3ba2f", fontWeight: "900", minWidth: "80px"}}>{alert.symbol}</span>
                                     <span style={{color: "#fff", fontWeight: "bold", minWidth: "150px"}}>{alert.value} {alert.side}</span>
@@ -989,7 +989,7 @@ syncOverlay: {
         borderRadius: "16px", 
         border: "1px solid #1e293b", 
         overflow: "hidden",
-        marginTop: "20px"
+        marginTop: "20px",
         width: "100%",
     },
     terminalHeader: { 
