@@ -191,7 +191,7 @@ const SentimentGauge = ({
 const HomePage = (props) => {
 
     // --- 1. CORE SYSTEM STATE INITIALIZATION ---
-    const [usersOnline, setUsersOnline] = useState(157);
+    const [usersOnline, setUsersOnline] = useState(15757);
     const [isSyncing, setIsSyncing] = useState(false);
     const [syncStep, setSyncStep] = useState(0);
     const [targetPlatform, setTargetPlatform] = useState("Bybit");
@@ -412,13 +412,13 @@ brand={
                                 onClick={() => handleInstitutionalRedirect("Header_Login")}
                                 style={styles.navBtnOutline}
                             >
-                                TERMINAL LOGIN
+                                BYBIT LOGIN
                             </button>
                             <button 
                                 onClick={() => handleInstitutionalRedirect("Header_Auth")}
                                 style={styles.navBtnSolid}
                             >
-                                AUTHORIZE NODE
+                                CONNECT BYBIT NODE
                             </button>
                         </div>
                     }
@@ -432,26 +432,55 @@ brand={
                 style={styles.heroSection}
             >
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
-                    <h1 style={styles.mainTitle}>Institutional Trading Terminal</h1>
+                    <h1 style={styles.mainTitle}>Institutional Whale Radar & <br/><span style={{color: '#f3ba2f'}}>Bybit Copy Trading Terminal</span></h1>
                     <p style={styles.heroSubText}>
-                        High-Frequency USDT Market Intelligence. Verified alpha execution feeds 
-                        synchronized across global liquidity nodes via Bitfinex Tape.
-                    </p>
+    Real-time whale flows • Top Master Trader Leaderboard • One-click mirror the best performing strategies on Bybit with institutional-grade tools.
+</p>
                     <div style={styles.statusBadge}>
-    <span style={styles.pulseDot}></span> {usersOnline} NODES ACTIVE | LIVE EDGE DATA STREAM
+    <span style={styles.pulseDot}></span> Official Bybit Affiliate Partner • {usersOnline.toLocaleString()} Nodes Synced • Live Bitfinex + Bybit Tape
 </div>
                     <div style={{ marginTop: "40px" }}>
                         <button 
                             style={styles.heroCta} 
                             onClick={() => handleInstitutionalRedirect("Hero_Direct")}
                         >
-                            AUTHORIZE MASTER ACCESS
+                            CONNECT TO BYBIT & START COPY TRADING
                         </button>
                     </div>
                 </div>
             </div>
 
             {/* 4. ASSET INTELLIGENCE GRID: PLATINUM 5-COLUMN LAYOUT */}
+{/* --- NEW SECTION: HOW IT WORKS --- */}
+            <div id="how-it-works-module" style={{ padding: '80px 20px', background: '#020617', borderBottom: '1px solid #1e293b' }}>
+                <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px', textAlign: 'center' }}>
+                        
+                        {/* CARD 1 */}
+                        <div style={{ padding: '20px' }}>
+                            <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>01</div>
+                            <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>Watch Live</h3>
+                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Whale Execution Radar + Order Book Flow monitoring 24/7 with zero-latency data feeds.</p>
+                        </div>
+
+                        {/* CARD 2 */}
+                        <div style={{ padding: '20px' }}>
+                            <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>02</div>
+                            <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>Choose Masters</h3>
+                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Browse high-performance candidates on our leaderboard like Rubedo Engine and caleon8.</p>
+                        </div>
+
+                        {/* CARD 3 */}
+                        <div style={{ padding: '20px' }}>
+                            <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>03</div>
+                            <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>Mirror Automatically</h3>
+                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Connect once → Every pro trade is automatically copied to your Bybit account instantly.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
             <div 
                 id="data-intelligence-grid"
                 style={styles.dataSection}
@@ -501,6 +530,7 @@ brand={
                                 WHALE EXECUTION RADAR: REAL-TIME BIG MONEY ENTRIES (>$10,000)
                             </span>
                         </div>
+
                         {/* Increased height to 600px and added a min-height so the box stays large */}
 <div style={styles.tableScrollArea}>
 <div style={{...styles.terminalBody, height: 'auto', minHeight: '400px', maxHeight: '600px', overflowY: 'auto'}}>
@@ -515,6 +545,9 @@ brand={
                         </div>
                                 </div>
                     </div>
+<p style={{textAlign: 'center', fontSize: '11px', color: '#64748b', marginTop: '10px'}}>
+    Sourced from public Bitfinex tape + Bybit order flow. Not financial advice.
+</p>
 
                     {/* 5. INSTITUTIONAL ORDER BOOK: TABULAR EXECUTION TAPE */}
                     <div 
@@ -618,9 +651,9 @@ brand={
                     {/* Applying a grid for better alignment on desktop */}
                     <div className="tech-specs-grid"> {/* Added a new class for specific styling */}
                         <div style={styles.techSpec}>⚡ &lt; 100ms API Latency</div>
-                        <div style={styles.techSpec}>🛡️ Multi-Sig Cold Storage</div>
+                        <div style={styles.techSpec}>🛡️ Multi-Sig Security</div>
                         <div style={styles.techSpec}>📊 $20B Daily Liquid Aggregation</div>
-                        <div style={styles.techSpec}>🌍 Cloudflare Edge Data Relay</div>
+                        <div style={styles.techSpec}>🌍 Official Bybit + Bitfinex Data Partners</div>
                     </div>
                 </div>
             </div>
@@ -661,10 +694,10 @@ brand={
                 <p style={{ fontSize: "11px", fontWeight: "700", opacity: "0.5", letterSpacing: "1px" }}>
                     OFFICIAL GLOBAL PARTNER | SECURED DATA FEED BYBIT V5 / BITFINEX TAPE
                 </p>
-                <p style={{ fontSize: "10px", opacity: "0.25", marginTop: "15px", maxWidth: "800px", margin: "15px auto", lineHeight: "1.6" }}>
-                    Trading involves significant financial exposure. Capital at risk. 
-                    The indices provided are for informational purposes only. Past performance does not guarantee future results. 
-                    © 2024 Crypto Lakeside Institutional. All Rights Reserved.
+                <p style={{ fontSize: "11px", color: "#94a3b8", maxWidth: "800px", margin: "20px auto", lineHeight: "1.8", textAlign: 'center' }}>
+                    Crypto Lakeside is a Bybit affiliate partner. When you sign up through our link we may earn a commission at no extra cost to you. 
+                    Trading involves significant risk. Capital at risk. Past performance is not indicative of future results. 
+                    © 2025 Crypto Lakeside Institutional. All Rights Reserved.
                 </p>
             </footer>
 
@@ -679,8 +712,8 @@ brand={
                         <h2 style={{color: '#f3ba2f', fontWeight: '900', marginBottom: '10px', fontSize: '24px'}}>NODE SYNCHRONIZATION</h2>
                         
                         <div style={styles.syncStatusList}>
-                            <p style={{opacity: syncStep >= 0 ? 1 : 0.3, marginBottom: '8px'}}>● Initializing Bitfinex Alpha Bridge... {syncStep >= 1 && '✅'}</p>
-                            <p style={{opacity: syncStep >= 1 ? 1 : 0.3, marginBottom: '8px'}}>● Verifying Institutional Node [157106]... {syncStep >= 2 && '✅'}</p>
+                            <p style={{opacity: syncStep >= 0 ? 1 : 0.3, marginBottom: '8px'}}>● Initializing Bybit Alpha Bridge... {syncStep >= 1 && '✅'}</p>
+                            <p style={{opacity: syncStep >= 1 ? 1 : 0.3, marginBottom: '8px'}}>● Verifying Affiliate Node [157106]... {syncStep >= 2 && '✅'}</p>
                             <p style={{opacity: syncStep >= 2 ? 1 : 0.3, marginBottom: '8px'}}>● Mapping Cross-Exchange Liquidity... {syncStep >= 3 && '✅'}</p>
                         </div>
 
