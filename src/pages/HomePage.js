@@ -948,7 +948,7 @@ syncOverlay: {
         borderRadius: "6px", 
         border: "none", 
         cursor: "pointer",
-        transition: "transform 0.2s"
+        transition: "transform 0.2s",
         width: "100%",
         maxWidth: "400px"
     },
