@@ -434,7 +434,9 @@ brand={
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
                     <h1 style={styles.mainTitle}>Institutional Whale Radar & <br/><span style={{color: '#f3ba2f'}}>Bybit Copy Trading Terminal</span></h1>
                     <p style={styles.heroSubText}>
-    Real-time whale flows from Bitfinex + Top trader signals → One-click mirror similar strategies on Bybit
+    Real-time whale flows from Bitfinex tape + Top reference traders → One-click copy similar strategies on Bybit
+
+
 </p>
                     <div style={styles.statusBadge}>
     <span style={styles.pulseDot}></span> Official Bybit Affiliate Partner • {usersOnline.toLocaleString()} Nodes Synced • Live Bitfinex + Bybit Tape
@@ -446,6 +448,9 @@ brand={
                         >
                         Connect Bybit & Copy Similar Strategies Now
                         </button>
+                                <p style={{ color: '#64748b', fontSize: '12px', marginTop: '15px', fontWeight: '500' }}>
+    No API access needed from Bybit • Free to connect • You control everything
+</p>
                     </div>
                 </div>
             </div>
@@ -467,7 +472,9 @@ brand={
                         <div style={{ padding: '20px' }}>
                             <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>02</div>
                             <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>Choose Masters</h3>
-                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Browse high-performance traders we track on Bitfinex as reference.</p>
+                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Browse high-performance reference traders we track from Bitfinex.
+
+.</p>
                         </div>
 
                         {/* CARD 3 */}
