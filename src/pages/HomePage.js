@@ -444,7 +444,7 @@ brand={
                             style={styles.heroCta} 
                             onClick={() => handleInstitutionalRedirect("Hero_Direct")}
                         >
-                            CONNECT TO BYBIT & START COPY TRADING
+                        Connect Bybit & Copy Similar Strategies Now
                         </button>
                     </div>
                 </div>
@@ -467,7 +467,7 @@ brand={
                         <div style={{ padding: '20px' }}>
                             <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>02</div>
                             <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>Choose Masters</h3>
-                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Browse high-performance reference candidates on our leaderboard from Bybit.</p>
+                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Browse high-performance traders we track on Bitfinex as reference.</p>
                         </div>
 
                         {/* CARD 3 */}
@@ -617,7 +617,7 @@ brand={
     Join 15,757+ nodes already mirroring top masters
                     </p>
                     <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '13px', marginBottom: '60px', maxWidth: '750px', margin: '0 auto 60px', lineHeight: '1.6' }}>
-                        Performance shown is monitored from Bitfinex reference nodes. Use these styles to find and follow similar high-conviction traders directly in the Bybit Copy Trading Hub.
+                        These are reference traders. Similar high-conviction styles are available for copying in Bybit’s Copy Trading Hub.
                     </p>
         <div style={styles.traderGrid}>
                         {traders.map((trader, idx) => (
