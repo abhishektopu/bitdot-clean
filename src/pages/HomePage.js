@@ -519,8 +519,8 @@ brand={
                                     </p>
                                     
                                     <h2 style={styles.priceHeading}>
-                                        ${parseFloat(marketData.prices[coin] || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                                    </h2>
+    {marketData.prices[coin] !== "0" ? `$${parseFloat(marketData.prices[coin]).toLocaleString(undefined, { minimumFractionDigits: 2 })}` : "Syncing..."}
+</h2>
 
                                     {/* ASSET SPECIFIC GAUGE SUB-COMPONENT */}
                                     <div style={styles.sentimentBox}>
