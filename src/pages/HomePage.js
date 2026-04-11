@@ -615,9 +615,8 @@ brand={
                     <h3 style={styles.sectionTitle}>High-Performance Traders We Track – Mirror Similar Strategies on Bybit</h3>
                     <p style={{ textAlign: 'center', color: '#f3ba2f', fontSize: '14px', fontWeight: '800', marginBottom: '60px', textTransform: 'uppercase', letterSpacing: '1px' }}>
     Join 15,757+ nodes already mirroring top masters
-</p>
-        <p style={{ textAlign: 'center', color: '#64748b', fontSize: '12px', marginBottom: '60px', maxWidth: '700px', margin: '0 auto 60px' }}>
-    Performance shown is from top traders on Bitfinex (used as reference). We help you find and mirror similar high-conviction strategies directly on Bybit.
+<p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '13px', marginBottom: '60px', maxWidth: '750px', margin: '0 auto 60px', lineHeight: '1.6' }}>
+    Performance shown is monitored from Bitfinex reference nodes. Use these styles to find and follow similar high-conviction traders directly in the Bybit Copy Trading Hub.
 </p>
                     <div style={styles.traderGrid}>
                         {traders.map((trader, idx) => (
@@ -639,7 +638,7 @@ brand={
                                     style={styles.copyBtn} 
                                     onClick={() => handleInstitutionalRedirect(`Leaderboard_Card_${trader.nickname}`)}
                                 >
-                                    Mirror Similar Style on Bybit →
+                                    Copy Similar Strategy on Bybit →
                                 </button>
                             </div>
                         ))}
@@ -703,7 +702,7 @@ brand={
                 <p style={{ fontSize: "11px", color: "#94a3b8", maxWidth: "800px", margin: "20px auto", lineHeight: "1.8", textAlign: 'center' }}>
                     Crypto Lakeside is a Bybit affiliate partner. When you sign up through our link we may earn a commission at no extra cost to you. 
                     Trading involves significant risk. Capital at risk. Past performance is not indicative of future results. 
-                    © 2025 Crypto Lakeside Institutional. All Rights Reserved.
+                    © 2026 Crypto Lakeside Institutional. All Rights Reserved.
                 </p>
             </footer>
 
