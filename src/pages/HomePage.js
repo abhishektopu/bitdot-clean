@@ -538,12 +538,12 @@ brand={
                         })}
                     </div>
 
-{/* --- INSTITUTIONAL WHALE RADAR: BIG MONEY ENTRIES (>$25K) --- */}
+{/* --- INSTITUTIONAL WHALE RADAR: BIG MONEY ENTRIES (>$2K) --- */}
                     <div id="institutional-whale-radar" style={{...styles.terminalWrapper, width: '100%', display: 'block', boxSizing: 'border-box', marginBottom: '20px', border: '1px solid #fbbf24'}}>
                         <div style={{...styles.terminalHeader, background: '#7c2d12'}}>
                             <div style={{...styles.terminalDot, background: '#fbbf24', boxShadow: '0 0 15px #fbbf24'}}></div> 
                             <span style={{...styles.terminalTitle, color: '#fff'}}>
-                                WHALE EXECUTION RADAR: REAL-TIME BIG MONEY ENTRIES (>$10,000)
+                                WHALE EXECUTION RADAR: REAL-TIME BIG MONEY ENTRIES (>$2,000)
                             </span>
                         </div>
 
