@@ -44,7 +44,7 @@ const PriceTicker = ({
                             {asset}/USDT
                         </span>
                         <span style={tickerStyles.price}>
-                            ${parseFloat(prices[asset] || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                            {prices[asset] !== "0" ? `$${parseFloat(prices[asset]).toLocaleString(undefined, { minimumFractionDigits: 2 })}` : "Syncing..."}
                         </span>
                         <span style={tickerStyles.pulse}>
                             ⚡
@@ -65,7 +65,7 @@ const PriceTicker = ({
                             {asset}/USDT
                         </span>
                         <span style={tickerStyles.price}>
-                            ${parseFloat(prices[asset] || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                            {prices[asset] !== "0" ? `$${parseFloat(prices[asset]).toLocaleString(undefined, { minimumFractionDigits: 2 })}` : "Syncing..."}
                         </span>
                         <span style={tickerStyles.pulse}>
                             ⚡
@@ -197,6 +197,7 @@ const HomePage = (props) => {
     const [targetPlatform, setTargetPlatform] = useState("Bybit");
     const [recentUser, setRecentUser] = useState("");
     const [lastHeartbeat, setLastHeartbeat] = useState(new Date().toLocaleTimeString());
+    const [hasLoaded, setHasLoaded] = useState(false);
     
     // Unified Institutional State Store (Multi-Asset Registry)
     const [marketData, setMarketData] = useState({
@@ -276,6 +277,7 @@ const HomePage = (props) => {
             whale_alerts: data.whale_alerts && data.whale_alerts.length > 0 ? data.whale_alerts : prevData.whale_alerts
         }));
         setLastHeartbeat(new Date().toLocaleTimeString());
+        setHasLoaded(true);
     }
 })
                 .catch(error => {
@@ -548,7 +550,7 @@ brand={
                         {/* Increased height to 600px and added a min-height so the box stays large */}
 <div style={styles.tableScrollArea}>
 <div style={{...styles.terminalBody, height: 'auto', minHeight: '400px', maxHeight: '600px', overflowY: 'auto'}}>
-                            {marketData.whale_alerts && marketData.whale_alerts.length > 0 ? marketData.whale_alerts.map((alert, i) => (
+                            {(hasLoaded || marketData.whale_alerts.length > 0) ? marketData.whale_alerts.map((alert, i) => (
                                     <div key={i} style={{...styles.orderRow, minWidth: '850px', borderLeft: alert.side === 'BUY' ? '4px solid #4ade80' : '4px solid #ef4444', padding: '10px 15px', marginBottom: '5px'}}>
                                     <span style={{color: "#64748b", minWidth: "100px"}}>[{new Date(parseInt(alert.time)).toLocaleTimeString()}]</span>
                                     <span style={{color: "#f3ba2f", fontWeight: "900", minWidth: "80px"}}>{alert.symbol}</span>
@@ -591,7 +593,7 @@ brand={
 
                 <div style={styles.terminalBody}>
                     <div style={styles.scrollingContent}>
-                        {marketData.trades.length > 0 ? marketData.trades.map((trade, i) => (
+                        {(hasLoaded || marketData.trades.length > 0) ? marketData.trades.map((trade, i) => (
                             <div key={i} style={styles.orderRow}>
                                 <span style={{ color: "#64748b", minWidth: "120px", flexShrink: 0 }}>[{new Date(parseInt(trade.time)).toLocaleTimeString()}]</span>
                                 <span style={{ color: "#f3ba2f", fontWeight: "900", minWidth: "100px", flexShrink: 0 }}>{trade.symbol}</span>
