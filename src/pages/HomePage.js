@@ -615,10 +615,13 @@ brand={
                     <h3 style={styles.sectionTitle}>High-Performance Traders We Track – Mirror Similar Strategies on Bybit</h3>
                     <p style={{ textAlign: 'center', color: '#f3ba2f', fontSize: '14px', fontWeight: '800', marginBottom: '60px', textTransform: 'uppercase', letterSpacing: '1px' }}>
     Join 15,757+ nodes already mirroring top masters
-<p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '13px', marginBottom: '60px', maxWidth: '750px', margin: '0 auto 60px', lineHeight: '1.6' }}>
-    Performance shown is monitored from Bitfinex reference nodes. Use these styles to find and follow similar high-conviction traders directly in the Bybit Copy Trading Hub.
-</p>
-                    <div style={styles.traderGrid}>
+<p style={{ textAlign: 'center', color: '#f3ba2f', fontSize: '16px', fontWeight: '800', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                        Join 15,757+ nodes already mirroring top masters
+                    </p>
+                    <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '13px', marginBottom: '60px', maxWidth: '750px', margin: '0 auto 60px', lineHeight: '1.6' }}>
+                        Performance shown is monitored from Bitfinex reference nodes. Use these styles to find and follow similar high-conviction traders directly in the Bybit Copy Trading Hub.
+                    </p>
+        <div style={styles.traderGrid}>
                         {traders.map((trader, idx) => (
                             <div key={idx} style={styles.traderCard}>
                                 <div style={styles.cardHeader}>
