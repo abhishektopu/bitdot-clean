@@ -267,13 +267,17 @@ const HomePage = (props) => {
                     return response.json();
                 })
                 .then(data => {
-                    // Critical Validation: Verify price integrity for LTC/XRP
-                    if(data.prices && data.prices.BTC !== "0") {
-                        setMarketData(data);
-                        setLastHeartbeat(new Date().toLocaleTimeString());
-                        console.log("Terminal Pulse: SUCCESS");
-                    }
-                })
+    if(data && data.prices) {
+        setMarketData(prevData => ({
+            ...prevData, // Keep old data
+            ...data,     // Overwrite with new data
+            // Only update trades/alerts if the new data actually has them
+            trades: data.trades && data.trades.length > 0 ? data.trades : prevData.trades,
+            whale_alerts: data.whale_alerts && data.whale_alerts.length > 0 ? data.whale_alerts : prevData.whale_alerts
+        }));
+        setLastHeartbeat(new Date().toLocaleTimeString());
+    }
+})
                 .catch(error => {
                     console.error("HEARTBEAT DESYNC: Re-initializing connection...");
                 });
@@ -283,7 +287,9 @@ const HomePage = (props) => {
         performSystemSync();
 
         // Establishing 20-second High-Frequency Polling Cycle
-        const syncCycle = setInterval(performSystemSync, 20000); 
+        
+        // Change from 20000 to 15000
+const syncCycle = setInterval(performSystemSync, 15000);
 
         // UI DOM Optimization Service: Systematic removal of overlays
         const cleanTerminalUI = () => {
