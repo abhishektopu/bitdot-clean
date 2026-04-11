@@ -4,11 +4,11 @@ let key = {
     CRYPTO_SECRET_KEY: "1234567812345678",
     RECAPTCHA_SITE_KEY: "6Lc1GYodAAAAABtu6oCLzoPGPphuQtUFcfEvt-Se",
     
-    // PRODUCTION URLS - Points to live servers
-    API_URL: 'https://bitdotapi.wealwin.com',
+    // PRODUCTION URLS - Updated to your domain
+    API_URL: 'https://cryptolakeside.co.in',
     FRONT_URL: 'https://cryptolakeside.co.in',
-    ADMIN_URL: 'https://bitdotapi.wealwin.com/bdadalw',
-    SOCKET_URL: 'https://bitdotapi.wealwin.com',
+    ADMIN_URL: 'https://cryptolakeside.co.in/bdadalw',
+    SOCKET_URL: 'https://cryptolakeside.co.in',
     
     getGeoInfo: "https://ipapi.co/json/",
     AUTHENTICATOR_URL: {
@@ -18,7 +18,7 @@ let key = {
 };
 
 // Log for debugging
-console.log("Config loaded: Production Mode");
+console.log("Config loaded: Production Mode - Domain Updated");
 
 export default {
     ...key,
