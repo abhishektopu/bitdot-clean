@@ -434,7 +434,7 @@ brand={
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
                     <h1 style={styles.mainTitle}>Institutional Whale Radar & <br/><span style={{color: '#f3ba2f'}}>Bybit Copy Trading Terminal</span></h1>
                     <p style={styles.heroSubText}>
-    Real-time whale flows • Top Master Trader Leaderboard • One-click mirror the best performing strategies on Bybit with institutional-grade copy trading tools.
+    Real-time whale flows from Bitfinex + Top trader signals → One-click mirror similar strategies on Bybit
 </p>
                     <div style={styles.statusBadge}>
     <span style={styles.pulseDot}></span> Official Bybit Affiliate Partner • {usersOnline.toLocaleString()} Nodes Synced • Live Bitfinex + Bybit Tape
@@ -467,7 +467,7 @@ brand={
                         <div style={{ padding: '20px' }}>
                             <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>02</div>
                             <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>Choose Masters</h3>
-                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Browse high-performance candidates on our leaderboard like Rubedo Engine and caleon8.</p>
+                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Browse high-performance reference candidates on our leaderboard from Bybit.</p>
                         </div>
 
                         {/* CARD 3 */}
@@ -612,9 +612,12 @@ brand={
                 style={styles.leaderboardSection}
             >
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
-                    <h3 style={styles.sectionTitle}>Institutional Performance Leaderboard</h3>
+                    <h3 style={styles.sectionTitle}>High-Performance Traders We Track – Mirror Similar Strategies on Bybit</h3>
                     <p style={{ textAlign: 'center', color: '#f3ba2f', fontSize: '14px', fontWeight: '800', marginBottom: '60px', textTransform: 'uppercase', letterSpacing: '1px' }}>
     Join 15,757+ nodes already mirroring top masters
+</p>
+        <p style={{ textAlign: 'center', color: '#64748b', fontSize: '12px', marginBottom: '60px', maxWidth: '700px', margin: '0 auto 60px' }}>
+    Performance shown is from top traders on Bitfinex (used as reference). We help you find and mirror similar high-conviction strategies directly on Bybit.
 </p>
                     <div style={styles.traderGrid}>
                         {traders.map((trader, idx) => (
@@ -636,7 +639,7 @@ brand={
                                     style={styles.copyBtn} 
                                     onClick={() => handleInstitutionalRedirect(`Leaderboard_Card_${trader.nickname}`)}
                                 >
-                                    Mirror This Trader on Bybit →
+                                    Mirror Similar Style on Bybit →
                                 </button>
                             </div>
                         ))}
