@@ -412,13 +412,13 @@ brand={
                                 onClick={() => handleInstitutionalRedirect("Header_Login")}
                                 style={styles.navBtnOutline}
                             >
-                                BYBIT LOGIN
+                                Login with Bybit
                             </button>
                             <button 
                                 onClick={() => handleInstitutionalRedirect("Header_Auth")}
                                 style={styles.navBtnSolid}
                             >
-                                CONNECT BYBIT NODE
+                                Connect & Mirror Now
                             </button>
                         </div>
                     }
@@ -434,7 +434,7 @@ brand={
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
                     <h1 style={styles.mainTitle}>Institutional Whale Radar & <br/><span style={{color: '#f3ba2f'}}>Bybit Copy Trading Terminal</span></h1>
                     <p style={styles.heroSubText}>
-    Real-time whale flows • Top Master Trader Leaderboard • One-click mirror the best performing strategies on Bybit with institutional-grade tools.
+    Real-time whale flows • Top Master Trader Leaderboard • One-click mirror the best performing strategies on Bybit with institutional-grade copy trading tools.
 </p>
                     <div style={styles.statusBadge}>
     <span style={styles.pulseDot}></span> Official Bybit Affiliate Partner • {usersOnline.toLocaleString()} Nodes Synced • Live Bitfinex + Bybit Tape
@@ -613,6 +613,9 @@ brand={
             >
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
                     <h3 style={styles.sectionTitle}>Institutional Performance Leaderboard</h3>
+                    <p style={{ textAlign: 'center', color: '#f3ba2f', fontSize: '14px', fontWeight: '800', marginBottom: '60px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+    Join 15,757+ nodes already mirroring top masters
+</p>
                     <div style={styles.traderGrid}>
                         {traders.map((trader, idx) => (
                             <div key={idx} style={styles.traderCard}>
@@ -633,7 +636,7 @@ brand={
                                     style={styles.copyBtn} 
                                     onClick={() => handleInstitutionalRedirect(`Leaderboard_Card_${trader.nickname}`)}
                                 >
-                                    MIRROR STRATEGY
+                                    Mirror This Trader on Bybit →
                                 </button>
                             </div>
                         ))}
@@ -938,14 +941,16 @@ syncOverlay: {
         color: "#000", 
         paddingTop: "20px",
         paddingBottom: "20px",
-        paddingLeft: "65px",
-        paddingRight: "65px", 
+        paddingLeft: "20px",
+        paddingRight: "20px", 
         fontSize: "17px", 
         fontWeight: "900", 
         borderRadius: "6px", 
         border: "none", 
         cursor: "pointer",
         transition: "transform 0.2s"
+        width: "100%",
+        maxWidth: "400px"
     },
     primaryBtn: { 
         background: "#f3ba2f", 
@@ -1055,10 +1060,11 @@ syncOverlay: {
         color: "#64748b" 
     },
     tableScrollArea: { 
-        overflowX: "auto", 
-        width: "100%",
-        WebkitOverflowScrolling: "touch"
-    },
+    overflowX: "auto", 
+    width: "100%",
+    WebkitOverflowScrolling: "touch", // Smooth scrolling for iPhone
+    borderBottom: '1px solid #1e293b'
+},
     orderBookHeader: { 
         display: "flex", 
         minWidth: "850px",
