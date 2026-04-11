@@ -538,29 +538,36 @@ brand={
                         })}
                     </div>
 
-{/* --- INSTITUTIONAL WHALE RADAR: BIG MONEY ENTRIES (>$2K) --- */}
-                    <div id="institutional-whale-radar" style={{...styles.terminalWrapper, width: '100%', display: 'block', boxSizing: 'border-box', marginBottom: '20px', border: '1px solid #fbbf24'}}>
-                        <div style={{...styles.terminalHeader, background: '#7c2d12'}}>
-                            <div style={{...styles.terminalDot, background: '#fbbf24', boxShadow: '0 0 15px #fbbf24'}}></div> 
-                            <span style={{...styles.terminalTitle, color: '#fff'}}>
-                                WHALE EXECUTION RADAR: REAL-TIME BIG MONEY ENTRIES (>$2,000)
-                            </span>
-                        </div>
+{/* --- INSTITUTIONAL WHALE RADAR: BIG MONEY ENTRIES (>$2,000) --- */}
+<div id="institutional-whale-radar" style={{...styles.terminalWrapper, width: '100%', display: 'block', boxSizing: 'border-box', marginBottom: '20px', border: '1px solid #fbbf24'}}>
+    <div style={{...styles.terminalHeader, background: '#7c2d12'}}>
+        <div style={{...styles.terminalDot, background: '#fbbf24', boxShadow: '0 0 15px #fbbf24'}}></div> 
+        <span style={{...styles.terminalTitle, color: '#fff'}}>
+            WHALE EXECUTION RADAR: REAL-TIME BIG MONEY ENTRIES (>$2,000)
+        </span>
+    </div>
 
-                        {/* Increased height to 600px and added a min-height so the box stays large */}
-<div style={styles.tableScrollArea}>
-<div style={{...styles.terminalBody, height: 'auto', minHeight: '400px', maxHeight: '600px', overflowY: 'auto'}}>
-                            {(hasLoaded || marketData.whale_alerts.length > 0) ? marketData.whale_alerts.map((alert, i) => (
-                                    <div key={i} style={{...styles.orderRow, minWidth: '850px', borderLeft: alert.side === 'BUY' ? '4px solid #4ade80' : '4px solid #ef4444', padding: '10px 15px', marginBottom: '5px'}}>
-                                    <span style={{color: "#64748b", minWidth: "100px"}}>[{new Date(parseInt(alert.time)).toLocaleTimeString()}]</span>
-                                    <span style={{color: "#f3ba2f", fontWeight: "900", minWidth: "80px"}}>{alert.symbol}</span>
-                                    <span style={{color: "#fff", fontWeight: "bold", minWidth: "150px"}}>{alert.value} {alert.side}</span>
-                                    <span style={{color: "#94a3b8", fontSize: '13px'}}>Institutional entry confirmed at {alert.price} USDT</span>
-                                </div>
-                            )) : <div style={{padding: '30px', textAlign: 'center', color: '#64748b'}}>Scanning global liquidity nodes for high-density whale orders...</div>}
-                        </div>
-                                </div>
-                    </div>
+    <div style={styles.tableScrollArea}>
+        <div style={{...styles.terminalBody, height: 'auto', minHeight: '400px', maxHeight: '600px', overflowY: 'auto'}}>
+            {(hasLoaded || marketData.whale_alerts.length > 0) ? marketData.whale_alerts.map((alert, i) => (
+                    <div key={i} style={{...styles.orderRow, minWidth: '850px', borderLeft: alert.side === 'BUY' ? '4px solid #4ade80' : '4px solid #ef4444', padding: '10px 15px', marginBottom: '5px'}}>
+                    <span style={{color: "#64748b", minWidth: "100px"}}>[{new Date(parseInt(alert.time)).toLocaleTimeString()}]</span>
+                    <span style={{color: "#f3ba2f", fontWeight: "900", minWidth: "80px"}}>{alert.symbol}</span>
+                    
+                    {/* UPDATED: COLOR CODED BUY/SELL TEXT */}
+                    <span style={{color: "#fff", fontWeight: "bold", minWidth: "150px"}}>
+                        {alert.value} 
+                        <span style={{ color: alert.side === 'BUY' ? '#4ade80' : '#ef4444', marginLeft: '8px' }}>
+                            {alert.side}
+                        </span>
+                    </span>
+
+                    <span style={{color: "#94a3b8", fontSize: '13px'}}>Institutional entry confirmed at {alert.price} USDT</span>
+                </div>
+            )) : <div style={{padding: '30px', textAlign: 'center', color: '#64748b'}}>Scanning global liquidity nodes for high-density whale orders...</div>}
+        </div>
+    </div>
+</div>
 <p style={{textAlign: 'center', fontSize: '11px', color: '#64748b', marginTop: '10px'}}>
     Sourced from public Bitfinex tape + Bybit order flow. Not financial advice.
 </p>
