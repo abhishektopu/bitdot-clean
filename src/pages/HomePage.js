@@ -681,27 +681,32 @@ brand={
                 </div>
             </div>
 
-            {/* 8. CALL TO ACTION GATEWAY PORTALS */}
-            <div 
-                id="institutional-onboarding-gateway"
-                style={styles.ctaSection}
-            >
-                <p style={styles.statLabel}>SECURE ACCESS GATEWAY</p>
-                <h2 style={{ fontWeight: "900", color: "#fff", marginBottom: "35px" }}>Institutional Onboarding Portal</h2>
+            {/* 8. RETAIL-FOCUSED AFFILIATE GATEWAY */}
+            <div id="retail-onboarding-gateway" style={styles.ctaSection}>
+                <div style={styles.promoBadge}>LIMITED TIME PARTNER OFFER</div>
+                <h2 style={styles.ctaTitle}>Start Trading Like a Whale</h2>
+                <p style={styles.ctaSubline}>
+                    Get up to <span style={{color: '#f3ba2f', fontWeight: '800'}}>$30,000 in Deposit Bonuses</span> & 
+                    Reduced Trading Fees when you connect via Crypto Lakeside.
+                </p>
+                
                 <div style={styles.ctaButtonGroup}>
                     <button 
-                        style={styles.binanceBtn} 
-                        onClick={() => handleInstitutionalRedirect("Binance_Portal")}
+                        style={styles.bybitHeroBtn} 
+                        onClick={() => handleInstitutionalRedirect("Bybit_Portal")}
                     >
-                        ACCESS BINANCE TERMINAL
+                        <img src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/352.png" style={{width: '24px', marginRight: '10px'}} alt=""/>
+                        CLAIM BYBIT BONUS & SIGN UP →
                     </button>
+                    
                     <button 
-                        style={styles.telegramBtn} 
+                        style={styles.telegramBtnNew} 
                         onClick={() => window.open("https://telegram.me/bitcoinblockchain501", "_blank")}
                     >
-                        TELEGRAM SUPPORT
+                        💬 CHAT WITH SUPPORT
                     </button>
                 </div>
+                <p style={{color: '#64748b', fontSize: '11px', marginTop: '20px'}}>Official Bybit UID: 157106 Verified Partnership</p>
             </div>
 
             {/* 9. FOOTER & COMPLIANCE ARCHITECTURE */}
@@ -1033,6 +1038,62 @@ syncOverlay: {
         border: "none", 
         cursor: "pointer" 
     },
+    promoBadge: {
+        background: "rgba(243, 186, 47, 0.1)",
+        color: "#f3ba2f",
+        padding: "8px 20px",
+        borderRadius: "100px",
+        fontSize: "12px",
+        fontWeight: "900",
+        display: "inline-block",
+        marginBottom: "20px",
+        letterSpacing: "2px",
+        border: "1px solid #f3ba2f"
+    },
+    ctaTitle: {
+        fontSize: "48px",
+        fontWeight: "900",
+        color: "#fff",
+        marginBottom: "15px",
+        letterSpacing: "-1px"
+    },
+    ctaSubline: {
+        fontSize: "18px",
+        color: "#94a3b8",
+        marginBottom: "40px",
+        maxWidth: "600px",
+        margin: "0 auto 40px"
+    },
+    bybitHeroBtn: {
+        background: "#f3ba2f",
+        color: "#000",
+        padding: "20px 40px",
+        borderRadius: "12px",
+        fontSize: "18px",
+        fontWeight: "900",
+        border: "none",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        boxShadow: "0 10px 30px rgba(243, 186, 47, 0.4)",
+        transition: "all 0.3s",
+        width: "100%",
+        maxWidth: "400px"
+    },
+    telegramBtnNew: {
+        background: "rgba(255,255,255,0.05)",
+        color: "#fff",
+        padding: "20px 40px",
+        borderRadius: "12px",
+        fontSize: "16px",
+        fontWeight: "700",
+        border: "1px solid rgba(255,255,255,0.1)",
+        cursor: "pointer",
+        transition: "all 0.3s",
+        width: "100%",
+        maxWidth: "350px"
+    },
 howItWorksSection: {
         padding: "100px 20px",
         background: "#020617",
@@ -1054,11 +1115,19 @@ howItWorksSection: {
     },
     stepCard: { 
         textAlign: "center",
-        padding: "20px"
+        padding: "40px 30px",
+        background: "rgba(255, 255, 255, 0.03)", // Subtle glass tint
+        border: "1px solid rgba(255, 255, 255, 0.05)", 
+        borderRadius: "24px",
+        backdropFilter: "blur(10px)", // The premium blur effect
+        boxShadow: "0 15px 35px rgba(0,0,0,0.2)",
+        transition: "transform 0.3s ease"
     },
     stepEmoji: { 
-        fontSize: "50px", 
-        marginBottom: "20px" 
+        fontSize: "40px", 
+        marginBottom: "20px",
+        display: "block",
+        filter: "drop-shadow(0 0 10px rgba(56, 97, 251, 0.3))" // Glowing icon effect
     },
     stepTitle: { 
         color: "#fff", 
@@ -1090,16 +1159,14 @@ howItWorksSection: {
         marginBottom: "40px" 
     },
     dashboardCard: { 
-        background: "#0f172a", 
-        paddingTop: "28px",
-        paddingBottom: "28px",
-        paddingLeft: "25px",
-        paddingRight: "25px", 
-        borderRadius: "12px", 
-        border: "1px solid #1e293b", 
+        background: "rgba(15, 23, 42, 0.5)", // Semi-transparent
+        padding: "28px 25px",
+        borderRadius: "20px", 
+        border: "1px solid rgba(255, 255, 255, 0.08)", 
         textAlign: "center", 
-        minHeight: "300px",
-        boxShadow: "0 10px 25px rgba(0,0,0,0.2)"
+        minHeight: "320px",
+        backdropFilter: "blur(12px)", // The "Glass" blur
+        boxShadow: "0 20px 40px rgba(0,0,0,0.4)"
     },
     statHeader: {
         display: "flex",
