@@ -461,7 +461,7 @@ brand={
 </p>
                     </div>
                 </div>
-            </div>
+            
 
             {/* 4. ASSET INTELLIGENCE GRID: PLATINUM 5-COLUMN LAYOUT */}
 {/* --- NEW SECTION: HOW IT WORKS --- */}
