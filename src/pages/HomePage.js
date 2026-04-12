@@ -757,10 +757,10 @@ brand={
                     {/* NEW FINAL STEP TEXT ADDED HERE */}
                     <div style={{ marginBottom: '25px', padding: '0 10px' }}>
                         <p style={{ color: '#ffffff', fontSize: '14px', fontWeight: '600', lineHeight: '1.5', margin: '0' }}>
-                            You are being connected securely to Bybit via Crypto Lakeside (Official Partner).
+                            You are being connected securely to {targetPlatform} via Crypto Lakeside ({targetPlatform === 'Bybit' ? 'Official Partner' : 'Authorized Referral'}).
                         </p>
                         <p style={{ color: '#94a3b8', fontSize: '13px', marginTop: '5px' }}>
-                            Your copy trading will be ready in seconds.
+                            Your {targetPlatform} trading setup will be ready in seconds.
                         </p>
                     </div>
 
