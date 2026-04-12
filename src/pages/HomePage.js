@@ -525,6 +525,10 @@ brand={
                                     <h2 style={styles.priceHeading}>
     {marketData.prices[coin] !== "0" ? `$${parseFloat(marketData.prices[coin]).toLocaleString(undefined, { minimumFractionDigits: 2 })}` : "Syncing..."}
 </h2>
+                                                                 {/* CMC DATA SOURCE ATTRIBUTION */}
+                                    <p style={styles.cmcSourceTag}>
+                                        LIVE SENTIMENT FEED: COINMARKETCAP (CMC)
+                                    </p>
 
                                     {/* ASSET SPECIFIC GAUGE SUB-COMPONENT */}
                                     <div style={styles.sentimentBox}>
@@ -573,7 +577,7 @@ brand={
     </div>
 </div>
 <p style={{textAlign: 'center', fontSize: '11px', color: '#64748b', marginTop: '10px'}}>
-    Sourced from public Bitfinex tape + Bybit order flow. Not financial advice.
+    Gauges: CMC Global Sentiment • Execution Radar: Bitfinex/Bybit Whale Flow Tape
 </p>
 
                     {/* 5. INSTITUTIONAL ORDER BOOK: TABULAR EXECUTION TAPE */}
@@ -1079,6 +1083,16 @@ howItWorksSection: {
         marginBottom: "12px", 
         letterSpacing: "1px", 
         textTransform: "uppercase" 
+    },
+    cmcSourceTag: {
+        fontSize: "9px",
+        color: "#94a3b8",
+        fontWeight: "700",
+        marginTop: "12px",
+        marginBottom: "-8px", 
+        letterSpacing: "1px",
+        opacity: "0.8",
+        textTransform: "uppercase"
     },
     priceHeading: { 
         color: "#ffffff", 
