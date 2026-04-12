@@ -422,13 +422,13 @@ brand={
                                 onClick={() => handleInstitutionalRedirect("Header_Login")}
                                 style={styles.navBtnOutline}
                             >
-                                Login with Bybit
+                                Connect Bybit & Start Copying
                             </button>
                             <button 
                                 onClick={() => handleInstitutionalRedirect("Header_Auth")}
                                 style={styles.navBtnSolid}
                             >
-                                Connect & Mirror Now
+                                Mirror Whales Now →
                             </button>
                         </div>
                     }
@@ -731,35 +731,46 @@ brand={
             {/* 10. SYSTEM TOAST NOTIFICATION OVERLAY */}
             {recentUser && <div style={styles.toast}>{recentUser}</div>}
 
-                    {/* --- INSTITUTIONAL HANDSHAKE OVERLAY --- */}
-            {isSyncing && (
-                <div style={styles.syncOverlay}>
-                    <div style={styles.syncBox}>
-                        <div style={styles.pulseDotLarge}></div>
-                        <h2 style={{color: '#f3ba2f', fontWeight: '900', marginBottom: '10px', fontSize: '24px'}}>NODE SYNCHRONIZATION</h2>
-                        
-                        <div style={styles.syncStatusList}>
-                            <p style={{opacity: syncStep >= 0 ? 1 : 0.3, marginBottom: '8px'}}>● Initializing Bybit Alpha Bridge... {syncStep >= 1 && '✅'}</p>
-                            <p style={{opacity: syncStep >= 1 ? 1 : 0.3, marginBottom: '8px'}}>● Verifying Affiliate Node [157106]... {syncStep >= 2 && '✅'}</p>
-                            <p style={{opacity: syncStep >= 2 ? 1 : 0.3, marginBottom: '8px'}}>● Mapping Cross-Exchange Liquidity... {syncStep >= 3 && '✅'}</p>
-                        </div>
+            {/* --- INSTITUTIONAL HANDSHAKE OVERLAY --- */}
+{isSyncing && (
+    <div style={styles.syncOverlay}>
+        <div style={styles.syncBox}>
+            <div style={styles.pulseDotLarge}></div>
+            <h2 style={{color: '#f3ba2f', fontWeight: '900', marginBottom: '10px', fontSize: '24px'}}>NODE SYNCHRONIZATION</h2>
+            
+            <div style={styles.syncStatusList}>
+                <p style={{opacity: syncStep >= 0 ? 1 : 0.3, marginBottom: '8px'}}>● Initializing Bybit Alpha Bridge... {syncStep >= 1 && '✅'}</p>
+                <p style={{opacity: syncStep >= 1 ? 1 : 0.3, marginBottom: '8px'}}>● Verifying Affiliate Node [157106]... {syncStep >= 2 && '✅'}</p>
+                <p style={{opacity: syncStep >= 2 ? 1 : 0.3, marginBottom: '8px'}}>● Mapping Cross-Exchange Liquidity... {syncStep >= 3 && '✅'}</p>
+            </div>
 
-                        {syncStep < 3 ? (
-                            <div style={styles.progressBar}>
-                                <div style={{...styles.progressFill, width: `${(syncStep + 1) * 33}%`}}></div>
-                            </div>
-                        ) : (
-                            <div style={{marginTop: '30px', animation: 'fadeIn 0.5s'}}>
-                                <p style={styles.successText}>ENCRYPTED BRIDGE ESTABLISHED</p>
-                                <button onClick={finalizeGateway} style={styles.finalizeBtn}>
-                                    ENTER {targetPlatform.toUpperCase()} TRADING HUB
-                                </button>
-                                <p style={{fontSize: '10px', marginTop: '15px', opacity: 0.3}}>Reference Protocol: HL-SYNC-AUTH-VIP</p>
-                            </div>
-                        )}
+            {syncStep < 3 ? (
+                <div style={styles.progressBar}>
+                    <div style={{...styles.progressFill, width: `${(syncStep + 1) * 33}%`}}></div>
+                </div>
+            ) : (
+                <div style={{marginTop: '30px', animation: 'fadeIn 0.5s'}}>
+                    <p style={styles.successText}>ENCRYPTED BRIDGE ESTABLISHED</p>
+                    
+                    {/* NEW FINAL STEP TEXT ADDED HERE */}
+                    <div style={{ marginBottom: '25px', padding: '0 10px' }}>
+                        <p style={{ color: '#ffffff', fontSize: '14px', fontWeight: '600', lineHeight: '1.5', margin: '0' }}>
+                            You are being connected securely to Bybit via Crypto Lakeside (Official Partner).
+                        </p>
+                        <p style={{ color: '#94a3b8', fontSize: '13px', marginTop: '5px' }}>
+                            Your copy trading will be ready in seconds.
+                        </p>
                     </div>
+
+                    <button onClick={finalizeGateway} style={styles.finalizeBtn}>
+                        ENTER {targetPlatform.toUpperCase()} TRADING HUB
+                    </button>
+                    <p style={{fontSize: '10px', marginTop: '15px', opacity: 0.3}}>Reference Protocol: HL-SYNC-AUTH-VIP</p>
                 </div>
             )}
+        </div>
+    </div>
+)}
 
             {/* 11. DYNAMIC KEYFRAME ENGINE & RESPONSIVE MEDIA QUERIES */}
             <style>{`
