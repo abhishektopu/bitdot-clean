@@ -40,6 +40,16 @@ const PriceTicker = ({
                         key={asset} 
                         style={tickerStyles.item}
                     >
+                            <img 
+                            src={asset === 'BTC' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/1.png' :
+                                 asset === 'ETH' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png' :
+                                 asset === 'XRP' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/52.png' :
+                                 asset === 'SOL' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png' :
+                                 asset === 'LTC' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/2.png' :
+                                 ''} 
+                            style={{ width: '16px', height: '16px', marginRight: '8px', borderRadius: '50%', verticalAlign: 'middle' }}
+                            alt=""
+                        />
                         <span style={tickerStyles.symbol}>
                             {asset}/USDT
                         </span>
@@ -61,6 +71,16 @@ const PriceTicker = ({
                         key={`repeat-${asset}`} 
                         style={tickerStyles.item}
                     >
+                            <img 
+                            src={asset === 'BTC' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/1.png' :
+                                 asset === 'ETH' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png' :
+                                 asset === 'XRP' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/52.png' :
+                                 asset === 'SOL' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png' :
+                                 asset === 'LTC' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/2.png' :
+                                 ''} 
+                            style={{ width: '16px', height: '16px', marginRight: '8px', borderRadius: '50%', verticalAlign: 'middle' }}
+                            alt=""
+                        />
                         <span style={tickerStyles.symbol}>
                             {asset}/USDT
                         </span>
@@ -467,9 +487,19 @@ brand={
                             const sentiment = marketData.sentiment[coin] || { value: "50", classification: "Neutral" };
                             return (
                                 <div key={coin} style={styles.dashboardCard}>
-                                    <p style={styles.statLabel}>
-                                        {coin} / USDT INDEX
-                                    </p>
+                                    <div style={styles.statHeader}>
+    <img 
+        src={coin === 'BTC' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/1.png' :
+             coin === 'ETH' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png' :
+             coin === 'XRP' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/52.png' :
+             coin === 'SOL' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png' :
+             coin === 'LTC' ? 'https://s2.coinmarketcap.com/static/img/coins/64x64/2.png' :
+             ''} 
+        alt={coin}
+        style={styles.coinLogo}
+    />
+    <p style={styles.statLabel}>{coin} / USDT INDEX</p>
+</div>
                                     
                                     <h2 style={styles.priceHeading}>
     {marketData.prices[coin] !== "0" ? `$${parseFloat(marketData.prices[coin]).toLocaleString(undefined, { minimumFractionDigits: 2 })}` : "Syncing..."}
@@ -1029,6 +1059,19 @@ howItWorksSection: {
         textAlign: "center", 
         minHeight: "300px",
         boxShadow: "0 10px 25px rgba(0,0,0,0.2)"
+    },
+    statHeader: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "10px",
+        marginBottom: "15px"
+    },
+    coinLogo: {
+        width: "24px",
+        height: "24px",
+        borderRadius: "50%",
+        boxShadow: "0 0 8px rgba(0,0,0,0.3)"
     },
     statLabel: { 
         fontSize: "11px", 
