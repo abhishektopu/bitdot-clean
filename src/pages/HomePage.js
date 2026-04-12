@@ -473,22 +473,21 @@ brand={
                         <div style={{ padding: '20px' }}>
                             <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>01</div>
                             <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>1. Scan the Whales</h3>
-<p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Our radar tracks the biggest "Smart Money" moves on Bitfinex and Bybit in real-time.</p>
+                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Our radar tracks the biggest "Smart Money" moves on Bitfinex and Bybit in real-time.</p>
                         </div>
 
                         {/* CARD 2 */}
                         <div style={{ padding: '20px' }}>
                             <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>02</div>
                             <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>2. Pick a Pro</h3>
-<p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Browse verified, high-performance traders. Check their win-rate and pick who to follow.</p>
-</p>
-</div>
+                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Browse verified, high-performance traders. Check their win-rate and pick who to follow.</p>
+                        </div>
 
                         {/* CARD 3 */}
                         <div style={{ padding: '20px' }}>
                             <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>03</div>
                             <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>3. Profit Automatically</h3>
-<p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Connect once. Every trade they make is instantly copied to your account while you sleep.</p>
+                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Connect once. Every trade they make is instantly copied to your account while you sleep.</p>
                         </div>
 
                     </div>
@@ -499,6 +498,7 @@ brand={
                 id="data-intelligence-grid"
                 style={styles.dataSection}
             >
+
                 <div 
                     className="container-fluid" 
                     style={styles.dataContainer}
