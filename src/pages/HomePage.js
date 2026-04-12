@@ -436,57 +436,64 @@ brand={
                 />
             </div>
 
-            {/* 3. HERO COMPONENT: CORPORATE BRANDING */}
-            <div 
-                id="terminal-hero-section"
-                style={styles.heroSection}
-            >
-<h1 style={styles.mainTitle}>Retail Traders: Copy Real Whales <br/><span style={{color: '#f3ba2f'}}>on Bybit in 1 Click</span></h1>
-<p style={styles.heroSubText}>
-    Live Bitfinex Whale Radar + Auto-Mirror Top Traders. <br/>
-    No trading experience required. Join 15,757+ people already copying.
-</p>
-                    <div style={styles.statusBadge}>
-                        <span style={styles.pulseDot}></span> 
-                        Official Bybit Partner &nbsp;|&nbsp; No API Keys Needed &nbsp;|&nbsp; You Control Your Funds &nbsp;|&nbsp; Secure & Verified
-                    </div>
-                    <div style={{ marginTop: "40px" }}>
-                        <button 
-                            style={styles.heroCta} 
-                            onClick={() => handleInstitutionalRedirect("Hero_Direct")}
-                        >
-                        Connect Bybit & Copy Similar Strategies Now
-                        </button>
-                                
-                    </div>
+                     {/* 3. HERO COMPONENT: RETAIL CONVERSION ENGINE */}
+            <div id="terminal-hero-section" style={styles.heroSection}>
+                <h1 style={styles.mainTitle}>
+                    Retail Traders: Copy Real Whales <br/>
+                    <span style={{color: '#f3ba2f'}}>on Bybit in 1 Click</span>
+                </h1>
+                <p style={styles.heroSubText}>
+                    Live Bitfinex Whale Radar + Auto-Mirror Top Traders.<br/>
+                    No experience needed. Join <strong style={{color: '#fff'}}>15,757+</strong> retail traders already copying smart money.
+                </p>
+
+                {/* Trust Bar */}
+                <div style={styles.trustBarGrid}>
+                    <div style={styles.trustItem}>✅ Official Bybit Partner</div>
+                    <div style={styles.trustItem}>✅ No API Keys Needed</div>
+                    <div style={styles.trustItem}>✅ You Control Your Funds</div>
+                    <div style={styles.trustItem}>✅ Secure & Verified</div>
                 </div>
-            
+
+                <div style={{ marginTop: "50px", display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
+                    <button 
+                        style={styles.heroCtaLarge} 
+                        onClick={() => handleInstitutionalRedirect("Hero_Direct")}
+                    >
+                        Connect Bybit & Mirror Whales Now →
+                    </button>
+                    <button 
+                        style={styles.heroSecondaryBtn}
+                        onClick={() => document.getElementById('institutional-whale-radar').scrollIntoView({behavior: 'smooth'})}
+                    >
+                        Watch Live Whale Radar
+                    </button>
+                </div>
+            </div>   
 
             {/* 4. ASSET INTELLIGENCE GRID: PLATINUM 5-COLUMN LAYOUT */}
-{/* --- NEW SECTION: HOW IT WORKS --- */}
-            <div id="how-it-works-module" style={{ padding: '80px 20px', background: '#020617', borderBottom: '1px solid #1e293b' }}>
+{/* 4. HOW IT WORKS SECTION */}
+            <div id="how-it-works-module" style={styles.howItWorksSection}>
                 <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px', textAlign: 'center' }}>
+                    <h2 style={styles.sectionTitleSmall}>How to Start Copying Whales in 60 Seconds</h2>
+                    <div style={styles.howItWorksGrid}>
                         
-                        {/* CARD 1 */}
-                        <div style={{ padding: '20px' }}>
-                            <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>01</div>
-                            <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>1. Scan the Whales</h3>
-                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Our radar tracks the biggest "Smart Money" moves on Bitfinex and Bybit in real-time.</p>
+                        <div style={styles.stepCard}>
+                            <div style={styles.stepEmoji}>1️⃣</div>
+                            <h3 style={styles.stepTitle}>Connect Your Bybit</h3>
+                            <p style={styles.stepDesc}>Secure 1-click login. No API keys. You always control your funds.</p>
                         </div>
 
-                        {/* CARD 2 */}
-                        <div style={{ padding: '20px' }}>
-                            <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>02</div>
-                            <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>2. Pick a Pro</h3>
-                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Browse verified, high-performance traders. Check their win-rate and pick who to follow.</p>
+                        <div style={styles.stepCard}>
+                            <div style={styles.stepEmoji}>2️⃣</div>
+                            <h3 style={styles.stepTitle}>Watch Live Whale Radar</h3>
+                            <p style={styles.stepDesc}>See real-time institutional moves from Bitfinex and Bybit flow.</p>
                         </div>
 
-                        {/* CARD 3 */}
-                        <div style={{ padding: '20px' }}>
-                            <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>03</div>
-                            <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>3. Profit Automatically</h3>
-                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Connect once. Every trade they make is instantly copied to your account while you sleep.</p>
+                        <div style={styles.stepCard}>
+                            <div style={styles.stepEmoji}>3️⃣</div>
+                            <h3 style={styles.stepTitle}>Pick & Mirror</h3>
+                            <p style={styles.stepDesc}>Choose top masters and auto-copy their trades 24/7 while you sleep.</p>
                         </div>
 
                     </div>
@@ -925,79 +932,117 @@ syncOverlay: {
     },
     heroSection: { 
         paddingTop: "240px",
-        paddingBottom: "80px",
-        paddingLeft: "20px",
-        paddingRight: "20px", 
+        paddingBottom: "100px",
         textAlign: "center", 
-        background: "radial-gradient(circle at center, #0f172a 0%, #020617 100%)" 
+        background: "radial-gradient(circle at center, #0f172a 0%, #020617 100%)",
+        paddingLeft: "20px",
+        paddingRight: "20px"
     },
     mainTitle: { 
         fontWeight: "900", 
-        fontSize: "52px", 
+        fontSize: "62px", 
         color: "#fff", 
-        letterSpacing: "-1.8px", 
-        lineHeight: "1" 
+        letterSpacing: "-2px", 
+        lineHeight: "1.1" 
     },
     heroSubText: { 
         color: "#94a3b8", 
-        fontSize: "22px", 
-        marginTop: "25px",
-        marginBottom: "25px",
-        marginLeft: "auto",
-        marginRight: "auto", 
-        maxWidth: "750px",
-        lineHeight: "1.5"
+        fontSize: "20px", 
+        marginTop: "30px",
+        lineHeight: "1.6",
+        maxWidth: "800px",
+        margin: "30px auto"
     },
-    statusBadge: { 
-         display: "inline-flex", 
-        alignItems: "center", 
-        background: "rgba(34, 197, 94, 0.1)", 
-        padding: "12px 25px", 
-        borderRadius: "100px", 
-        color: "#4ade80", 
-        fontWeight: "700", 
-        marginTop: "25px", 
-        border: "1px solid rgba(74, 222, 128, 0.3)",
-        fontSize: "13px",
-        letterSpacing: "0.5px"
+    trustBarGrid: {
+        display: "flex",
+        justifyContent: "center",
+        flexWrap: "wrap",
+        gap: "30px",
+        marginTop: "40px",
+        color: "#4ade80",
+        fontSize: "14px",
+        fontWeight: "700"
     },
-    pulseDot: { 
-         height: "8px", 
-        width: "8px", 
-        backgroundColor: "#4ade80", 
-        borderRadius: "50%", 
-        marginRight: "12px", 
-        boxShadow: "0 0 12px #4ade80"
+    trustItem: {
+        display: "flex",
+        alignItems: "center",
+        gap: "10px"
     },
-    heroCta: { 
+    heroCtaLarge: { 
         background: "#f3ba2f", 
         color: "#000", 
-        paddingTop: "20px",
-        paddingBottom: "20px",
-        paddingLeft: "20px",
-        paddingRight: "20px", 
-        fontSize: "17px", 
+        padding: "22px 45px", 
+        fontSize: "20px", 
         fontWeight: "900", 
-        borderRadius: "6px", 
+        borderRadius: "16px", 
         border: "none", 
         cursor: "pointer",
-        transition: "transform 0.2s",
+        boxShadow: "0 10px 30px rgba(243, 186, 47, 0.3)",
+        width: "100%",
+        maxWidth: "450px",
+        transition: "transform 0.2s"
+    },
+    heroSecondaryBtn: {
+        background: "transparent",
+        color: "#fff",
+        border: "1px solid #334155",
+        padding: "18px 35px",
+        fontSize: "18px",
+        fontWeight: "600",
+        borderRadius: "16px",
+        cursor: "pointer",
         width: "100%",
         maxWidth: "400px"
     },
     primaryBtn: { 
         background: "#f3ba2f", 
         color: "#000", 
-        paddingTop: "18px",
-        paddingBottom: "18px",
-        paddingLeft: "55px",
-        paddingRight: "55px", 
+        padding: "18px 55px", 
         fontSize: "17px", 
         fontWeight: "900", 
-        borderRadius: "6px", 
+        borderRadius: "12px", 
         border: "none", 
         cursor: "pointer" 
     },
+howItWorksSection: {
+        padding: "100px 20px",
+        background: "#020617",
+        borderTop: "1px solid #1e293b",
+        borderBottom: "1px solid #1e293b"
+    },
+    sectionTitleSmall: {
+        color: "#fff",
+        fontSize: "36px",
+        fontWeight: "900",
+        textAlign: "center",
+        marginBottom: "60px",
+        letterSpacing: "-1px"
+    },
+    howItWorksGrid: {
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+        gap: "40px"
+    },
+    stepCard: { 
+        textAlign: "center",
+        padding: "20px"
+    },
+    stepEmoji: { 
+        fontSize: "50px", 
+        marginBottom: "20px" 
+    },
+    stepTitle: { 
+        color: "#fff", 
+        fontSize: "24px", 
+        fontWeight: "800", 
+        marginBottom: "15px" 
+    },
+    stepDesc: { 
+        color: "#94a3b8", 
+        fontSize: "16px", 
+        lineHeight: "1.6" 
+    },
+    
     dataSection: { 
         paddingTop: "40px",
         paddingBottom: "40px" 
