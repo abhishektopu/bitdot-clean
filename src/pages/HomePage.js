@@ -84,103 +84,46 @@ const PriceTicker = ({
  * Logic: Maps a 0-100 index value to a -90 to +90 degree vector rotation.
  * UI: Implements institutional color coding for Market Sentiment tracking.
  */
+
 const SentimentGauge = ({ 
     value, 
-    classification 
+    classification,
+    symbol // ADDED THIS
 }) => {
     const numericValue = parseInt(value) || 50;
-    
-    // Needle Degree Translation mapping logic
     const needleRotation = (numericValue / 100) * 180 - 90;
     
-    /**
-     * Map numerical sentiment to standardized enterprise color tokens
-     */
     const getSentimentColor = (val) => {
-        if (val <= 25) {
-            return "#ef4444"; // Extreme Fear (Institutional Buy Signal)
-        }
-        if (val <= 45) {
-            return "#f97316"; // Fear (Accumulation Zone)
-        }
-        if (val <= 75) {
-            return "#eab308"; // Greed (Distribution Zone)
-        }
-        return "#22c55e"; // Extreme Greed (Retail Over-extension)
+        if (val <= 25) return "#ef4444";
+        if (val <= 45) return "#f97316";
+        if (val <= 75) return "#eab308";
+        return "#22c55e";
     };
 
     const activeColor = getSentimentColor(numericValue);
 
     return (
-        <div 
-            className="gauge-render-node"
-            style={gaugeStyles.container}
-        >
-            <svg 
-                width="140" 
-                height="80" 
-                viewBox="0 0 140 80"
-            >
-                {/* Background Rail Arc */}
-                <path 
-                    d="M20,70 A50,50 0 0,1 120,70" 
-                    fill="none" 
-                    stroke="#1e293b" 
-                    strokeWidth="12" 
-                    strokeLinecap="round" 
-                />
-                {/* Sentiment Progress Vector */}
-                <path 
-                    d="M20,70 A50,50 0 0,1 120,70" 
-                    fill="none" 
-                    stroke={activeColor} 
-                    strokeWidth="12" 
-                    strokeLinecap="round" 
-                    strokeDasharray="157" 
-                    strokeDashoffset={157 - (numericValue / 100) * 157}
-                    style={{ 
-                        transition: 'stroke-dashoffset 2s ease-in-out, stroke 1.5s' 
-                    }}
-                />
-                {/* Directional Needle Vector */}
-                <line 
-                    x1="70" 
-                    y1="70" 
-                    x2="70" 
-                    y2="25" 
-                    stroke="#ffffff" 
-                    strokeWidth="3" 
-                    strokeLinecap="round" 
-                    transform={`rotate(${needleRotation} 70 70)`}
-                    style={{ 
-                        transition: 'transform 2.2s cubic-bezier(0.34, 1.56, 0.64, 1)' 
-                    }}
-                />
-                {/* Axis Center Pivot */}
-                <circle 
-                    cx="70" 
-                    cy="70" 
-                    r="6" 
-                    fill="#ffffff" 
-                />
+        <div className="gauge-render-node" style={gaugeStyles.container}>
+            <svg width="140" height="80" viewBox="0 0 140 80">
+                <path d="M20,70 A50,50 0 0,1 120,70" fill="none" stroke="#1e293b" strokeWidth="12" strokeLinecap="round" />
+                
+                {/* ADDED: COIN SYMBOL IN CENTER BACKGROUND */}
+                <text x="70" y="65" textAnchor="middle" fill="rgba(255,255,255,0.1)" style={{ fontSize: '24px', fontWeight: '900' }}>
+                    {symbol}
+                </text>
+
+                <path d="M20,70 A50,50 0 0,1 120,70" fill="none" stroke={activeColor} strokeWidth="12" strokeLinecap="round" strokeDasharray="157" strokeDashoffset={157 - (numericValue / 100) * 157} style={{ transition: 'stroke-dashoffset 2s ease-in-out, stroke 1.5s' }} />
+                <line x1="70" y1="70" x2="70" y2="25" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" transform={`rotate(${needleRotation} 70 70)`} style={{ transition: 'transform 2.2s cubic-bezier(0.34, 1.56, 0.64, 1)' }} />
+                <circle cx="70" cy="70" r="6" fill="#ffffff" />
             </svg>
-            <div 
-                className="gauge-labels"
-                style={gaugeStyles.labelContainer}
-            >
-                <p style={{ 
-                    ...gaugeStyles.statusText, 
-                    color: activeColor 
-                }}>
-                    {classification.toUpperCase()}
-                </p>
-                <p style={gaugeStyles.indexValue}>
-                    INDEX: {numericValue}
-                </p>
+            <div className="gauge-labels" style={gaugeStyles.labelContainer}>
+                <p style={{ ...gaugeStyles.statusText, color: activeColor }}>{classification.toUpperCase()}</p>
+                <p style={gaugeStyles.indexValue}>INDEX: {numericValue}</p>
             </div>
         </div>
     );
 };
+
 
 /**
  * -----------------------------------------------------------------------------
@@ -537,9 +480,10 @@ brand={
                                     {/* ASSET SPECIFIC GAUGE SUB-COMPONENT */}
                                     <div style={styles.sentimentBox}>
                                         <SentimentGauge 
-                                            value={sentiment.value} 
-                                            classification={sentiment.classification} 
-                                        />
+                                        value={sentiment.value} 
+                                        classification={sentiment.classification}
+                                        symbol={coin} // ADDED THIS
+                                    />
                                     </div>
                                     
                                     <span style={styles.feedTag}>
@@ -1089,14 +1033,18 @@ howItWorksSection: {
         textTransform: "uppercase" 
     },
     timestampTag: {
-        fontSize: "8px",
-        color: "#64748b",
-        fontWeight: "600",
-        marginTop: "6px",
-        marginBottom: "-8px", 
+        fontSize: "9px",
+        color: "#000", // High contrast black text
+        background: "#f3ba2f", // Gold brand color
+        padding: "3px 10px",
+        borderRadius: "4px",
+        fontWeight: "900",
+        display: "inline-block",
+        marginTop: "8px",
+        marginBottom: "-5px",
         letterSpacing: "0.5px",
-        opacity: "0.7",
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        boxShadow: "0 4px 10px rgba(243, 186, 47, 0.3)"
     },
     cmcSourceTag: {
         fontSize: "10px",
