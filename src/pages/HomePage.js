@@ -88,7 +88,7 @@ const PriceTicker = ({
 const SentimentGauge = ({ 
     value, 
     classification,
-    symbol // ADDED THIS
+    symbol // WE ADDED THIS
 }) => {
     const numericValue = parseInt(value) || 50;
     const needleRotation = (numericValue / 100) * 180 - 90;
@@ -107,8 +107,14 @@ const SentimentGauge = ({
             <svg width="140" height="80" viewBox="0 0 140 80">
                 <path d="M20,70 A50,50 0 0,1 120,70" fill="none" stroke="#1e293b" strokeWidth="12" strokeLinecap="round" />
                 
-                {/* ADDED: COIN SYMBOL IN CENTER BACKGROUND */}
-                <text x="70" y="65" textAnchor="middle" fill="rgba(255,255,255,0.1)" style={{ fontSize: '24px', fontWeight: '900' }}>
+                {/* --- THIS IS THE SYMBOL WATERMARK --- */}
+                <text 
+                    x="70" 
+                    y="62" 
+                    textAnchor="middle" 
+                    fill="rgba(255,255,255,0.2)" 
+                    style={{ fontSize: '26px', fontWeight: '900', fontFamily: 'monospace' }}
+                >
                     {symbol}
                 </text>
 
@@ -479,11 +485,11 @@ brand={
 
                                     {/* ASSET SPECIFIC GAUGE SUB-COMPONENT */}
                                     <div style={styles.sentimentBox}>
-                                        <SentimentGauge 
-                                        value={sentiment.value} 
-                                        classification={sentiment.classification}
-                                        symbol={coin} // ADDED THIS
-                                    />
+                                    <SentimentGauge 
+                                    value={sentiment.value} 
+                                    classification={sentiment.classification}
+                                    symbol={coin} // MAKE SURE THIS LINE IS HERE
+                                />
                                     </div>
                                     
                                     <span style={styles.feedTag}>
@@ -1032,19 +1038,16 @@ howItWorksSection: {
         letterSpacing: "1px", 
         textTransform: "uppercase" 
     },
-    timestampTag: {
+timestampTag: {
         fontSize: "9px",
-        color: "#000", // High contrast black text
-        background: "#f3ba2f", // Gold brand color
+        color: "#000",
+        background: "#f3ba2f",
         padding: "3px 10px",
         borderRadius: "4px",
         fontWeight: "900",
         display: "inline-block",
         marginTop: "8px",
-        marginBottom: "-5px",
-        letterSpacing: "0.5px",
-        textTransform: "uppercase",
-        boxShadow: "0 4px 10px rgba(243, 186, 47, 0.3)"
+        marginBottom: "-5px"
     },
     cmcSourceTag: {
         fontSize: "10px",
