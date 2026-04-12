@@ -525,6 +525,10 @@ brand={
                                     <h2 style={styles.priceHeading}>
     {marketData.prices[coin] !== "0" ? `$${parseFloat(marketData.prices[coin]).toLocaleString(undefined, { minimumFractionDigits: 2 })}` : "Syncing..."}
 </h2>
+                                                                 {/* TIMESTAMP TO EXPLAIN THE 10-MIN CACHE GAP */}
+                                    <p style={styles.timestampTag}>
+                                        SNAPSHOT AT: {lastHeartbeat} (UTC)
+                                    </p>
                                     {/* CMC DATA SOURCE ATTRIBUTION */}
     <p style={styles.cmcSourceTag}>
         LIVE FEED: <span style={{color: '#fff'}}>COINMARKETCAP</span> (CMC)
@@ -1083,6 +1087,16 @@ howItWorksSection: {
         marginBottom: "12px", 
         letterSpacing: "1px", 
         textTransform: "uppercase" 
+    },
+    timestampTag: {
+        fontSize: "8px",
+        color: "#64748b",
+        fontWeight: "600",
+        marginTop: "6px",
+        marginBottom: "-8px", 
+        letterSpacing: "0.5px",
+        opacity: "0.7",
+        textTransform: "uppercase"
     },
     cmcSourceTag: {
         fontSize: "10px",
