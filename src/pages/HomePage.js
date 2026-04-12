@@ -312,26 +312,22 @@ const syncCycle = setInterval(performSystemSync, 15000);
      * Compliance: Regional India FIU Logic enabled for Bybit Hub.
      * Attribution: Forced Referral ID 157106.
      */
-   
-const handleInstitutionalRedirect = (originNode) => {
-        setIsSyncing(true);
-        setSyncStep(0);
+   const handleInstitutionalRedirect = (originNode) => {
+    setIsSyncing(true);
+    setSyncStep(0);
 
-        // Determine if user wants Binance or Bybit
-        if (originNode.toLowerCase().includes("binance")) {
-            setTargetPlatform("Binance");
-        } else {
-            setTargetPlatform("Bybit");
-        }
+    // If the button name has "binance", target Binance. Otherwise, default to Bybit.
+    const platform = originNode.toLowerCase().includes("binance") ? "Binance" : "Bybit";
+    setTargetPlatform(platform);
 
-        if (window.gtag) { 
-            window.gtag('event', 'node_sync_initiated', { 'origin_node': originNode }); 
-        }
+    if (window.gtag) { 
+        window.gtag('event', 'node_sync_initiated', { 'origin_node': originNode, 'target': platform }); 
+    }
 
-        setTimeout(() => setSyncStep(1), 600); 
-        setTimeout(() => setSyncStep(2), 1500); 
-        setTimeout(() => setSyncStep(3), 2500); 
-    };
+    setTimeout(() => setSyncStep(1), 600); 
+    setTimeout(() => setSyncStep(2), 1500); 
+    setTimeout(() => setSyncStep(3), 2500); 
+};
 
     const finalizeGateway = () => {
         let gatewayUrl = "";
@@ -681,32 +677,35 @@ brand={
                 </div>
             </div>
 
-            {/* 8. RETAIL-FOCUSED AFFILIATE GATEWAY */}
-            <div id="retail-onboarding-gateway" style={styles.ctaSection}>
-                <div style={styles.promoBadge}>LIMITED TIME PARTNER OFFER</div>
-                <h2 style={styles.ctaTitle}>Start Trading Like a Whale</h2>
+            {/* 8. SECONDARY GATEWAY: BINANCE REFERRAL */}
+            <div id="binance-onboarding-gateway" style={styles.ctaSection}>
+                <div style={styles.promoBadge}>SECONDARY TERMINAL: BINANCE</div>
+                <h2 style={styles.ctaTitle}>Access the Binance Terminal</h2>
                 <p style={styles.ctaSubline}>
-                    Get up to <span style={{color: '#f3ba2f', fontWeight: '800'}}>$30,000 in Deposit Bonuses</span> & 
-                    Reduced Trading Fees when you connect via Crypto Lakeside.
+                    Register via Crypto Lakeside to unlock <span style={{color: '#f3ba2f', fontWeight: '800'}}>Binance Welcome Vouchers</span> & 
+                    exclusive community trading rebates.
                 </p>
                 
                 <div style={styles.ctaButtonGroup}>
                     <button 
                         style={styles.bybitHeroBtn} 
-                        onClick={() => handleInstitutionalRedirect("Bybit_Portal")}
+                        onClick={() => handleInstitutionalRedirect("Binance_Portal")}
                     >
-                        <img src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/352.png" style={{width: '24px', marginRight: '10px'}} alt=""/>
-                        CLAIM BYBIT BONUS & SIGN UP →
+                        {/* BINANCE LOGO */}
+                        <img src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/270.png" style={{width: '24px', marginRight: '15px'}} alt=""/>
+                        OPEN BINANCE REGISTRATION →
                     </button>
                     
                     <button 
                         style={styles.telegramBtnNew} 
                         onClick={() => window.open("https://telegram.me/bitcoinblockchain501", "_blank")}
                     >
-                        💬 CHAT WITH SUPPORT
+                        💬 TELEGRAM SUPPORT
                     </button>
                 </div>
-                <p style={{color: '#64748b', fontSize: '11px', marginTop: '20px'}}>Official Bybit UID: 157106 Verified Partnership</p>
+                <p style={{color: '#64748b', fontSize: '11px', marginTop: '20px', fontWeight: '600'}}>
+                    Binance Referral ID: 35886743 • Secure Cloudflare Bridge Active
+                </p>
             </div>
 
             {/* 9. FOOTER & COMPLIANCE ARCHITECTURE */}
@@ -740,8 +739,10 @@ brand={
             <h2 style={{color: '#f3ba2f', fontWeight: '900', marginBottom: '10px', fontSize: '24px'}}>NODE SYNCHRONIZATION</h2>
             
             <div style={styles.syncStatusList}>
-                <p style={{opacity: syncStep >= 0 ? 1 : 0.3, marginBottom: '8px'}}>● Initializing Bybit Alpha Bridge... {syncStep >= 1 && '✅'}</p>
-                <p style={{opacity: syncStep >= 1 ? 1 : 0.3, marginBottom: '8px'}}>● Verifying Affiliate Node [157106]... {syncStep >= 2 && '✅'}</p>
+                <p style={{opacity: syncStep >= 0 ? 1 : 0.3, marginBottom: '8px'}}>● Initializing {targetPlatform} Alpha Bridge... {syncStep >= 1 && '✅'}</p>
+                <p style={{opacity: syncStep >= 1 ? 1 : 0.3, marginBottom: '8px'}}>
+                    ● Verifying {targetPlatform} Node [{targetPlatform === 'Bybit' ? '157106' : '35886743'}]... {syncStep >= 2 && '✅'}
+                </p>
                 <p style={{opacity: syncStep >= 2 ? 1 : 0.3, marginBottom: '8px'}}>● Mapping Cross-Exchange Liquidity... {syncStep >= 3 && '✅'}</p>
             </div>
 
@@ -1159,13 +1160,13 @@ howItWorksSection: {
         marginBottom: "40px" 
     },
     dashboardCard: { 
-        background: "rgba(15, 23, 42, 0.5)", // Semi-transparent
+        background: "rgba(15, 23, 42, 0.4)", // Muted for stars to show through
         padding: "28px 25px",
         borderRadius: "20px", 
         border: "1px solid rgba(255, 255, 255, 0.08)", 
         textAlign: "center", 
-        minHeight: "320px",
-        backdropFilter: "blur(12px)", // The "Glass" blur
+        minHeight: "340px",
+        backdropFilter: "blur(10px)", // The "Glass" effect
         boxShadow: "0 20px 40px rgba(0,0,0,0.4)"
     },
     statHeader: {
