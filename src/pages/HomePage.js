@@ -441,15 +441,13 @@ brand={
                 id="terminal-hero-section"
                 style={styles.heroSection}
             >
-                <div className="container" style={{ maxWidth: "1100px", margin: "0 auto" }}>
-                    <h1 style={styles.mainTitle}>Institutional Whale Radar & <br/><span style={{color: '#f3ba2f'}}>Bybit Copy Trading Terminal</span></h1>
-                    <p style={styles.heroSubText}>
-    Real-time whale flows from Bitfinex tape + Top reference traders → One-click copy similar strategies on Bybit
-
-
+<h1 style={styles.mainTitle}>Retail Traders: Copy Real Whales <br/><span style={{color: '#f3ba2f'}}>on Bybit in 1 Click</span></h1>
+<p style={styles.heroSubText}>
+    Live Bitfinex Whale Radar + Auto-Mirror Top Traders. <br/>
+    No trading experience required. Join 15,757+ people already copying.
 </p>
                     <div style={styles.statusBadge}>
-    <span style={styles.pulseDot}></span> Official Bybit Affiliate Partner • {usersOnline.toLocaleString()} Nodes Synced • Live Bitfinex + Bybit Tape
+    <span style={styles.pulseDot}></span> Official Bybit Partner • {usersOnline.toLocaleString()} Active Copiers • Secure & Verified
 </div>
                     <div style={{ marginTop: "40px" }}>
                         <button 
@@ -474,23 +472,23 @@ brand={
                         {/* CARD 1 */}
                         <div style={{ padding: '20px' }}>
                             <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>01</div>
-                            <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>Watch Live</h3>
-                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Whale Execution Radar + Order Book Flow monitoring 24/7 with zero-latency data feeds.</p>
+                            <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>1. Scan the Whales</h3>
+<p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Our radar tracks the biggest "Smart Money" moves on Bitfinex and Bybit in real-time.</p>
                         </div>
 
                         {/* CARD 2 */}
                         <div style={{ padding: '20px' }}>
                             <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>02</div>
-                            <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>Choose Masters</h3>
-                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Browse high-performance reference traders we track from Bitfinex as signals.
+                            <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>2. Pick a Pro</h3>
+<p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Browse verified, high-performance traders. Check their win-rate and pick who to follow.</p>
 </p>
-                        </div>
+</div>
 
                         {/* CARD 3 */}
                         <div style={{ padding: '20px' }}>
                             <div style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>03</div>
-                            <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>Mirror Automatically</h3>
-                            <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Connect once → Every pro trade is automatically copied to your Bybit account instantly.</p>
+                            <h3 style={{ color: '#fff', fontWeight: '800', fontSize: '22px', marginBottom: '15px' }}>3. Profit Automatically</h3>
+<p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>Connect once. Every trade they make is instantly copied to your account while you sleep.</p>
                         </div>
 
                     </div>
