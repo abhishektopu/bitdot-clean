@@ -354,6 +354,8 @@ const handleInstitutionalRedirect = (originNode) => {
             className="enterprise_terminal_root" 
             style={styles.mainWrapper}
         >
+    {/* PREMIUM TECH GLOW OVERLAY */}
+            <div style={styles.bgGlow}></div>
             
             {/* 1. LAYER 9000: GLOBAL PRICE TICKER SYSTEM (TETHER PAIRED) */}
             <PriceTicker prices={marketData.prices} />
@@ -848,6 +850,23 @@ brand={
                         margin-bottom: 0 !important;
                     }
                 }
+                @keyframes techPulse {
+                    0% { opacity: 0.2; }
+                    50% { opacity: 0.5; }
+                    100% { opacity: 0.2; }
+                }
+                
+                .enterprise_terminal_root::after {
+                    content: "";
+                    position: fixed;
+                    top: 0; left: 0; width: 100%; height: 100%;
+                    background-image: radial-gradient(#ffffff 1px, transparent 1px);
+                    background-size: 80px 80px;
+                    opacity: 0.1;
+                    z-index: 1;
+                    pointer-events: none;
+                    animation: techPulse 10s infinite;
+                }
             `}</style>
         </div>
     );
@@ -857,10 +876,32 @@ brand={
 const styles = {
     mainWrapper: { 
         backgroundColor: "#020617", 
+        // DEEP SPACE TECH GRADIENT + SUBTLE TECH GRID
+        backgroundImage: `
+            radial-gradient(circle at 50% 0%, rgba(26, 35, 55, 0.5) 0%, rgba(2, 6, 23, 1) 75%),
+            linear-gradient(rgba(30, 41, 59, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(30, 41, 59, 0.05) 1px, transparent 1px)
+        `,
+        backgroundSize: "100% 100%, 40px 40px, 40px 40px",
         color: "#f8fafc", 
         fontFamily: "'Barlow', sans-serif",
-        minHeight: "100vh"
-    }, 
+        minHeight: "100vh",
+        position: "relative",
+        overflowX: "hidden"
+    },
+    bgGlow: {
+        position: "absolute",
+        top: "-150px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: "100%",
+        maxWidth: "1400px",
+        height: "800px",
+        background: "radial-gradient(circle, rgba(243, 186, 47, 0.04) 0%, transparent 70%)",
+        zIndex: 0,
+        pointerEvents: "none"
+    },
+ 
 syncOverlay: {
         position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
         backgroundColor: "rgba(2, 6, 23, 0.98)", zIndex: 20000,
