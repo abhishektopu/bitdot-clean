@@ -525,10 +525,10 @@ brand={
                                     <h2 style={styles.priceHeading}>
     {marketData.prices[coin] !== "0" ? `$${parseFloat(marketData.prices[coin]).toLocaleString(undefined, { minimumFractionDigits: 2 })}` : "Syncing..."}
 </h2>
-                                                                 {/* CMC DATA SOURCE ATTRIBUTION */}
-                                    <p style={styles.cmcSourceTag}>
-                                        LIVE SENTIMENT FEED: COINMARKETCAP (CMC)
-                                    </p>
+                                    {/* CMC DATA SOURCE ATTRIBUTION */}
+    <p style={styles.cmcSourceTag}>
+        LIVE FEED: <span style={{color: '#fff'}}>COINMARKETCAP</span> (CMC)
+    </p>
 
                                     {/* ASSET SPECIFIC GAUGE SUB-COMPONENT */}
                                     <div style={styles.sentimentBox}>
@@ -1085,14 +1085,18 @@ howItWorksSection: {
         textTransform: "uppercase" 
     },
     cmcSourceTag: {
-        fontSize: "9px",
-        color: "#94a3b8",
-        fontWeight: "700",
-        marginTop: "12px",
-        marginBottom: "-8px", 
+        fontSize: "10px",
+        color: "#3861fb", // Official CMC Brand Blue
+        fontWeight: "900",
+        marginTop: "15px",
+        marginBottom: "-5px", 
         letterSpacing: "1px",
-        opacity: "0.8",
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        display: "inline-block",
+        padding: "2px 8px",
+        background: "rgba(56, 97, 251, 0.1)", // Light blue tint background
+        borderRadius: "4px",
+        border: "1px solid rgba(56, 97, 251, 0.2)"
     },
     priceHeading: { 
         color: "#ffffff", 
@@ -1108,7 +1112,7 @@ howItWorksSection: {
     },
     feedTag: { 
         fontSize: "9px", 
-        color: "#4ade80", 
+        color: "#4ade80", // Green for 'Authorized'
         display: "block", 
         marginTop: "15px", 
         fontWeight: "800",
