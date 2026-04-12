@@ -447,8 +447,9 @@ brand={
     No trading experience required. Join 15,757+ people already copying.
 </p>
                     <div style={styles.statusBadge}>
-    <span style={styles.pulseDot}></span> Official Bybit Partner • {usersOnline.toLocaleString()} Active Copiers • Secure & Verified
-</div>
+                        <span style={styles.pulseDot}></span> 
+                        Official Bybit Partner &nbsp;|&nbsp; No API Keys Needed &nbsp;|&nbsp; You Control Your Funds &nbsp;|&nbsp; Secure & Verified
+                    </div>
                     <div style={{ marginTop: "40px" }}>
                         <button 
                             style={styles.heroCta} 
@@ -456,9 +457,7 @@ brand={
                         >
                         Connect Bybit & Copy Similar Strategies Now
                         </button>
-                                <p style={{ color: '#64748b', fontSize: '12px', marginTop: '15px', fontWeight: '500' }}>
-    No API access needed from Bybit • Free to connect • You control everything
-</p>
+                                
                     </div>
                 </div>
             
@@ -950,26 +949,25 @@ syncOverlay: {
         lineHeight: "1.5"
     },
     statusBadge: { 
-        display: "inline-flex", 
+         display: "inline-flex", 
         alignItems: "center", 
         background: "rgba(34, 197, 94, 0.1)", 
-        paddingTop: "12px",
-        paddingBottom: "12px",
-        paddingLeft: "30px",
-        paddingRight: "30px", 
-        borderRadius: "8px", 
+        padding: "12px 25px", 
+        borderRadius: "100px", 
         color: "#4ade80", 
-        fontWeight: "800", 
+        fontWeight: "700", 
         marginTop: "25px", 
-        border: "1px solid rgba(74, 222, 128, 0.3)" 
+        border: "1px solid rgba(74, 222, 128, 0.3)",
+        fontSize: "13px",
+        letterSpacing: "0.5px"
     },
     pulseDot: { 
-        height: "10px", 
-        width: "10px", 
+         height: "8px", 
+        width: "8px", 
         backgroundColor: "#4ade80", 
         borderRadius: "50%", 
-        marginRight: "14px", 
-        boxShadow: "0 0 15px #4ade80" 
+        marginRight: "12px", 
+        boxShadow: "0 0 12px #4ade80"
     },
     heroCta: { 
         background: "#f3ba2f", 
